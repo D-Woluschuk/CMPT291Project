@@ -140,3 +140,22 @@ C:\Users\wolus\Desktop\CMPT291PROJECT_June_5_2022\CMPT291PROJECT June 5 2022\CMP
 C:\Users\wolus\Desktop\CMPT291PROJECT_June_5_2022\CMPT291PROJECT June 5 2022\CMPT291PROJECT(Mark)\CMPT291PROJECT\obj\Debug\CMPT291PROJECT.csproj.CoreCompileInputs.cache
 C:\Users\wolus\Desktop\CMPT291PROJECT_June_5_2022\CMPT291PROJECT June 5 2022\CMPT291PROJECT(Mark)\CMPT291PROJECT\obj\Debug\CMPT291PROJECT.exe
 C:\Users\wolus\Desktop\CMPT291PROJECT_June_5_2022\CMPT291PROJECT June 5 2022\CMPT291PROJECT(Mark)\CMPT291PROJECT\obj\Debug\CMPT291PROJECT.pdb
+C:\Users\wolus\Source\Repos\D-Woluschuk\CMPT291Project\CMPT291PROJECT\bin\Debug\CMPT291PROJECT.exe.config
+C:\Users\wolus\Source\Repos\D-Woluschuk\CMPT291Project\CMPT291PROJECT\bin\Debug\CMPT291PROJECT.exe
+C:\Users\wolus\Source\Repos\D-Woluschuk\CMPT291Project\CMPT291PROJECT\bin\Debug\CMPT291PROJECT.pdb
+C:\Users\wolus\Source\Repos\D-Woluschuk\CMPT291Project\CMPT291PROJECT\obj\Debug\CMPT291PROJECT.csproj.AssemblyReference.cache
+C:\Users\wolus\Source\Repos\D-Woluschuk\CMPT291Project\CMPT291PROJECT\obj\Debug\CMPT291PROJECT.csproj.SuggestedBindingRedirects.cache
+C:\Users\wolus\Source\Repos\D-Woluschuk\CMPT291Project\CMPT291PROJECT\obj\Debug\CMPT291PROJECT.CustomerLookup.resources
+C:\Users\wolus\Source\Repos\D-Woluschuk\CMPT291Project\CMPT291PROJECT\obj\Debug\CMPT291PROJECT.Edit.resources
+C:\Users\wolus\Source\Repos\D-Woluschuk\CMPT291Project\CMPT291PROJECT\obj\Debug\CMPT291PROJECT.Inventory.resources
+C:\Users\wolus\Source\Repos\D-Woluschuk\CMPT291Project\CMPT291PROJECT\obj\Debug\CMPT291PROJECT.Login.resources
+C:\Users\wolus\Source\Repos\D-Woluschuk\CMPT291Project\CMPT291PROJECT\obj\Debug\CMPT291PROJECT.Customer.resources
+C:\Users\wolus\Source\Repos\D-Woluschuk\CMPT291Project\CMPT291PROJECT\obj\Debug\CMPT291PROJECT.Employee.resources
+C:\Users\wolus\Source\Repos\D-Woluschuk\CMPT291Project\CMPT291PROJECT\obj\Debug\CMPT291PROJECT.SelectCar.resources
+C:\Users\wolus\Source\Repos\D-Woluschuk\CMPT291Project\CMPT291PROJECT\obj\Debug\CMPT291PROJECT.SignIn.resources
+C:\Users\wolus\Source\Repos\D-Woluschuk\CMPT291Project\CMPT291PROJECT\obj\Debug\CMPT291PROJECT.UserSignUp.resources
+C:\Users\wolus\Source\Repos\D-Woluschuk\CMPT291Project\CMPT291PROJECT\obj\Debug\CMPT291PROJECT.Properties.Resources.resources
+C:\Users\wolus\Source\Repos\D-Woluschuk\CMPT291Project\CMPT291PROJECT\obj\Debug\CMPT291PROJECT.csproj.GenerateResource.cache
+C:\Users\wolus\Source\Repos\D-Woluschuk\CMPT291Project\CMPT291PROJECT\obj\Debug\CMPT291PROJECT.csproj.CoreCompileInputs.cache
+C:\Users\wolus\Source\Repos\D-Woluschuk\CMPT291Project\CMPT291PROJECT\obj\Debug\CMPT291PROJECT.exe
+C:\Users\wolus\Source\Repos\D-Woluschuk\CMPT291Project\CMPT291PROJECT\obj\Debug\CMPT291PROJECT.pdb

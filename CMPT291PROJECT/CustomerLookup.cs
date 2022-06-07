@@ -15,7 +15,7 @@ namespace CMPT291PROJECT
         public CustomerLookup()
         {
             InitializeComponent();
-
+            firstName.Text = "Hello";
         }
     }
 }
