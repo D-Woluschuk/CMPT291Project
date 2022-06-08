@@ -12,10 +12,19 @@ namespace CMPT291PROJECT
 {
     public partial class CustomerLookup : Form
     {
-        public CustomerLookup()
+        public string[] provinces = { "Any", "AB", "BC", "SK", "MB", "ON", "QC", "NB", "NS", "PE", "NL", "YT", "NT", "NU"};
+
+        public CustomerLookup(Employee e1)
         {
             InitializeComponent();
-            firstName.Text = "Hello";
+            
+            province.DataSource = provinces;
+            
+        }
+
+        private void LookupSubmit(object sender, EventArgs e)
+        {
+
         }
     }
 }

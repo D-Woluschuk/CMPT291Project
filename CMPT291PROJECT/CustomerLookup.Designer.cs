@@ -29,19 +29,20 @@
         private void InitializeComponent()
         {
             this.firstName = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.LastName = new System.Windows.Forms.TextBox();
+            this.Street = new System.Windows.Forms.TextBox();
+            this.City = new System.Windows.Forms.TextBox();
             this.fName = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.custLookupResults = new System.Windows.Forms.ListBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.Info = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.Phone = new System.Windows.Forms.TextBox();
+            this.CustLookupSubmit = new System.Windows.Forms.Button();
+            this.province = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // firstName
@@ -51,26 +52,26 @@
             this.firstName.Size = new System.Drawing.Size(100, 20);
             this.firstName.TabIndex = 0;
             // 
-            // textBox2
+            // LastName
             // 
-            this.textBox2.Location = new System.Drawing.Point(79, 104);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 20);
-            this.textBox2.TabIndex = 1;
+            this.LastName.Location = new System.Drawing.Point(79, 104);
+            this.LastName.Name = "LastName";
+            this.LastName.Size = new System.Drawing.Size(100, 20);
+            this.LastName.TabIndex = 1;
             // 
-            // textBox3
+            // Street
             // 
-            this.textBox3.Location = new System.Drawing.Point(79, 148);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(100, 20);
-            this.textBox3.TabIndex = 2;
+            this.Street.Location = new System.Drawing.Point(79, 148);
+            this.Street.Name = "Street";
+            this.Street.Size = new System.Drawing.Size(100, 20);
+            this.Street.TabIndex = 2;
             // 
-            // textBox4
+            // City
             // 
-            this.textBox4.Location = new System.Drawing.Point(79, 198);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(100, 20);
-            this.textBox4.TabIndex = 3;
+            this.City.Location = new System.Drawing.Point(79, 198);
+            this.City.Name = "City";
+            this.City.Size = new System.Drawing.Size(100, 20);
+            this.City.TabIndex = 3;
             // 
             // fName
             // 
@@ -116,13 +117,6 @@
             this.custLookupResults.Size = new System.Drawing.Size(366, 407);
             this.custLookupResults.TabIndex = 8;
             // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(78, 250);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 9;
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -150,31 +144,50 @@
             this.label5.TabIndex = 12;
             this.label5.Text = "Phone";
             // 
-            // textBox5
+            // Phone
             // 
-            this.textBox5.Location = new System.Drawing.Point(77, 293);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(100, 20);
-            this.textBox5.TabIndex = 13;
+            this.Phone.Location = new System.Drawing.Point(79, 293);
+            this.Phone.Name = "Phone";
+            this.Phone.Size = new System.Drawing.Size(100, 20);
+            this.Phone.TabIndex = 13;
+            // 
+            // CustLookupSubmit
+            // 
+            this.CustLookupSubmit.Location = new System.Drawing.Point(79, 355);
+            this.CustLookupSubmit.Name = "CustLookupSubmit";
+            this.CustLookupSubmit.Size = new System.Drawing.Size(75, 23);
+            this.CustLookupSubmit.TabIndex = 14;
+            this.CustLookupSubmit.Text = "Submit";
+            this.CustLookupSubmit.UseVisualStyleBackColor = true;
+            this.CustLookupSubmit.Click += new System.EventHandler(this.LookupSubmit);
+            // 
+            // province
+            // 
+            this.province.FormattingEnabled = true;
+            this.province.Location = new System.Drawing.Point(79, 250);
+            this.province.Name = "province";
+            this.province.Size = new System.Drawing.Size(100, 21);
+            this.province.TabIndex = 15;
             // 
             // CustomerLookup
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(795, 445);
-            this.Controls.Add(this.textBox5);
+            this.Controls.Add(this.province);
+            this.Controls.Add(this.CustLookupSubmit);
+            this.Controls.Add(this.Phone);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.Info);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.custLookupResults);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.fName);
-            this.Controls.Add(this.textBox4);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.City);
+            this.Controls.Add(this.Street);
+            this.Controls.Add(this.LastName);
             this.Controls.Add(this.firstName);
             this.Name = "CustomerLookup";
             this.Text = "CustomerLookup";
@@ -186,18 +199,19 @@
         #endregion
 
         private System.Windows.Forms.TextBox firstName;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox LastName;
+        private System.Windows.Forms.TextBox Street;
+        private System.Windows.Forms.TextBox City;
         private System.Windows.Forms.Label fName;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ListBox custLookupResults;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label Info;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.TextBox Phone;
+        private System.Windows.Forms.Button CustLookupSubmit;
+        private System.Windows.Forms.ComboBox province;
     }
 }

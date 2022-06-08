@@ -870,6 +870,10 @@ namespace CMPT291PROJECT
         private void customerLookup(object sender, EventArgs e)
         {
             mycommand.CommandText = "SELECT * FROM customer";
+            CustomerLookup customerLookup = new CustomerLookup(this);
+            customerLookup.Show();
+            this.Visible = false;
+
 
         }
 
