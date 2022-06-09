@@ -37,9 +37,13 @@ namespace CMPT291PROJECT
         {
             custLookupResults.Items.Clear();
             mycommand.CommandText = "SELECT * FROM customer WHERE FName like " + "'" + firstName.Text + "%'" + " AND LName like " + "'" + LastName.Text + "%'";
-            myreader = mycommand.ExecuteReader();
-            while (myreader.Read())
-                custLookupResults.Items.Add(myreader["cust_id"].ToString() + "\t" + myreader["FName"].ToString() + "\t" + myreader["LName"].ToString() + "\t" + myreader["Street"].ToString());
+
+            try
+            {
+                myreader = mycommand.ExecuteReader();
+                while (myreader.Read())
+                    custLookupResults.Items.Add(myreader["cust_id"].ToString() + "\t" + myreader["FName"].ToString() + "\t" + myreader["LName"].ToString() + "\t" + myreader["Street"].ToString());
+            } catch (SqlException e1) { MessageBox.Show(e1.Message); }
 
             myreader.Close();
         }
