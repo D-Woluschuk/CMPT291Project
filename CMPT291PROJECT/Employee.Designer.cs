@@ -117,7 +117,6 @@
             this.remcar_id = new System.Windows.Forms.TextBox();
             this.remove_submit = new System.Windows.Forms.Button();
             this.tabPage7 = new System.Windows.Forms.TabPage();
-            this.label40 = new System.Windows.Forms.Label();
             this.label38 = new System.Windows.Forms.Label();
             this.edit_year = new System.Windows.Forms.TextBox();
             this.label31 = new System.Windows.Forms.Label();
@@ -1040,7 +1039,6 @@
             // tabPage7
             // 
             this.tabPage7.Controls.Add(this.editOutput);
-            this.tabPage7.Controls.Add(this.label40);
             this.tabPage7.Controls.Add(this.label38);
             this.tabPage7.Controls.Add(this.edit_year);
             this.tabPage7.Controls.Add(this.label31);
@@ -1063,15 +1061,6 @@
             this.tabPage7.TabIndex = 6;
             this.tabPage7.Text = "Edit Car";
             this.tabPage7.UseVisualStyleBackColor = true;
-            // 
-            // label40
-            // 
-            this.label40.AutoSize = true;
-            this.label40.Location = new System.Drawing.Point(261, 182);
-            this.label40.Name = "label40";
-            this.label40.Size = new System.Drawing.Size(235, 13);
-            this.label40.TabIndex = 40;
-            this.label40.Text = "Type:      Branch:      Model:      Plate:      Colour:";
             // 
             // label38
             // 
@@ -1126,9 +1115,9 @@
             // edit_output
             // 
             this.edit_output.FormattingEnabled = true;
-            this.edit_output.Location = new System.Drawing.Point(183, 198);
+            this.edit_output.Location = new System.Drawing.Point(0, 302);
             this.edit_output.Name = "edit_output";
-            this.edit_output.Size = new System.Drawing.Size(400, 186);
+            this.edit_output.Size = new System.Drawing.Size(173, 95);
             this.edit_output.TabIndex = 33;
             this.edit_output.Visible = false;
             this.edit_output.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.edit_output_MouseDoubleClick);
@@ -1218,10 +1207,10 @@
             this.editOutput.GridLines = true;
             this.editOutput.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.editOutput.HideSelection = false;
-            this.editOutput.Location = new System.Drawing.Point(264, 198);
+            this.editOutput.Location = new System.Drawing.Point(190, 198);
             this.editOutput.MultiSelect = false;
             this.editOutput.Name = "editOutput";
-            this.editOutput.Size = new System.Drawing.Size(414, 199);
+            this.editOutput.Size = new System.Drawing.Size(488, 199);
             this.editOutput.TabIndex = 41;
             this.editOutput.UseCompatibleStateImageBehavior = false;
             this.editOutput.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.edit_output_MouseDoubleClick);
@@ -1353,7 +1342,6 @@
         private System.Windows.Forms.Label label39;
         private System.Windows.Forms.Label label38;
         private System.Windows.Forms.Label label41;
-        private System.Windows.Forms.Label label40;
         private System.Windows.Forms.Label label42;
         private System.Windows.Forms.Label remModel;
         private System.Windows.Forms.TextBox remcar_model;
