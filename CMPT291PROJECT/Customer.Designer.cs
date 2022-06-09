@@ -169,7 +169,7 @@
             this.Controls.Add(this.date_to);
             this.Controls.Add(this.date_from);
             this.Name = "Customer";
-            this.Text = "Form2";
+            this.Text = "View Available Cars";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Customer_FormClosing);
             this.Load += new System.EventHandler(this.Customer_Load);
             this.ResumeLayout(false);

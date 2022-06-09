@@ -46,6 +46,8 @@
             this.CurrentInventory.Size = new System.Drawing.Size(776, 288);
             this.CurrentInventory.TabIndex = 0;
             this.CurrentInventory.UseCompatibleStateImageBehavior = false;
+            this.CurrentInventory.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+
             // 
             // label1
             // 

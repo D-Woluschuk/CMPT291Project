@@ -19,7 +19,7 @@ namespace CMPT291PROJECT
         public SqlDataReader myreader;
         public string[] args;
 
-        public Edit(Login f1, string temp)
+        public Edit(Login f1, string[] aCar)
         {
             InitializeComponent();
             parent = f1;
@@ -33,8 +33,7 @@ namespace CMPT291PROJECT
             //Allows ESC key strokes to trigger cancel button clicks
             CancelButton = edit_cancel;
 
-
-            args = temp.Split('\t');
+            args = aCar;
 
             // Populate combo boxes
             mycommand.CommandText = "SELECT B.city, T.description FROM branch B, type T";
@@ -57,18 +56,15 @@ namespace CMPT291PROJECT
                 types = types.Distinct().ToList();
 
                 
-
-                
-                
                 edit_branch.DataSource = branches;
                 edit_type.DataSource = types;
 
-                edit_carID.Text = args[0];
-                edit_type.SelectedItem = args[1];
-                edit_branch.SelectedItem = args[2];
-                edit_year.Text = args[3];
-                edit_model.Text = args[4];
-                edit_plate.Text = args[5];
+                edit_carID.Text = aCar[0];
+                edit_type.SelectedItem = aCar[1];
+                edit_branch.SelectedItem = aCar[2];
+                edit_model.Text = aCar[3];
+                edit_year.Text = aCar[4];
+                edit_plate.Text = aCar[5];
                 
             }
             
@@ -109,9 +105,9 @@ namespace CMPT291PROJECT
             myreader.Close();
 
             
-            if (!edit_type.SelectedItem.ToString().Trim().Equals(args[1].Trim()))
+            if (!edit_type.SelectedItem.ToString().Equals(args[1]))
             {
-                confirmation += "Car type changing from '" + args[1].Trim() + "' To '" + edit_type.SelectedItem.ToString().Trim() + "' ?\n";
+                confirmation += "Car type changing from '" + args[1] + "' To '" + edit_type.SelectedItem.ToString() + "' ?\n";
                 mycommand.CommandText = "SELECT type_id FROM type WHERE description = " + "'" + edit_type.SelectedItem.ToString().Trim() + "'";
                 myreader = mycommand.ExecuteReader();
                 while (myreader.Read())
@@ -135,16 +131,16 @@ namespace CMPT291PROJECT
                 branch = true;
             }
 
-            if (!edit_year.Text.Equals(args[3]))
+            if (!edit_year.Text.Equals(args[4]))
             {
-                confirmation += "Car year changing from '" + args[3] + "' To '" + edit_year.Text + "' ?\n";
+                confirmation += "Car year changing from '" + args[4] + "' To '" + edit_year.Text + "' ?\n";
                 updateYear = "year = " + "'" + edit_year.Text + "'";
                 year = true;
             }
 
-            if (!edit_model.Text.Equals(args[4]))
+            if (!edit_model.Text.Equals(args[3]))
             {
-                confirmation += "Car model changing from '" + args[4] + "' To '" + edit_model.Text + "' ?\n";
+                confirmation += "Car model changing from '" + args[3] + "' To '" + edit_model.Text + "' ?\n";
                 updateModel = "model = " + "'" + edit_model.Text + "'";
                 model = true;
             }
@@ -209,8 +205,8 @@ namespace CMPT291PROJECT
             {
                 edit_type.SelectedItem = args[1];
                 edit_branch.SelectedItem = args[2];
-                edit_year.Text = args[3];
-                edit_model.Text = args[4];
+                edit_model.Text = args[3];
+                edit_year.Text = args[4];
                 edit_plate.Text = args[5];
 
             }

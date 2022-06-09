@@ -32,7 +32,16 @@ namespace CMPT291PROJECT
             myconnection = f1.myconnection;
             myreader = f1.myreader;
             mycommand = f1.mycommand;
+            editOutput.View = View.Details;
+            editOutput.GridLines = true;
+            editOutput.FullRowSelect = true;
 
+            editOutput.Columns.Add("Car ID", 75);
+            editOutput.Columns.Add("Type", 100);
+            editOutput.Columns.Add("Branch", 100);
+            editOutput.Columns.Add("Model", 100);
+            editOutput.Columns.Add("Year", 75);
+            editOutput.Columns.Add("Licence Plate", 100);
 
             returnHeading.Text = "Booking ID\t" + "\t" + "Customer ID" + "\t" + "Car ID";
 
@@ -494,12 +503,13 @@ namespace CMPT291PROJECT
 
         private void rembranch_SelectedIndexChanged(object sender, EventArgs e)
         {
-            remove_output.DataSource = null;
+            //remove_output.DataSource = null;
         }
 
         private void remSubmit_Click(object sender, EventArgs e)
         {
             remove_output.DataSource = null;
+            remove_output.Items.Clear();
             if (remcar_id.Text.Length != 0)
             {
                 mycommand.CommandText = "SELECT C.car_id, T.description, B.city, C.model, C.year, C.plate_num" +
@@ -521,9 +531,9 @@ namespace CMPT291PROJECT
                 myreader.Close();
 
             }
-            else if (remcar_type.SelectedItem.ToString().Equals("Any") && remcar_branch.SelectedItem.ToString().Equals("Any"))
+            else if (remcar_type.Text.Equals("Any") && remcar_branch.Text.Equals("Any"))
             {
-                mycommand.CommandText = "SELECT * FROM car C, branch B, type T WHERE (C.car_branch = B.branch_id AND C.car_type = T.type_id)";
+                mycommand.CommandText = "SELECT * FROM car C, branch B, type T WHERE (C.car_branch = B.branch_id AND C.car_type = T.type_id)" + " AND C.model like '" + remcar_model.Text + "%' AND C.year like '" + remcar_year.Text + "%' AND C.plate_num like '" + remcar_plate.Text + "%'"; ;
                 myreader = mycommand.ExecuteReader();
                 while (myreader.Read())
                 {
@@ -537,9 +547,9 @@ namespace CMPT291PROJECT
                 myreader.Close();
 
             }
-            else if (remcar_type.SelectedItem.ToString().Equals("Any") && !(remcar_branch.SelectedItem.ToString().Equals("Any")))
+            else if ((remcar_type.Text.Equals("Any")) && (!remcar_branch.Text.Equals("Any")))
             {
-                mycommand.CommandText = "SELECT * FROM car C, branch B, type T WHERE (C.car_branch = B.branch_id AND C.car_type = T.type_id) AND T.description = " + "'" + edit_type.SelectedItem.ToString() + "'";
+                mycommand.CommandText = "SELECT * FROM car C, branch B, type T WHERE (C.car_branch = B.branch_id AND C.car_type = T.type_id) AND B.city = " + "'" + remcar_branch.Text + "'" + " AND C.model like '" + remcar_model.Text + "%' AND C.year like '" + remcar_year.Text + "%' AND C.plate_num like '" + remcar_plate.Text + "%'";
                 myreader = mycommand.ExecuteReader();
                 while (myreader.Read())
                 {
@@ -553,9 +563,9 @@ namespace CMPT291PROJECT
                 myreader.Close();
             }
 
-            else if (!(remcar_type.SelectedItem.ToString().Equals("Any")) && remcar_branch.SelectedItem.ToString().Equals("Any"))
+            else if (!(remcar_type.Text.Equals("Any")) && remcar_branch.Text.Equals("Any"))
             {
-                mycommand.CommandText = "SELECT * FROM car C, branch B, type T WHERE (C.car_branch = B.branch_id AND C.car_type = T.type_id) AND B.city = " + "'" + edit_branch.SelectedItem.ToString() + "'";
+                mycommand.CommandText = "SELECT * FROM car C, branch B, type T WHERE (C.car_branch = B.branch_id AND C.car_type = T.type_id) AND T.description = " + "'" + remcar_type.SelectedItem.ToString() + "'" + " AND C.model like '" + remcar_model.Text + "%' AND C.year like '" + remcar_year.Text + "%' AND C.plate_num like '" + remcar_plate.Text + "%'";
                 myreader = mycommand.ExecuteReader();
                 while (myreader.Read())
                 {
@@ -572,7 +582,7 @@ namespace CMPT291PROJECT
 
             else
             {
-                mycommand.CommandText = "SELECT * FROM car C, branch B, type T WHERE (C.car_branch = B.branch_id AND C.car_type = T.type_id) AND T.description = " + "'" + edit_type.SelectedItem.ToString() + "'" + " AND B.city = " + "'" + edit_branch.SelectedItem.ToString() + "'";
+                mycommand.CommandText = "SELECT * FROM car C, branch B, type T WHERE (C.car_branch = B.branch_id AND C.car_type = T.type_id) AND T.description = " + "'" + remcar_type.SelectedItem.ToString() + "'" + " AND B.city = " + "'" + remcar_branch.SelectedItem.ToString() + "' AND C.model like '" + remcar_model.Text + "%' AND C.year like '" + remcar_year.Text + "%' AND C.plate_num like '" + remcar_plate.Text + "%'";
                 myreader = mycommand.ExecuteReader();
                 while (myreader.Read())
                 {
@@ -651,32 +661,74 @@ namespace CMPT291PROJECT
 
         private void edit_output_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            if (edit_output.SelectedItem != null)
+            if (editOutput.SelectedItems.Count != 0)
             {
-                Edit edit = new Edit(parent, edit_output.SelectedItem.ToString());
+                string[] aCar = new string[6];
+
+                ListViewItem aSelection = editOutput.SelectedItems[0];
+
+                aCar[0] = (aSelection.SubItems[0].Text);
+                aCar[1] = (aSelection.SubItems[1].Text);
+                aCar[2] = (aSelection.SubItems[2].Text);
+                aCar[3] = (aSelection.SubItems[3].Text);
+                aCar[4] = (aSelection.SubItems[4].Text);
+                aCar[5] = (aSelection.SubItems[5].Text);
+
+                Edit edit = new Edit(parent, aCar);
                 edit.Show();
-                edit_output.Items.Clear();
+                editOutput.Items.Clear();
                 //MessageBox.Show("Editing: " + edit_output.SelectedItem.ToString());
             }
+            
+            //MessageBox.Show(aSelection.SubItems[0].Text);
+            //MessageBox.Show(aSelection.SubItems[1].Text);
+            //string[] aCar = new string[15];
+            //editOutput.SelectedItems.CopyTo(aCar, 0);
+            //int j = 0;
+            //foreach (int i in aSelection)
+            //{
+            //  MessageBox.Show(editOutput.Items[i].ToString());
+            //for (j = 0; j < 6; j++)
+            // MessageBox.Show(editOutput.Items[i].SubItems[j].ToString());
+
+            //}
+            //MessageBox.Show(aSelection.ToString());
+            //for (int i = 0; i < aCar.Length; i++)
+                //MessageBox.Show(aCar[i]);
+
+
         }
 
 
 
         private void editCar_Submit(object sender, EventArgs e)
         {
-            edit_output.Items.Clear();
+            string[] carInfo = new string[6];
+            ListViewItem anItem;
+            editOutput.Items.Clear();
+            //edit_output.Items.Clear();
             if (editcar_id.Text.Length != 0)
             {
                 mycommand.CommandText = "SELECT * FROM car C, branch B, type T WHERE (C.car_branch = B.branch_id AND C.car_type = T.type_id) AND car_id = " + "'" + editcar_id.Text + "'";
                 myreader = mycommand.ExecuteReader();
                 while (myreader.Read())
                 {
-                    edit_output.Items.Add(myreader["car_id"].ToString().Replace("  ", "")
+
+                    carInfo[0] = myreader["car_id"].ToString();
+                    carInfo[1] = myreader["description"].ToString();
+                    carInfo[2] = myreader["city"].ToString();
+                    carInfo[3] = myreader["model"].ToString();
+                    carInfo[4] = myreader["year"].ToString();
+                    carInfo[5] = myreader["plate_num"].ToString();
+                    anItem = new ListViewItem(carInfo);
+                    editOutput.Items.Add(anItem);
+
+                    /*edit_output.Items.Add(myreader["car_id"].ToString().Replace("  ", "")
                         + "\t" + myreader["description"].ToString()
                         + "\t" + myreader["city"].ToString().Replace("  ", "")
                         + "\t" + myreader["year"].ToString().Replace("  ", "")
                         + "\t" + myreader["model"].ToString().Replace("  ", "")
-                        + "\t" + myreader["plate_num"].ToString().Replace("  ", ""));
+                        + "\t" + myreader["plate_num"].ToString().Replace("  ", ""));*/
                 }
                 myreader.Close();
 
@@ -684,48 +736,75 @@ namespace CMPT291PROJECT
 
             else if (edit_branch.SelectedItem.ToString().Equals("Any") && edit_type.SelectedItem.ToString().Equals("Any"))
             {
-                mycommand.CommandText = "SELECT * FROM car C, branch B, type T WHERE (C.car_branch = B.branch_id AND C.car_type = T.type_id)"; // AND T.description = " + "'" + edit_type.SelectedItem.ToString() + "'" + " AND B.city = " + "'" + edit_branch.SelectedItem.ToString() + "'";
+                mycommand.CommandText = "SELECT * FROM car C, branch B, type T WHERE (C.car_branch = B.branch_id AND C.car_type = T.type_id)" + " AND C.model like '" + edit_model.Text + "%' AND C.year like '" + edit_year.Text + "%' AND C.plate_num like '" + edit_plate.Text + "%'"; // AND T.description = " + "'" + edit_type.SelectedItem.ToString() + "'" + " AND B.city = " + "'" + edit_branch.SelectedItem.ToString() + "'";
                 myreader = mycommand.ExecuteReader();
                 while (myreader.Read())
                 {
+                    carInfo[0] = myreader["car_id"].ToString();
+                    carInfo[1] = myreader["description"].ToString();
+                    carInfo[2] = myreader["city"].ToString();
+                    carInfo[3] = myreader["model"].ToString();
+                    carInfo[4] = myreader["year"].ToString();
+                    carInfo[5] = myreader["plate_num"].ToString();
+                    anItem = new ListViewItem(carInfo);
+                    editOutput.Items.Add(anItem);
+                    /*
                     edit_output.Items.Add(myreader["car_id"].ToString().Replace("  ", "")
                         + "\t" + myreader["description"].ToString()
                         + "\t" + myreader["city"].ToString().Replace("  ", "")
                         + "\t" + myreader["year"].ToString().Replace("  ", "")
                         + "\t" + myreader["model"].ToString().Replace("  ", "")
-                        + "\t" + myreader["plate_num"].ToString().Replace("  ", ""));
+                        + "\t" + myreader["plate_num"].ToString().Replace("  ", ""));*/
                 }
                 myreader.Close();
 
             }
             else if (edit_branch.SelectedItem.ToString().Equals("Any") && !(edit_type.SelectedItem.ToString().Equals("Any")))
             {
-                mycommand.CommandText = "SELECT * FROM car C, branch B, type T WHERE (C.car_branch = B.branch_id AND C.car_type = T.type_id) AND T.description = " + "'" + edit_type.SelectedItem.ToString() + "'"; // + " AND B.city = " + "'" + edit_branch.SelectedItem.ToString() + "'";
+                mycommand.CommandText = "SELECT * FROM car C, branch B, type T WHERE (C.car_branch = B.branch_id AND C.car_type = T.type_id) AND T.description = " + "'" + edit_type.SelectedItem.ToString() + "'" + " AND C.model like '" + edit_model.Text + "%' AND C.year like '" + edit_year.Text + "%' AND C.plate_num like '" + edit_plate.Text + "%'"; // + " AND B.city = " + "'" + edit_branch.SelectedItem.ToString() + "'";
                 myreader = mycommand.ExecuteReader();
                 while (myreader.Read())
                 {
+                    carInfo[0] = myreader["car_id"].ToString();
+                    carInfo[1] = myreader["description"].ToString();
+                    carInfo[2] = myreader["city"].ToString();
+                    carInfo[3] = myreader["model"].ToString();
+                    carInfo[4] = myreader["year"].ToString();
+                    carInfo[5] = myreader["plate_num"].ToString();
+                    anItem = new ListViewItem(carInfo);
+                    editOutput.Items.Add(anItem);
+                    /*
                     edit_output.Items.Add(myreader["car_id"].ToString().Replace("  ", "")
                         + "\t" + myreader["description"].ToString()
                         + "\t" + myreader["city"].ToString().Replace("  ", "")
                         + "\t" + myreader["year"].ToString().Replace("  ", "")
                         + "\t" + myreader["model"].ToString().Replace("  ", "")
-                        + "\t" + myreader["plate_num"].ToString().Replace("  ", ""));
+                        + "\t" + myreader["plate_num"].ToString().Replace("  ", ""));*/
                 }
                 myreader.Close();
             }
 
             else if (!(edit_branch.SelectedItem.ToString().Equals("Any")) && edit_type.SelectedItem.ToString().Equals("Any"))
             {
-                mycommand.CommandText = "SELECT * FROM car C, branch B, type T WHERE (C.car_branch = B.branch_id AND C.car_type = T.type_id) AND B.city = " + "'" + edit_branch.SelectedItem.ToString() + "'"; // AND T.description = " + "'" + edit_type.SelectedItem.ToString() + "'" + " 
+                mycommand.CommandText = "SELECT * FROM car C, branch B, type T WHERE (C.car_branch = B.branch_id AND C.car_type = T.type_id) AND B.city = " + "'" + edit_branch.SelectedItem.ToString() + "'" + " AND C.model like '" + edit_model.Text + "%' AND C.year like '" + edit_year.Text + "%' AND C.plate_num like '" + edit_plate.Text + "%'"; ; // AND T.description = " + "'" + edit_type.SelectedItem.ToString() + "'" + " 
                 myreader = mycommand.ExecuteReader();
                 while (myreader.Read())
                 {
+                    carInfo[0] = myreader["car_id"].ToString();
+                    carInfo[1] = myreader["description"].ToString();
+                    carInfo[2] = myreader["city"].ToString();
+                    carInfo[3] = myreader["model"].ToString();
+                    carInfo[4] = myreader["year"].ToString();
+                    carInfo[5] = myreader["plate_num"].ToString();
+                    anItem = new ListViewItem(carInfo);
+                    editOutput.Items.Add(anItem);
+                    /*
                     edit_output.Items.Add(myreader["car_id"].ToString().Replace("  ", "")
                         + "\t" + myreader["description"].ToString()
                         + "\t" + myreader["city"].ToString().Replace("  ", "")
                         + "\t" + myreader["year"].ToString().Replace("  ", "")
                         + "\t" + myreader["model"].ToString().Replace("  ", "")
-                        + "\t" + myreader["plate_num"].ToString().Replace("  ", ""));
+                        + "\t" + myreader["plate_num"].ToString().Replace("  ", ""));*/
                 }
                 myreader.Close();
 
@@ -733,20 +812,32 @@ namespace CMPT291PROJECT
 
             else
             {
-                mycommand.CommandText = "SELECT * FROM car C, branch B, type T WHERE (C.car_branch = B.branch_id AND C.car_type = T.type_id) AND T.description = " + "'" + edit_type.SelectedItem.ToString() + "'" + " AND B.city = " + "'" + edit_branch.SelectedItem.ToString() + "'";
+                mycommand.CommandText = "SELECT * FROM car C, branch B, type T WHERE (C.car_branch = B.branch_id AND C.car_type = T.type_id) AND T.description = " + "'" + edit_type.SelectedItem.ToString() + "'" + " AND B.city = " + "'" + edit_branch.SelectedItem.ToString() + "'" + " AND C.model like '" + edit_model.Text + "%' AND C.year like '" + edit_year.Text + "%' AND C.plate_num like '" + edit_plate.Text + "%'"; ;
                 myreader = mycommand.ExecuteReader();
                 while (myreader.Read())
                 {
+                    carInfo[0] = myreader["car_id"].ToString();
+                    carInfo[1] = myreader["description"].ToString();
+                    carInfo[2] = myreader["city"].ToString();
+                    carInfo[3] = myreader["model"].ToString();
+                    carInfo[4] = myreader["year"].ToString();
+                    carInfo[5] = myreader["plate_num"].ToString();
+                    anItem = new ListViewItem(carInfo);
+                    editOutput.Items.Add(anItem);
+                    /*
                     edit_output.Items.Add(myreader["car_id"].ToString().Replace("  ", "")
                         + "\t" + myreader["description"].ToString()
                         + "\t" + myreader["city"].ToString().Replace("  ", "")
                         + "\t" + myreader["year"].ToString().Replace("  ", "")
                         + "\t" + myreader["model"].ToString().Replace("  ", "")
-                        + "\t" + myreader["plate_num"].ToString().Replace("  ", ""));
+                        + "\t" + myreader["plate_num"].ToString().Replace("  ", ""));*/
                 }
                 myreader.Close();
 
             }
+
+            //if (edit_output.Items.Count == 0)
+                //edit_output.Items.Add("No Results");
 
 
         }
@@ -784,6 +875,9 @@ namespace CMPT291PROJECT
 
         private void searchForCarsWithIDEdit(object sender, string anID)
         {
+            editOutput.Items.Clear();
+            string[] carInfo = new string[6];
+            ListViewItem anItem;
             //mycommand.CommandText = "SELECT * FROM car C, branch B, type T WHERE (C.car_branch = B.branch_id AND C.car_type = T.type_id) AND car_id like " + "'" + anID + "%'";
             mycommand.CommandText = "SELECT * FROM car C, branch B, type T ";
             mycommand.CommandText += "WHERE (C.car_branch = B.branch_id AND C.car_type = T.type_id) ";
@@ -791,12 +885,21 @@ namespace CMPT291PROJECT
             myreader = mycommand.ExecuteReader();
             while (myreader.Read())
             {
+                carInfo[0] = myreader["car_id"].ToString();
+                carInfo[1] = myreader["description"].ToString();
+                carInfo[2] = myreader["city"].ToString();
+                carInfo[3] = myreader["model"].ToString();
+                carInfo[4] = myreader["year"].ToString();
+                carInfo[5] = myreader["plate_num"].ToString();
+                anItem = new ListViewItem(carInfo);
+                editOutput.Items.Add(anItem);
+                /*
                 edit_output.Items.Add(myreader["car_id"].ToString().Replace("  ", "")
                     + "\t" + myreader["description"].ToString().Replace("  ", "")
                     + "\t" + myreader["city"].ToString().Replace("  ", "")
                     + "\t" + myreader["year"].ToString().Replace("  ", "")
                     + "\t" + myreader["model"].ToString().Replace("  ", "")
-                    + "\t" + myreader["plate_num"].ToString().Replace("  ", ""));
+                    + "\t" + myreader["plate_num"].ToString().Replace("  ", ""));*/
             }
             myreader.Close();
         }
@@ -824,6 +927,8 @@ namespace CMPT291PROJECT
             else if (tabControl1.SelectedTab == tabControl1.TabPages["tabPage3"])
             {
                 this.AcceptButton = InventoryButton;
+                //InventoryBranch.SelectedIndex = 0;
+                //this.dateTimePicker6.Text = default;
             }
                 
             else if (tabControl1.SelectedTab == tabControl1.TabPages["tabPage4"])
@@ -839,19 +944,31 @@ namespace CMPT291PROJECT
                 
             else if (tabControl1.SelectedTab == tabControl1.TabPages["tabPage6"])
             {
+                remcar_id.Text = default;
                 this.AcceptButton = remove_submit;
                 remove_output.DataSource = null;
                 remove_output.Items.Clear();
                 remcar_type.SelectedIndex = 0;
                 remcar_branch.SelectedIndex = 0;
+                remcar_year.Text = default;
+                remcar_plate.Text = default;
+                remcar_model.Text = default;
+
             }
                 
             else if (tabControl1.SelectedTab == tabControl1.TabPages["tabPage7"])
             {
+                editcar_id.Text = default;
                 this.AcceptButton = editSubmit;
-                edit_output.Items.Clear();
+                editOutput.Items.Clear();
+                //edit_output.DataSource = null;
+                //edit_output.Items.Clear();
                 edit_branch.SelectedIndex = 0;
                 edit_type.SelectedIndex = 0;
+                edit_model.Text = default;
+                edit_plate.Text = default;
+                edit_year.Text = default;
+                
             }
                 
             

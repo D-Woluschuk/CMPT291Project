@@ -132,7 +132,7 @@
             this.Controls.Add(this.new_user);
             this.Controls.Add(this.existing_user);
             this.Name = "Login";
-            this.Text = "Form1";
+            this.Text = "Welcome!";
             this.Load += new System.EventHandler(this.Login_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

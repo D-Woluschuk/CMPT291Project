@@ -35,11 +35,9 @@
             this.yearLabel = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
             this.edit_branch = new System.Windows.Forms.ComboBox();
-            this.label19 = new System.Windows.Forms.Label();
             this.edit_type = new System.Windows.Forms.ComboBox();
             this.label18 = new System.Windows.Forms.Label();
             this.edit_year = new System.Windows.Forms.TextBox();
-            this.edit_milage = new System.Windows.Forms.TextBox();
             this.addcar_submit = new System.Windows.Forms.Button();
             this.edit_cancel = new System.Windows.Forms.Button();
             this.editc_id_label = new System.Windows.Forms.Label();
@@ -49,7 +47,7 @@
             // label27
             // 
             this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(191, 214);
+            this.label27.Location = new System.Drawing.Point(191, 217);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(71, 13);
             this.label27.TabIndex = 26;
@@ -66,7 +64,7 @@
             // 
             // edit_plate
             // 
-            this.edit_plate.Location = new System.Drawing.Point(268, 211);
+            this.edit_plate.Location = new System.Drawing.Point(268, 214);
             this.edit_plate.Name = "edit_plate";
             this.edit_plate.Size = new System.Drawing.Size(121, 20);
             this.edit_plate.TabIndex = 24;
@@ -81,7 +79,7 @@
             // yearLabel
             // 
             this.yearLabel.AutoSize = true;
-            this.yearLabel.Location = new System.Drawing.Point(16, 214);
+            this.yearLabel.Location = new System.Drawing.Point(16, 166);
             this.yearLabel.Name = "yearLabel";
             this.yearLabel.Size = new System.Drawing.Size(29, 13);
             this.yearLabel.TabIndex = 22;
@@ -105,15 +103,6 @@
             this.edit_branch.Size = new System.Drawing.Size(121, 21);
             this.edit_branch.TabIndex = 20;
             // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(13, 163);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(44, 13);
-            this.label19.TabIndex = 19;
-            this.label19.Text = "Mileage";
-            // 
             // edit_type
             // 
             this.edit_type.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -134,17 +123,10 @@
             // 
             // edit_year
             // 
-            this.edit_year.Location = new System.Drawing.Point(60, 211);
+            this.edit_year.Location = new System.Drawing.Point(60, 163);
             this.edit_year.Name = "edit_year";
             this.edit_year.Size = new System.Drawing.Size(121, 20);
             this.edit_year.TabIndex = 16;
-            // 
-            // edit_milage
-            // 
-            this.edit_milage.Location = new System.Drawing.Point(60, 160);
-            this.edit_milage.Name = "edit_milage";
-            this.edit_milage.Size = new System.Drawing.Size(121, 20);
-            this.edit_milage.TabIndex = 15;
             // 
             // addcar_submit
             // 
@@ -201,11 +183,9 @@
             this.Controls.Add(this.yearLabel);
             this.Controls.Add(this.label20);
             this.Controls.Add(this.edit_branch);
-            this.Controls.Add(this.label19);
             this.Controls.Add(this.edit_type);
             this.Controls.Add(this.label18);
             this.Controls.Add(this.edit_year);
-            this.Controls.Add(this.edit_milage);
             this.Controls.Add(this.addcar_submit);
             this.Name = "Edit";
             this.Text = "Editing Vehicle Information";
@@ -224,11 +204,9 @@
         private System.Windows.Forms.Label yearLabel;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.ComboBox edit_branch;
-        private System.Windows.Forms.Label label19;
         private System.Windows.Forms.ComboBox edit_type;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.TextBox edit_year;
-        private System.Windows.Forms.TextBox edit_milage;
         private System.Windows.Forms.Button addcar_submit;
         private System.Windows.Forms.Button edit_cancel;
         private System.Windows.Forms.Label editc_id_label;
