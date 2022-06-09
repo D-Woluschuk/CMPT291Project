@@ -701,8 +701,8 @@ namespace CMPT291PROJECT
                 
 
                 aCar[0] = (aSelection.SubItems[0].Text);
-                aCar[1] = (aSelection.SubItems[1].Text);
-                aCar[2] = (aSelection.SubItems[2].Text);
+                aCar[1] = descToType((aSelection.SubItems[1].Text));
+                aCar[2] = cityToBID((aSelection.SubItems[2].Text));
                 aCar[3] = (aSelection.SubItems[3].Text);
                 aCar[4] = (aSelection.SubItems[4].Text);
                 aCar[5] = (aSelection.SubItems[5].Text);
@@ -715,7 +715,7 @@ namespace CMPT291PROJECT
                 }
                 DialogResult removeCar = MessageBox.Show(message, "Remove", MessageBoxButtons.YesNo);
 
-                string[] cols = { "car_id", "car_type", "car_branch", "year", "model", "plate_num" };
+                string[] cols = { "car_id", "car_type", "car_branch", "model", "year", "plate_num" };
                 mycommand.CommandText = "DELETE FROM car WHERE ";
                 int i;
                 for (i = 0; i < aCar.Length; i++)
@@ -734,7 +734,8 @@ namespace CMPT291PROJECT
                     try
                     {
                         int nums = mycommand.ExecuteNonQuery();
-                        MessageBox.Show("Car removed from the system.");
+
+                        MessageBox.Show("Car removed from the system." + nums.ToString());
                         removeOutput.Items.RemoveAt(aSelection.Index);
                     }
                     catch (SqlException) { MessageBox.Show("Something went wrong..\nThe car could not be removed.\nPlease try again", "ERROR"); }
