@@ -36,12 +36,12 @@ namespace CMPT291PROJECT
             editOutput.GridLines = true;
             editOutput.FullRowSelect = true;
 
-            editOutput.Columns.Add("Car ID", 75);
-            editOutput.Columns.Add("Type", 100);
-            editOutput.Columns.Add("Branch", 100);
-            editOutput.Columns.Add("Model", 100);
-            editOutput.Columns.Add("Year", 75);
-            editOutput.Columns.Add("Licence Plate", 100);
+            editOutput.Columns.Add("Car ID", 55);
+            editOutput.Columns.Add("Type", 90);
+            editOutput.Columns.Add("Branch", 95);
+            editOutput.Columns.Add("Model", 95);
+            editOutput.Columns.Add("Year", 70);
+            editOutput.Columns.Add("Licence Plate", 90);
 
             returnHeading.Text = "Booking ID\t" + "\t" + "Customer ID" + "\t" + "Car ID";
 
