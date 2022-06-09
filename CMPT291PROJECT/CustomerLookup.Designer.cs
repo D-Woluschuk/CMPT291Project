@@ -203,7 +203,7 @@
             this.Controls.Add(this.LastName);
             this.Controls.Add(this.firstName);
             this.Name = "CustomerLookup";
-            this.Text = "CustomerLookup";
+            this.Text = "Customer Lookup";
             this.ResumeLayout(false);
             this.PerformLayout();
 

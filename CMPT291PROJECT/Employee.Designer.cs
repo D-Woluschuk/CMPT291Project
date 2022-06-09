@@ -49,6 +49,8 @@
             this.date_to = new System.Windows.Forms.DateTimePicker();
             this.date_from = new System.Windows.Forms.DateTimePicker();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.returnHeading = new System.Windows.Forms.Label();
+            this.returnLookup = new System.Windows.Forms.Button();
             this.returnOutput = new System.Windows.Forms.ListBox();
             this.return_dropoff = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -110,11 +112,9 @@
             this.label25 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
             this.remcar_branch = new System.Windows.Forms.ComboBox();
-            this.label22 = new System.Windows.Forms.Label();
             this.remcar_type = new System.Windows.Forms.ComboBox();
             this.label23 = new System.Windows.Forms.Label();
             this.remcar_id = new System.Windows.Forms.TextBox();
-            this.remcar_milage = new System.Windows.Forms.TextBox();
             this.remove_submit = new System.Windows.Forms.Button();
             this.tabPage7 = new System.Windows.Forms.TabPage();
             this.label40 = new System.Windows.Forms.Label();
@@ -132,10 +132,9 @@
             this.edit_type = new System.Windows.Forms.ComboBox();
             this.label37 = new System.Windows.Forms.Label();
             this.editcar_id = new System.Windows.Forms.TextBox();
-            this.edit_milage = new System.Windows.Forms.TextBox();
+            this.edit_model = new System.Windows.Forms.TextBox();
             this.editSubmit = new System.Windows.Forms.Button();
-            this.returnLookup = new System.Windows.Forms.Button();
-            this.returnHeading = new System.Windows.Forms.Label();
+            this.editOutput = new System.Windows.Forms.ListView();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -161,6 +160,7 @@
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(689, 426);
             this.tabControl1.TabIndex = 0;
+            this.tabControl1.TabStop = false;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabPage_Switch);
             // 
             // tabPage1
@@ -185,7 +185,7 @@
             this.tabPage1.Controls.Add(this.date_from);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(681, 400);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Booking";
@@ -206,6 +206,7 @@
             this.CustomerLookup.Name = "CustomerLookup";
             this.CustomerLookup.Size = new System.Drawing.Size(75, 24);
             this.CustomerLookup.TabIndex = 29;
+            this.CustomerLookup.TabStop = false;
             this.CustomerLookup.Text = "Lookup";
             this.CustomerLookup.UseVisualStyleBackColor = true;
             this.CustomerLookup.Click += new System.EventHandler(this.customerLookup);
@@ -226,6 +227,7 @@
             this.booking_output.Name = "booking_output";
             this.booking_output.Size = new System.Drawing.Size(354, 225);
             this.booking_output.TabIndex = 27;
+            this.booking_output.TabStop = false;
             this.booking_output.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.booking_MouseDoubleClick);
             // 
             // label17
@@ -242,7 +244,7 @@
             this.user_id.Location = new System.Drawing.Point(102, 242);
             this.user_id.Name = "user_id";
             this.user_id.Size = new System.Drawing.Size(121, 20);
-            this.user_id.TabIndex = 25;
+            this.user_id.TabIndex = 4;
             // 
             // label5
             // 
@@ -259,6 +261,7 @@
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 22;
+            this.button1.TabStop = false;
             this.button1.Text = "Submit";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
@@ -270,7 +273,7 @@
             this.dropoff.Location = new System.Drawing.Point(388, 123);
             this.dropoff.Name = "dropoff";
             this.dropoff.Size = new System.Drawing.Size(121, 21);
-            this.dropoff.TabIndex = 21;
+            this.dropoff.TabIndex = 1;
             // 
             // drop_off_check
             // 
@@ -279,6 +282,7 @@
             this.drop_off_check.Name = "drop_off_check";
             this.drop_off_check.Size = new System.Drawing.Size(153, 17);
             this.drop_off_check.TabIndex = 20;
+            this.drop_off_check.TabStop = false;
             this.drop_off_check.Text = "Different Drop Off Location";
             this.drop_off_check.UseVisualStyleBackColor = true;
             this.drop_off_check.CheckedChanged += new System.EventHandler(this.drop_off_check_CheckedChanged);
@@ -299,7 +303,7 @@
             this.vehicle_type.Location = new System.Drawing.Point(102, 179);
             this.vehicle_type.Name = "vehicle_type";
             this.vehicle_type.Size = new System.Drawing.Size(121, 21);
-            this.vehicle_type.TabIndex = 18;
+            this.vehicle_type.TabIndex = 3;
             // 
             // label3
             // 
@@ -317,7 +321,7 @@
             this.pickup.Location = new System.Drawing.Point(102, 124);
             this.pickup.Name = "pickup";
             this.pickup.Size = new System.Drawing.Size(121, 21);
-            this.pickup.TabIndex = 16;
+            this.pickup.TabIndex = 0;
             // 
             // label2
             // 
@@ -343,6 +347,7 @@
             this.date_to.Name = "date_to";
             this.date_to.Size = new System.Drawing.Size(200, 20);
             this.date_to.TabIndex = 13;
+            this.date_to.TabStop = false;
             // 
             // date_from
             // 
@@ -350,6 +355,7 @@
             this.date_from.Name = "date_from";
             this.date_from.Size = new System.Drawing.Size(200, 20);
             this.date_from.TabIndex = 12;
+            this.date_from.TabStop = false;
             // 
             // tabPage2
             // 
@@ -365,11 +371,30 @@
             this.tabPage2.Controls.Add(this.return_id);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage2.Size = new System.Drawing.Size(681, 400);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Return";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // returnHeading
+            // 
+            this.returnHeading.AutoSize = true;
+            this.returnHeading.Location = new System.Drawing.Point(27, 138);
+            this.returnHeading.Name = "returnHeading";
+            this.returnHeading.Size = new System.Drawing.Size(0, 13);
+            this.returnHeading.TabIndex = 10;
+            // 
+            // returnLookup
+            // 
+            this.returnLookup.Location = new System.Drawing.Point(210, 26);
+            this.returnLookup.Name = "returnLookup";
+            this.returnLookup.Size = new System.Drawing.Size(75, 23);
+            this.returnLookup.TabIndex = 9;
+            this.returnLookup.TabStop = false;
+            this.returnLookup.Text = "Lookup";
+            this.returnLookup.UseVisualStyleBackColor = true;
+            this.returnLookup.Click += new System.EventHandler(this.customerLookup);
             // 
             // returnOutput
             // 
@@ -378,6 +403,7 @@
             this.returnOutput.Name = "returnOutput";
             this.returnOutput.Size = new System.Drawing.Size(416, 199);
             this.returnOutput.TabIndex = 8;
+            this.returnOutput.TabStop = false;
             // 
             // return_dropoff
             // 
@@ -386,7 +412,7 @@
             this.return_dropoff.Location = new System.Drawing.Point(423, 29);
             this.return_dropoff.Name = "return_dropoff";
             this.return_dropoff.Size = new System.Drawing.Size(121, 21);
-            this.return_dropoff.TabIndex = 7;
+            this.return_dropoff.TabIndex = 1;
             // 
             // label8
             // 
@@ -412,6 +438,7 @@
             this.dropoff_date.Name = "dropoff_date";
             this.dropoff_date.Size = new System.Drawing.Size(200, 20);
             this.dropoff_date.TabIndex = 3;
+            this.dropoff_date.TabStop = false;
             // 
             // submit_return
             // 
@@ -419,6 +446,7 @@
             this.submit_return.Name = "submit_return";
             this.submit_return.Size = new System.Drawing.Size(75, 23);
             this.submit_return.TabIndex = 2;
+            this.submit_return.TabStop = false;
             this.submit_return.Text = "Submit";
             this.submit_return.UseVisualStyleBackColor = true;
             // 
@@ -471,6 +499,7 @@
             this.InventoryButton.Name = "InventoryButton";
             this.InventoryButton.Size = new System.Drawing.Size(79, 23);
             this.InventoryButton.TabIndex = 23;
+            this.InventoryButton.TabStop = false;
             this.InventoryButton.Text = "Get Inventory";
             this.InventoryButton.UseVisualStyleBackColor = true;
             this.InventoryButton.Click += new System.EventHandler(this.getInventory);
@@ -499,6 +528,7 @@
             this.dateTimePicker7.Name = "dateTimePicker7";
             this.dateTimePicker7.Size = new System.Drawing.Size(200, 20);
             this.dateTimePicker7.TabIndex = 20;
+            this.dateTimePicker7.TabStop = false;
             // 
             // dateTimePicker6
             // 
@@ -506,6 +536,7 @@
             this.dateTimePicker6.Name = "dateTimePicker6";
             this.dateTimePicker6.Size = new System.Drawing.Size(200, 20);
             this.dateTimePicker6.TabIndex = 19;
+            this.dateTimePicker6.TabStop = false;
             // 
             // label13
             // 
@@ -523,7 +554,7 @@
             this.InventoryBranch.Location = new System.Drawing.Point(64, 39);
             this.InventoryBranch.Name = "InventoryBranch";
             this.InventoryBranch.Size = new System.Drawing.Size(121, 21);
-            this.InventoryBranch.TabIndex = 17;
+            this.InventoryBranch.TabIndex = 0;
             // 
             // tabPage4
             // 
@@ -557,6 +588,7 @@
             this.reportbox.Name = "reportbox";
             this.reportbox.Size = new System.Drawing.Size(263, 225);
             this.reportbox.TabIndex = 22;
+            this.reportbox.TabStop = false;
             // 
             // label41
             // 
@@ -573,7 +605,7 @@
             this.radioButton5.Location = new System.Drawing.Point(54, 183);
             this.radioButton5.Name = "radioButton5";
             this.radioButton5.Size = new System.Drawing.Size(249, 17);
-            this.radioButton5.TabIndex = 20;
+            this.radioButton5.TabIndex = 2;
             this.radioButton5.TabStop = true;
             this.radioButton5.Text = "Gold Members Who Never Got A Free Upgrade";
             this.radioButton5.UseVisualStyleBackColor = true;
@@ -585,7 +617,7 @@
             this.report_type.Location = new System.Drawing.Point(218, 53);
             this.report_type.Name = "report_type";
             this.report_type.Size = new System.Drawing.Size(121, 21);
-            this.report_type.TabIndex = 19;
+            this.report_type.TabIndex = 1;
             // 
             // report_branch
             // 
@@ -594,7 +626,7 @@
             this.report_branch.Location = new System.Drawing.Point(54, 53);
             this.report_branch.Name = "report_branch";
             this.report_branch.Size = new System.Drawing.Size(121, 21);
-            this.report_branch.TabIndex = 18;
+            this.report_branch.TabIndex = 0;
             // 
             // radioButton4
             // 
@@ -602,7 +634,7 @@
             this.radioButton4.Location = new System.Drawing.Point(54, 275);
             this.radioButton4.Name = "radioButton4";
             this.radioButton4.Size = new System.Drawing.Size(125, 17);
-            this.radioButton4.TabIndex = 13;
+            this.radioButton4.TabIndex = 6;
             this.radioButton4.TabStop = true;
             this.radioButton4.Text = "Average Rental Time";
             this.radioButton4.UseVisualStyleBackColor = true;
@@ -613,7 +645,7 @@
             this.radioButton3.Location = new System.Drawing.Point(54, 252);
             this.radioButton3.Name = "radioButton3";
             this.radioButton3.Size = new System.Drawing.Size(101, 17);
-            this.radioButton3.TabIndex = 12;
+            this.radioButton3.TabIndex = 5;
             this.radioButton3.TabStop = true;
             this.radioButton3.Text = "Top Rented Car";
             this.radioButton3.UseVisualStyleBackColor = true;
@@ -624,7 +656,7 @@
             this.radioButton2.Location = new System.Drawing.Point(54, 229);
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(116, 17);
-            this.radioButton2.TabIndex = 11;
+            this.radioButton2.TabIndex = 4;
             this.radioButton2.TabStop = true;
             this.radioButton2.Text = "Total Late Dropoffs";
             this.radioButton2.UseVisualStyleBackColor = true;
@@ -636,7 +668,7 @@
             this.radioButton1.Location = new System.Drawing.Point(54, 206);
             this.radioButton1.Name = "radioButton1";
             this.radioButton1.Size = new System.Drawing.Size(160, 17);
-            this.radioButton1.TabIndex = 10;
+            this.radioButton1.TabIndex = 3;
             this.radioButton1.TabStop = true;
             this.radioButton1.Text = "Average Customer Spending";
             this.radioButton1.UseVisualStyleBackColor = true;
@@ -647,6 +679,7 @@
             this.report_submit.Name = "report_submit";
             this.report_submit.Size = new System.Drawing.Size(102, 23);
             this.report_submit.TabIndex = 9;
+            this.report_submit.TabStop = false;
             this.report_submit.Text = "Generate Report";
             this.report_submit.UseVisualStyleBackColor = true;
             this.report_submit.Click += new System.EventHandler(this.report_submit_Click);
@@ -675,6 +708,7 @@
             this.report_dateto.Name = "report_dateto";
             this.report_dateto.Size = new System.Drawing.Size(200, 20);
             this.report_dateto.TabIndex = 6;
+            this.report_dateto.TabStop = false;
             // 
             // report_datefrom
             // 
@@ -682,6 +716,7 @@
             this.report_datefrom.Name = "report_datefrom";
             this.report_datefrom.Size = new System.Drawing.Size(200, 20);
             this.report_datefrom.TabIndex = 5;
+            this.report_datefrom.TabStop = false;
             // 
             // label10
             // 
@@ -746,14 +781,14 @@
             this.addcar_plate.Location = new System.Drawing.Point(274, 156);
             this.addcar_plate.Name = "addcar_plate";
             this.addcar_plate.Size = new System.Drawing.Size(121, 20);
-            this.addcar_plate.TabIndex = 11;
+            this.addcar_plate.TabIndex = 5;
             // 
             // addcar_model
             // 
             this.addcar_model.Location = new System.Drawing.Point(274, 105);
             this.addcar_model.Name = "addcar_model";
             this.addcar_model.Size = new System.Drawing.Size(121, 20);
-            this.addcar_model.TabIndex = 10;
+            this.addcar_model.TabIndex = 4;
             // 
             // label24
             // 
@@ -780,7 +815,7 @@
             this.addcar_branch.Location = new System.Drawing.Point(274, 51);
             this.addcar_branch.Name = "addcar_branch";
             this.addcar_branch.Size = new System.Drawing.Size(121, 21);
-            this.addcar_branch.TabIndex = 7;
+            this.addcar_branch.TabIndex = 3;
             // 
             // addcarYearText
             // 
@@ -798,7 +833,7 @@
             this.addcar_type.Location = new System.Drawing.Point(66, 54);
             this.addcar_type.Name = "addcar_type";
             this.addcar_type.Size = new System.Drawing.Size(121, 21);
-            this.addcar_type.TabIndex = 5;
+            this.addcar_type.TabIndex = 0;
             // 
             // label18
             // 
@@ -814,14 +849,14 @@
             this.addcar_colour.Location = new System.Drawing.Point(66, 156);
             this.addcar_colour.Name = "addcar_colour";
             this.addcar_colour.Size = new System.Drawing.Size(121, 20);
-            this.addcar_colour.TabIndex = 3;
+            this.addcar_colour.TabIndex = 2;
             // 
             // addcar_year
             // 
             this.addcar_year.Location = new System.Drawing.Point(66, 105);
             this.addcar_year.Name = "addcar_year";
             this.addcar_year.Size = new System.Drawing.Size(121, 20);
-            this.addcar_year.TabIndex = 2;
+            this.addcar_year.TabIndex = 1;
             // 
             // addcar_submit
             // 
@@ -829,6 +864,7 @@
             this.addcar_submit.Name = "addcar_submit";
             this.addcar_submit.Size = new System.Drawing.Size(75, 23);
             this.addcar_submit.TabIndex = 0;
+            this.addcar_submit.TabStop = false;
             this.addcar_submit.Text = "Submit";
             this.addcar_submit.UseVisualStyleBackColor = true;
             this.addcar_submit.Click += new System.EventHandler(this.addcar_submit_Click);
@@ -847,11 +883,9 @@
             this.tabPage6.Controls.Add(this.label25);
             this.tabPage6.Controls.Add(this.label21);
             this.tabPage6.Controls.Add(this.remcar_branch);
-            this.tabPage6.Controls.Add(this.label22);
             this.tabPage6.Controls.Add(this.remcar_type);
             this.tabPage6.Controls.Add(this.label23);
             this.tabPage6.Controls.Add(this.remcar_id);
-            this.tabPage6.Controls.Add(this.remcar_milage);
             this.tabPage6.Controls.Add(this.remove_submit);
             this.tabPage6.Location = new System.Drawing.Point(4, 22);
             this.tabPage6.Name = "tabPage6";
@@ -863,7 +897,7 @@
             // remModel
             // 
             this.remModel.AutoSize = true;
-            this.remModel.Location = new System.Drawing.Point(450, 148);
+            this.remModel.Location = new System.Drawing.Point(9, 149);
             this.remModel.Name = "remModel";
             this.remModel.Size = new System.Drawing.Size(36, 13);
             this.remModel.TabIndex = 35;
@@ -871,10 +905,10 @@
             // 
             // remcar_model
             // 
-            this.remcar_model.Location = new System.Drawing.Point(492, 145);
+            this.remcar_model.Location = new System.Drawing.Point(56, 146);
             this.remcar_model.Name = "remcar_model";
-            this.remcar_model.Size = new System.Drawing.Size(100, 20);
-            this.remcar_model.TabIndex = 34;
+            this.remcar_model.Size = new System.Drawing.Size(121, 20);
+            this.remcar_model.TabIndex = 3;
             // 
             // label39
             // 
@@ -890,12 +924,12 @@
             this.remcar_year.Location = new System.Drawing.Point(56, 195);
             this.remcar_year.Name = "remcar_year";
             this.remcar_year.Size = new System.Drawing.Size(121, 20);
-            this.remcar_year.TabIndex = 23;
+            this.remcar_year.TabIndex = 5;
             // 
             // label30
             // 
             this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(18, 198);
+            this.label30.Location = new System.Drawing.Point(9, 198);
             this.label30.Name = "label30";
             this.label30.Size = new System.Drawing.Size(29, 13);
             this.label30.TabIndex = 22;
@@ -924,7 +958,7 @@
             this.remcar_plate.Location = new System.Drawing.Point(264, 146);
             this.remcar_plate.Name = "remcar_plate";
             this.remcar_plate.Size = new System.Drawing.Size(121, 20);
-            this.remcar_plate.TabIndex = 19;
+            this.remcar_plate.TabIndex = 4;
             // 
             // remove_output
             // 
@@ -933,6 +967,7 @@
             this.remove_output.Name = "remove_output";
             this.remove_output.Size = new System.Drawing.Size(400, 186);
             this.remove_output.TabIndex = 18;
+            this.remove_output.TabStop = false;
             this.remove_output.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Remove_Output_DoubleClick);
             // 
             // label25
@@ -961,18 +996,8 @@
             this.remcar_branch.Location = new System.Drawing.Point(264, 95);
             this.remcar_branch.Name = "remcar_branch";
             this.remcar_branch.Size = new System.Drawing.Size(121, 21);
-            this.remcar_branch.TabIndex = 15;
+            this.remcar_branch.TabIndex = 2;
             this.remcar_branch.SelectedIndexChanged += new System.EventHandler(this.rembranch_SelectedIndexChanged);
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(9, 149);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(38, 13);
-            this.label22.TabIndex = 14;
-            this.label22.Text = "Milage";
-            this.label22.Click += new System.EventHandler(this.label22_Click);
             // 
             // remcar_type
             // 
@@ -981,7 +1006,7 @@
             this.remcar_type.Location = new System.Drawing.Point(56, 95);
             this.remcar_type.Name = "remcar_type";
             this.remcar_type.Size = new System.Drawing.Size(121, 21);
-            this.remcar_type.TabIndex = 13;
+            this.remcar_type.TabIndex = 1;
             this.remcar_type.SelectedIndexChanged += new System.EventHandler(this.remtype_SelectedIndexChanged);
             // 
             // label23
@@ -999,29 +1024,22 @@
             this.remcar_id.Location = new System.Drawing.Point(56, 41);
             this.remcar_id.Name = "remcar_id";
             this.remcar_id.Size = new System.Drawing.Size(121, 20);
-            this.remcar_id.TabIndex = 11;
+            this.remcar_id.TabIndex = 0;
             this.remcar_id.TextChanged += new System.EventHandler(this.remcar_id_TextChanged);
-            // 
-            // remcar_milage
-            // 
-            this.remcar_milage.Location = new System.Drawing.Point(56, 146);
-            this.remcar_milage.Name = "remcar_milage";
-            this.remcar_milage.Size = new System.Drawing.Size(121, 20);
-            this.remcar_milage.TabIndex = 10;
-            this.remcar_milage.TextChanged += new System.EventHandler(this.textBox4_TextChanged);
             // 
             // remove_submit
             // 
             this.remove_submit.Location = new System.Drawing.Point(67, 262);
             this.remove_submit.Name = "remove_submit";
             this.remove_submit.Size = new System.Drawing.Size(75, 23);
-            this.remove_submit.TabIndex = 9;
+            this.remove_submit.TabIndex = 6;
             this.remove_submit.Text = "Submit";
             this.remove_submit.UseVisualStyleBackColor = true;
             this.remove_submit.Click += new System.EventHandler(this.remSubmit_Click);
             // 
             // tabPage7
             // 
+            this.tabPage7.Controls.Add(this.editOutput);
             this.tabPage7.Controls.Add(this.label40);
             this.tabPage7.Controls.Add(this.label38);
             this.tabPage7.Controls.Add(this.edit_year);
@@ -1037,7 +1055,7 @@
             this.tabPage7.Controls.Add(this.edit_type);
             this.tabPage7.Controls.Add(this.label37);
             this.tabPage7.Controls.Add(this.editcar_id);
-            this.tabPage7.Controls.Add(this.edit_milage);
+            this.tabPage7.Controls.Add(this.edit_model);
             this.tabPage7.Controls.Add(this.editSubmit);
             this.tabPage7.Location = new System.Drawing.Point(4, 22);
             this.tabPage7.Name = "tabPage7";
@@ -1074,7 +1092,7 @@
             // label31
             // 
             this.label31.AutoSize = true;
-            this.label31.Location = new System.Drawing.Point(18, 198);
+            this.label31.Location = new System.Drawing.Point(9, 198);
             this.label31.Name = "label31";
             this.label31.Size = new System.Drawing.Size(29, 13);
             this.label31.TabIndex = 37;
@@ -1108,10 +1126,11 @@
             // edit_output
             // 
             this.edit_output.FormattingEnabled = true;
-            this.edit_output.Location = new System.Drawing.Point(264, 198);
+            this.edit_output.Location = new System.Drawing.Point(183, 198);
             this.edit_output.Name = "edit_output";
             this.edit_output.Size = new System.Drawing.Size(400, 186);
             this.edit_output.TabIndex = 33;
+            this.edit_output.Visible = false;
             this.edit_output.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.edit_output_MouseDoubleClick);
             // 
             // label34
@@ -1146,9 +1165,9 @@
             this.label36.AutoSize = true;
             this.label36.Location = new System.Drawing.Point(9, 149);
             this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(38, 13);
+            this.label36.Size = new System.Drawing.Size(36, 13);
             this.label36.TabIndex = 29;
-            this.label36.Text = "Milage";
+            this.label36.Text = "Model";
             // 
             // edit_type
             // 
@@ -1176,12 +1195,12 @@
             this.editcar_id.TabIndex = 26;
             this.editcar_id.TextChanged += new System.EventHandler(this.editCar_id);
             // 
-            // edit_milage
+            // edit_model
             // 
-            this.edit_milage.Location = new System.Drawing.Point(56, 146);
-            this.edit_milage.Name = "edit_milage";
-            this.edit_milage.Size = new System.Drawing.Size(121, 20);
-            this.edit_milage.TabIndex = 25;
+            this.edit_model.Location = new System.Drawing.Point(56, 146);
+            this.edit_model.Name = "edit_model";
+            this.edit_model.Size = new System.Drawing.Size(121, 20);
+            this.edit_model.TabIndex = 25;
             // 
             // editSubmit
             // 
@@ -1193,23 +1212,19 @@
             this.editSubmit.UseVisualStyleBackColor = true;
             this.editSubmit.Click += new System.EventHandler(this.editCar_Submit);
             // 
-            // returnLookup
+            // editOutput
             // 
-            this.returnLookup.Location = new System.Drawing.Point(210, 26);
-            this.returnLookup.Name = "returnLookup";
-            this.returnLookup.Size = new System.Drawing.Size(75, 23);
-            this.returnLookup.TabIndex = 9;
-            this.returnLookup.Text = "Lookup";
-            this.returnLookup.UseVisualStyleBackColor = true;
-            this.returnLookup.Click += new System.EventHandler(this.customerLookup);
-            // 
-            // returnHeading
-            // 
-            this.returnHeading.AutoSize = true;
-            this.returnHeading.Location = new System.Drawing.Point(27, 138);
-            this.returnHeading.Name = "returnHeading";
-            this.returnHeading.Size = new System.Drawing.Size(0, 13);
-            this.returnHeading.TabIndex = 10;
+            this.editOutput.FullRowSelect = true;
+            this.editOutput.GridLines = true;
+            this.editOutput.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.editOutput.HideSelection = false;
+            this.editOutput.Location = new System.Drawing.Point(264, 198);
+            this.editOutput.MultiSelect = false;
+            this.editOutput.Name = "editOutput";
+            this.editOutput.Size = new System.Drawing.Size(414, 199);
+            this.editOutput.TabIndex = 41;
+            this.editOutput.UseCompatibleStateImageBehavior = false;
+            this.editOutput.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.edit_output_MouseDoubleClick);
             // 
             // Employee
             // 
@@ -1218,7 +1233,7 @@
             this.ClientSize = new System.Drawing.Size(709, 446);
             this.Controls.Add(this.tabControl1);
             this.Name = "Employee";
-            this.Text = "Form3";
+            this.Text = "291 Rentals";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Employee_FormClosing);
             this.Load += new System.EventHandler(this.Employee_Load);
             this.tabControl1.ResumeLayout(false);
@@ -1302,11 +1317,9 @@
         private System.Windows.Forms.ListBox returnOutput;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.ComboBox remcar_branch;
-        private System.Windows.Forms.Label label22;
         private System.Windows.Forms.ComboBox remcar_type;
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.TextBox remcar_id;
-        private System.Windows.Forms.TextBox remcar_milage;
         private System.Windows.Forms.Button remove_submit;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.Label label25;
@@ -1335,7 +1348,7 @@
         private System.Windows.Forms.ComboBox edit_type;
         private System.Windows.Forms.Label label37;
         private System.Windows.Forms.TextBox editcar_id;
-        private System.Windows.Forms.TextBox edit_milage;
+        private System.Windows.Forms.TextBox edit_model;
         private System.Windows.Forms.Button editSubmit;
         private System.Windows.Forms.Label label39;
         private System.Windows.Forms.Label label38;
@@ -1350,5 +1363,6 @@
         private System.Windows.Forms.Label user_info;
         private System.Windows.Forms.Button returnLookup;
         private System.Windows.Forms.Label returnHeading;
+        private System.Windows.Forms.ListView editOutput;
     }
 }

@@ -66,14 +66,14 @@
             this.signup_Lname.Location = new System.Drawing.Point(79, 121);
             this.signup_Lname.Name = "signup_Lname";
             this.signup_Lname.Size = new System.Drawing.Size(100, 20);
-            this.signup_Lname.TabIndex = 1;
+            this.signup_Lname.TabIndex = 2;
             // 
             // signup_Fname
             // 
             this.signup_Fname.Location = new System.Drawing.Point(79, 82);
             this.signup_Fname.Name = "signup_Fname";
             this.signup_Fname.Size = new System.Drawing.Size(100, 20);
-            this.signup_Fname.TabIndex = 2;
+            this.signup_Fname.TabIndex = 1;
             this.signup_Fname.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
             // 
             // label1
@@ -111,6 +111,7 @@
             this.submit.Name = "submit";
             this.submit.Size = new System.Drawing.Size(75, 23);
             this.submit.TabIndex = 6;
+            this.submit.TabStop = false;
             this.submit.Text = "Submit";
             this.submit.UseVisualStyleBackColor = true;
             this.submit.Click += new System.EventHandler(this.submit_Click);
@@ -131,6 +132,7 @@
             this.employee_check.Name = "employee_check";
             this.employee_check.Size = new System.Drawing.Size(72, 17);
             this.employee_check.TabIndex = 8;
+            this.employee_check.TabStop = false;
             this.employee_check.Text = "Employee";
             this.employee_check.UseVisualStyleBackColor = true;
             this.employee_check.CheckedChanged += new System.EventHandler(this.employee_check_CheckedChanged);
@@ -140,21 +142,21 @@
             this.signup_province.Location = new System.Drawing.Point(296, 46);
             this.signup_province.Name = "signup_province";
             this.signup_province.Size = new System.Drawing.Size(100, 20);
-            this.signup_province.TabIndex = 9;
+            this.signup_province.TabIndex = 4;
             // 
             // signup_city
             // 
             this.signup_city.Location = new System.Drawing.Point(296, 82);
             this.signup_city.Name = "signup_city";
             this.signup_city.Size = new System.Drawing.Size(100, 20);
-            this.signup_city.TabIndex = 10;
+            this.signup_city.TabIndex = 5;
             // 
             // signup_street
             // 
             this.signup_street.Location = new System.Drawing.Point(296, 124);
             this.signup_street.Name = "signup_street";
             this.signup_street.Size = new System.Drawing.Size(100, 20);
-            this.signup_street.TabIndex = 11;
+            this.signup_street.TabIndex = 6;
             // 
             // label5
             // 
@@ -188,14 +190,14 @@
             this.signup_phone1.Location = new System.Drawing.Point(78, 161);
             this.signup_phone1.Name = "signup_phone1";
             this.signup_phone1.Size = new System.Drawing.Size(100, 20);
-            this.signup_phone1.TabIndex = 15;
+            this.signup_phone1.TabIndex = 3;
             // 
             // signup_phone2
             // 
             this.signup_phone2.Location = new System.Drawing.Point(296, 161);
             this.signup_phone2.Name = "signup_phone2";
             this.signup_phone2.Size = new System.Drawing.Size(100, 20);
-            this.signup_phone2.TabIndex = 16;
+            this.signup_phone2.TabIndex = 7;
             // 
             // label8
             // 
@@ -248,7 +250,7 @@
             this.signup_branch.Location = new System.Drawing.Point(296, 196);
             this.signup_branch.Name = "signup_branch";
             this.signup_branch.Size = new System.Drawing.Size(121, 21);
-            this.signup_branch.TabIndex = 23;
+            this.signup_branch.TabIndex = 8;
             // 
             // UserSignUp
             // 
@@ -279,7 +281,7 @@
             this.Controls.Add(this.signup_Lname);
             this.Controls.Add(this.signup_id);
             this.Name = "UserSignUp";
-            this.Text = "Form2";
+            this.Text = "Sign Up";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.UserSignUp_FormClosing);
             this.Load += new System.EventHandler(this.UserSignUp_Load);
             this.ResumeLayout(false);
