@@ -8,8 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
-
-
+using System.Globalization;
 
 namespace CMPT291PROJECT
 {
@@ -33,7 +32,9 @@ namespace CMPT291PROJECT
             myconnection = f1.myconnection;
             myreader = f1.myreader;
             mycommand = f1.mycommand;
-            
+
+
+            returnHeading.Text = "Booking ID\t" + "\t" + "Customer ID" + "\t" + "Car ID";
 
             // Populate report branch combobox
             mycommand.CommandText = "SELECT branch_id FROM branch";
@@ -75,7 +76,7 @@ namespace CMPT291PROJECT
                 addcar_branch.DataSource = branches;
                 InventoryBranch.DataSource = branches;
                 addcar_type.DataSource = types;
-
+                return_dropoff.DataSource = branches;
 
 
 
@@ -88,6 +89,7 @@ namespace CMPT291PROJECT
 
                 pickup.DataSource = branches;
                 dropoff.DataSource = branches;
+                
                 vehicle_type.DataSource = types;
                 
             }
@@ -351,10 +353,7 @@ namespace CMPT291PROJECT
             catch (Exception e) { MessageBox.Show(e.ToString()); }
             return new_id;
         }
-        private void results_DoubleClick(object sender, EventArgs e)
-        {
 
-        }
         public string get_car_id_from_plate(string plate_no)
         {
             string car_id = "";
@@ -495,12 +494,12 @@ namespace CMPT291PROJECT
 
         private void rembranch_SelectedIndexChanged(object sender, EventArgs e)
         {
-            remove_output.Items.Clear();
+            remove_output.DataSource = null;
         }
 
         private void remSubmit_Click(object sender, EventArgs e)
         {
-            remove_output.Items.Clear();
+            remove_output.DataSource = null;
             if (remcar_id.Text.Length != 0)
             {
                 mycommand.CommandText = "SELECT C.car_id, T.description, B.city, C.model, C.year, C.plate_num" +
@@ -524,7 +523,7 @@ namespace CMPT291PROJECT
             }
             else if (remcar_type.SelectedItem.ToString().Equals("Any") && remcar_branch.SelectedItem.ToString().Equals("Any"))
             {
-                mycommand.CommandText = "SELECT * FROM car C, branch B, type T WHERE (C.car_branch = B.branch_id AND C.car_type = T.type_id)"; // AND T.description = " + "'" + edit_type.SelectedItem.ToString() + "'" + " AND B.city = " + "'" + edit_branch.SelectedItem.ToString() + "'";
+                mycommand.CommandText = "SELECT * FROM car C, branch B, type T WHERE (C.car_branch = B.branch_id AND C.car_type = T.type_id)";
                 myreader = mycommand.ExecuteReader();
                 while (myreader.Read())
                 {
@@ -540,7 +539,7 @@ namespace CMPT291PROJECT
             }
             else if (remcar_type.SelectedItem.ToString().Equals("Any") && !(remcar_branch.SelectedItem.ToString().Equals("Any")))
             {
-                mycommand.CommandText = "SELECT * FROM car C, branch B, type T WHERE (C.car_branch = B.branch_id AND C.car_type = T.type_id) AND T.description = " + "'" + edit_type.SelectedItem.ToString() + "'"; // + " AND B.city = " + "'" + edit_branch.SelectedItem.ToString() + "'";
+                mycommand.CommandText = "SELECT * FROM car C, branch B, type T WHERE (C.car_branch = B.branch_id AND C.car_type = T.type_id) AND T.description = " + "'" + edit_type.SelectedItem.ToString() + "'";
                 myreader = mycommand.ExecuteReader();
                 while (myreader.Read())
                 {
@@ -556,7 +555,7 @@ namespace CMPT291PROJECT
 
             else if (!(remcar_type.SelectedItem.ToString().Equals("Any")) && remcar_branch.SelectedItem.ToString().Equals("Any"))
             {
-                mycommand.CommandText = "SELECT * FROM car C, branch B, type T WHERE (C.car_branch = B.branch_id AND C.car_type = T.type_id) AND B.city = " + "'" + edit_branch.SelectedItem.ToString() + "'"; // AND T.description = " + "'" + edit_type.SelectedItem.ToString() + "'" + " 
+                mycommand.CommandText = "SELECT * FROM car C, branch B, type T WHERE (C.car_branch = B.branch_id AND C.car_type = T.type_id) AND B.city = " + "'" + edit_branch.SelectedItem.ToString() + "'";
                 myreader = mycommand.ExecuteReader();
                 while (myreader.Read())
                 {
@@ -810,13 +809,16 @@ namespace CMPT291PROJECT
             if (tabControl1.SelectedTab == tabControl1.TabPages["tabPage1"])
             {
                 this.AcceptButton = button1;
-                booking_output.Items.Clear();
+                booking_output.DataSource = null;
+                user_id.ResetText();
+                drop_off_check.Checked = default;
             }
                 
             else if (tabControl1.SelectedTab == tabControl1.TabPages["tabPage2"])
             {
                 this.AcceptButton = submit_return;
-                listBox1.Items.Clear();
+                returnOutput.Items.Clear();
+                return_id.ResetText();
             }
                 
             else if (tabControl1.SelectedTab == tabControl1.TabPages["tabPage3"])
@@ -838,6 +840,7 @@ namespace CMPT291PROJECT
             else if (tabControl1.SelectedTab == tabControl1.TabPages["tabPage6"])
             {
                 this.AcceptButton = remove_submit;
+                remove_output.DataSource = null;
                 remove_output.Items.Clear();
                 remcar_type.SelectedIndex = 0;
                 remcar_branch.SelectedIndex = 0;
@@ -857,8 +860,8 @@ namespace CMPT291PROJECT
         private void getInventory(object sender, EventArgs e)
         {
             string branchID = InventoryBranch.SelectedItem.ToString();
-            DateTime dateFrom = dateTimePicker6.Value;
-            DateTime dateTo = dateTimePicker7.Value;
+            string dateFrom = dateTimePicker6.Text;
+            string dateTo = dateTimePicker7.Text;
             Inventory inventory = new Inventory(this, branchID, dateFrom, dateTo);
             inventory.Show();
             this.Visible = false;
@@ -869,12 +872,22 @@ namespace CMPT291PROJECT
 
         private void customerLookup(object sender, EventArgs e)
         {
-            mycommand.CommandText = "SELECT * FROM customer";
-            CustomerLookup customerLookup = new CustomerLookup(this);
-            customerLookup.Show();
-            this.Visible = false;
 
-
+            TextBox textBox;
+            if (tabControl1.SelectedTab == tabControl1.TabPages["tabPage2"])
+            {
+                textBox = return_id;
+                CustomerLookup customerLookup = new CustomerLookup(this, textBox);
+                customerLookup.Show();
+                this.Visible = false;
+            }
+            else if (tabControl1.SelectedTab == tabControl1.TabPages["tabPage1"])
+            {
+                textBox = user_id;
+                CustomerLookup customerLookup = new CustomerLookup(this, textBox);
+                customerLookup.Show();
+                this.Visible = false;
+            }
         }
 
         private string cityToBID(string city)

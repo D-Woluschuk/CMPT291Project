@@ -43,6 +43,7 @@
             this.Phone = new System.Windows.Forms.TextBox();
             this.CustLookupSubmit = new System.Windows.Forms.Button();
             this.province = new System.Windows.Forms.ComboBox();
+            this.lookupCancel = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // firstName
@@ -116,6 +117,7 @@
             this.custLookupResults.Name = "custLookupResults";
             this.custLookupResults.Size = new System.Drawing.Size(366, 407);
             this.custLookupResults.TabIndex = 8;
+            this.custLookupResults.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.customerSelected);
             // 
             // label1
             // 
@@ -169,11 +171,22 @@
             this.province.Size = new System.Drawing.Size(100, 21);
             this.province.TabIndex = 15;
             // 
+            // lookupCancel
+            // 
+            this.lookupCancel.Location = new System.Drawing.Point(187, 355);
+            this.lookupCancel.Name = "lookupCancel";
+            this.lookupCancel.Size = new System.Drawing.Size(75, 23);
+            this.lookupCancel.TabIndex = 16;
+            this.lookupCancel.Text = "Cancel";
+            this.lookupCancel.UseVisualStyleBackColor = true;
+            this.lookupCancel.Click += new System.EventHandler(this.CustLookupCancel);
+            // 
             // CustomerLookup
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(795, 445);
+            this.Controls.Add(this.lookupCancel);
             this.Controls.Add(this.province);
             this.Controls.Add(this.CustLookupSubmit);
             this.Controls.Add(this.Phone);
@@ -213,5 +226,6 @@
         private System.Windows.Forms.TextBox Phone;
         private System.Windows.Forms.Button CustLookupSubmit;
         private System.Windows.Forms.ComboBox province;
+        private System.Windows.Forms.Button lookupCancel;
     }
 }
