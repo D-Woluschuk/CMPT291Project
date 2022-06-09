@@ -25,6 +25,18 @@ namespace CMPT291PROJECT
         {
             InitializeComponent();
 
+
+            //Converting datetimepicker values to 'yyyy-MM-dd' format for query
+            string convertDateFrom;
+            string convertDateTo;
+            TypeConverter converter = new TypeConverter();           
+            DateTime date_from = (DateTime)TypeDescriptor.GetConverter(typeof(DateTime)).ConvertFromString(dateFrom);
+            DateTime date_to = (DateTime)TypeDescriptor.GetConverter(typeof(DateTime)).ConvertFromString(dateTo);
+            convertDateFrom = date_from.ToString("yyyy-MM-dd");
+            convertDateTo = date_to.ToString("yyyy-MM-dd");
+
+
+
             parent = e1;
             myconnection = e1.myconnection;
             myreader = e1.myreader;
@@ -36,41 +48,34 @@ namespace CMPT291PROJECT
             CurrentInventory.GridLines = true;
             CurrentInventory.FullRowSelect = true;
             
-           // mycommand.CommandText = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'car'";
             myreader.Close();
-            //myreader = mycommand.ExecuteReader();
-            //CarInfo.Text = "";
             CurrentInventory.Columns.Add("Car ID", 75);
             CurrentInventory.Columns.Add("Type", 100);
             CurrentInventory.Columns.Add("Model", 100);
             CurrentInventory.Columns.Add("Year",100);
             CurrentInventory.Columns.Add("Licence Plate", 100);
-            
 
-            //while (myreader.Read())
-            //{
-                //CarInfo.Text += myreader.GetString(0).Replace('_', ' ').ToUpper() + "                             ";
-              //  CurrentInventory.Columns.Add(myreader.GetString(0).Replace('_', ' ').ToUpper(), 120);
+            mycommand.CommandText = "SELECT C.car_id, T.description, C.model, C.year, C.plate_num FROM car C, type T, branch B1 WHERE (C.car_type = T.type_id AND C.car_branch = B1.branch_id) AND B1.city = '" + branchID + "' AND C.car_id not in (SELECT B.car_id FROM booking B WHERE B.date_from <= '" + convertDateFrom + "' AND B.date_to >= '" + convertDateTo + "')";
 
-                
-            //}
-            //myreader.Close();
-
-            mycommand.CommandText = "SELECT C.car_id, T.description, C.model, C.year, C.plate_num FROM car C, type T, branch B1 WHERE (C.car_type = T.type_id AND C.car_branch = B1.branch_id) AND B1.city = '" + branchID + "' AND C.car_id not in (SELECT B.car_id FROM booking B WHERE B.date_from <= '" + dateFrom + "' AND B.date_to >= '" + dateTo + "')";
-            myreader = mycommand.ExecuteReader();
             string[] carInfo = new string[6];
             ListViewItem anItem;
-            while (myreader.Read())
-            {
-                carInfo[0] = myreader["car_id"].ToString();
-                carInfo[1] = myreader["description"].ToString();
-                //carInfo[2] = myreader["city"].ToString();
-                carInfo[2] = myreader["model"].ToString();
-                carInfo[3] = myreader["year"].ToString();
-                carInfo[4] = myreader["plate_num"].ToString();
-                anItem = new ListViewItem(carInfo);
-                CurrentInventory.Items.Add(anItem);
-            }
+            try
+            { 
+                myreader = mycommand.ExecuteReader();
+                while (myreader.Read())
+                {
+                    carInfo[0] = myreader["car_id"].ToString();
+                    carInfo[1] = myreader["description"].ToString();
+                    //carInfo[2] = myreader["city"].ToString();
+                    carInfo[2] = myreader["model"].ToString();
+                    carInfo[3] = myreader["year"].ToString();
+                    carInfo[4] = myreader["plate_num"].ToString();
+                    anItem = new ListViewItem(carInfo);
+                    CurrentInventory.Items.Add(anItem);
+                }
+
+            } catch(Exception e) { MessageBox.Show(e.ToString()); }
+
             myreader.Close();
 
         }
