@@ -162,9 +162,8 @@
             this.edit_carID.AutoSize = true;
             this.edit_carID.Location = new System.Drawing.Point(60, 65);
             this.edit_carID.Name = "edit_carID";
-            this.edit_carID.Size = new System.Drawing.Size(35, 13);
+            this.edit_carID.Size = new System.Drawing.Size(0, 13);
             this.edit_carID.TabIndex = 30;
-            this.edit_carID.Text = "label2";
             // 
             // Edit
             // 
@@ -172,7 +171,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(516, 299);
+            this.ClientSize = new System.Drawing.Size(437, 299);
             this.Controls.Add(this.edit_carID);
             this.Controls.Add(this.editc_id_label);
             this.Controls.Add(this.edit_cancel);

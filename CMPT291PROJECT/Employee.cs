@@ -36,24 +36,33 @@ namespace CMPT291PROJECT
             editOutput.GridLines = true;
             editOutput.FullRowSelect = true;
 
-            editOutput.Columns.Add("Car ID", 55);
-            editOutput.Columns.Add("Type", 90);
-            editOutput.Columns.Add("Branch", 95);
-            editOutput.Columns.Add("Model", 95);
+            editOutput.Columns.Add("Car ID", 70);
+            editOutput.Columns.Add("Type", 105);
+            editOutput.Columns.Add("Branch", 120);
+            editOutput.Columns.Add("Model", 132);
             editOutput.Columns.Add("Year", 70);
-            editOutput.Columns.Add("Licence Plate", 90);
+            editOutput.Columns.Add("Licence Plate", 130);
 
 
             removeOutput.View = View.Details;
 
-            removeOutput.Columns.Add("Car ID", 55);
-            removeOutput.Columns.Add("Type", 90);
-            removeOutput.Columns.Add("Branch", 95);
-            removeOutput.Columns.Add("Model", 95);
+            removeOutput.Columns.Add("Car ID", 70);
+            removeOutput.Columns.Add("Type", 105);
+            removeOutput.Columns.Add("Branch", 120);
+            removeOutput.Columns.Add("Model", 132);
             removeOutput.Columns.Add("Year", 70);
-            removeOutput.Columns.Add("Licence Plate", 90);
+            removeOutput.Columns.Add("Licence Plate", 130);
 
+            bookingOutput.View = View.Details;
+            bookingOutput.GridLines=true;
+            bookingOutput.FullRowSelect = true;
 
+            bookingOutput.Columns.Add("Branch");
+            bookingOutput.Columns.Add("Type");
+            bookingOutput.Columns.Add("Model");
+            bookingOutput.Columns.Add("Year");
+            bookingOutput.Columns.Add("Plate");
+            bookingOutput.Columns.Add("Price");
 
 
             returnHeading.Text = "Booking ID\t" + "\t" + "Customer ID" + "\t" + "Car ID";
@@ -199,11 +208,23 @@ namespace CMPT291PROJECT
             IList<string> result = new List<string>();
             string temp;
             float cost = 0;
+            string[] aCar = new string[7];
+            ListViewItem anItem;
             try
             {
                 myreader = mycommand.ExecuteReader();
                 while (myreader.Read())
                 {
+                    aCar[0] = myreader["city"].ToString();
+                    aCar[1] = myreader["description"].ToString();
+                    aCar[2] = myreader["model"].ToString();
+                    aCar[3] = myreader["year"].ToString();
+                    aCar[4] = myreader["plate_num"].ToString();
+                    aCar[5] = calculate_price(date_from.Value, date_to.Value, myreader["daily"].ToString(), myreader["weekly"].ToString(), myreader["monthly"].ToString()).ToString();
+                    
+                    anItem = new ListViewItem(aCar);
+                    bookingOutput.Items.Add(anItem);
+
                     temp = myreader["city"].ToString() + "\t" + myreader["description"].ToString() + "\t";
                     temp += myreader["model"].ToString() + "\t" + myreader["year"].ToString() + "\t";
                     cost = calculate_price(date_from.Value, date_to.Value, myreader["daily"].ToString(), myreader["weekly"].ToString(), myreader["monthly"].ToString());
@@ -399,8 +420,8 @@ namespace CMPT291PROJECT
         private void addcar_submit_Click(object sender, EventArgs e)
         {
             string confirm;
-            confirm = "Add a " + addcar_year.Text + " " + addcar_type.SelectedItem.ToString() + " to " + addcar_branch.SelectedItem.ToString();
-            confirm += " with " + addcar_colour.Text + " colour?";
+            confirm = "Add a '" + addcar_year.Text + "' '" + addcar_type.SelectedItem.ToString() + "' to the '" + addcar_branch.SelectedItem.ToString();
+            confirm += "' branch with a licence plate number of '" + addcar_plate.Text + "'?";
             DialogResult addCar = MessageBox.Show(confirm, "Confirm", MessageBoxButtons.YesNo);
             mycommand.CommandText = "SELECT MAX(car_id) FROM car";
             myreader = mycommand.ExecuteReader();
@@ -435,35 +456,11 @@ namespace CMPT291PROJECT
 
             addcar_branch.ResetText();
             addcar_type.ResetText();
-            addcar_colour.Clear();
             addcar_year.Clear();
             addcar_plate.Clear();
             addcar_model.Clear();
 
         }
-
-        private void label21_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label22_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label23_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox4_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-
-
 
         private void report_submit_Click(object sender, EventArgs e)
         {
@@ -505,62 +502,31 @@ namespace CMPT291PROJECT
         //---------------------------------------REMOVE CAR---------------------------------------------//
         private void remcar_id_TextChanged(object sender, EventArgs e)
         {
-            remove_output.Items.Clear();
+            removeOutput.Items.Clear();
 
             searchForCarsWithID(this, remcar_id.Text.ToString());
         }
 
         private void remtype_SelectedIndexChanged(object sender, EventArgs e)
         {
-            remove_output.DataSource = null;
+            removeOutput.Items.Clear();
         }
 
         private void rembranch_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //remove_output.DataSource = null;
+            removeOutput.Items.Clear();
         }
 
         private void remSubmit_Click(object sender, EventArgs e)
         {
             string[] carInfo = new string[6];
             ListViewItem anItem;
-
-            //remove_output.DataSource = null;
             removeOutput.Items.Clear();
             if (remcar_id.Text.Length != 0)
             {
                 searchForCarsWithID(this, remcar_id.Text);
-                /*mycommand.CommandText = "SELECT C.car_id, T.description, B.city, C.model, C.year, C.plate_num" +
-                    " FROM car C, branch B, type T" +
-                    " WHERE (C.car_branch = B.branch_id AND C.car_type = T.type_id)" +
-                    " AND car_id = " + "'" + remcar_id.Text + "'";
-
-                try
-                {
-                    myreader = mycommand.ExecuteReader();
-                    while (myreader.Read())
-                    {
-                        carInfo[0] = myreader["car_id"].ToString();
-                        carInfo[1] = myreader["description"].ToString();
-                        carInfo[2] = myreader["city"].ToString();
-                        carInfo[3] = myreader["model"].ToString();
-                        carInfo[4] = myreader["year"].ToString();
-                        carInfo[5] = myreader["plate_num"].ToString();
-                        anItem = new ListViewItem(carInfo);
-                        removeOutput.Items.Add(anItem);
-
-                        /*
-                        remove_output.Items.Add(myreader["car_id"].ToString().Replace("  ", "")
-                            + "\t" + myreader["description"].ToString().Replace("  ", "")
-                            + "\t" + myreader["city"].ToString().Replace("  ", "")
-                            + "\t" + myreader["year"].ToString().Replace("  ", "")
-                            + "\t" + myreader["model"].ToString().Replace("  ", "")
-                            + "\t" + myreader["plate_num"].ToString().Replace("  ", ""));
-                    }
-                } catch (SqlException e1) { MessageBox.Show(e1.Message); }
-                myreader.Close();*/
-
             }
+
             else if (remcar_type.Text.Equals("Any") && remcar_branch.Text.Equals("Any"))
             {
                 mycommand.CommandText = "SELECT * FROM car C, branch B, type T WHERE (C.car_branch = B.branch_id AND C.car_type = T.type_id)" + " AND C.model like '" + remcar_model.Text + "%' AND C.year like '" + remcar_year.Text + "%' AND C.plate_num like '" + remcar_plate.Text + "%'"; ;
@@ -579,15 +545,8 @@ namespace CMPT291PROJECT
                         carInfo[5] = myreader["plate_num"].ToString();
                         anItem = new ListViewItem(carInfo);
                         removeOutput.Items.Add(anItem);
-
-                        /*
-                        remove_output.Items.Add(myreader["car_id"].ToString().Replace("  ", "")
-                            + "\t" + myreader["description"].ToString().Replace("  ", "")
-                            + "\t" + myreader["city"].ToString().Replace("  ", "")
-                            + "\t" + myreader["year"].ToString().Replace("  ", "")
-                            + "\t" + myreader["model"].ToString().Replace("  ", "")
-                            + "\t" + myreader["plate_num"].ToString().Replace("  ", ""));*/
                     }
+
                 } catch (SqlException e2) { MessageBox.Show(e2.Message); }
                 myreader.Close();
 
@@ -610,15 +569,8 @@ namespace CMPT291PROJECT
                         carInfo[5] = myreader["plate_num"].ToString();
                         anItem = new ListViewItem(carInfo);
                         removeOutput.Items.Add(anItem);
-
-                        /*
-                        remove_output.Items.Add(myreader["car_id"].ToString().Replace("  ", "")
-                            + "\t" + myreader["description"].ToString().Replace("  ", "")
-                            + "\t" + myreader["city"].ToString().Replace("  ", "")
-                            + "\t" + myreader["year"].ToString().Replace("  ", "")
-                            + "\t" + myreader["model"].ToString().Replace("  ", "")
-                            + "\t" + myreader["plate_num"].ToString().Replace("  ", ""));*/
                     }
+
                 } catch (SqlException e3) { MessageBox.Show(e3.Message); }
                 myreader.Close();
             }
@@ -641,15 +593,8 @@ namespace CMPT291PROJECT
                         carInfo[5] = myreader["plate_num"].ToString();
                         anItem = new ListViewItem(carInfo);
                         removeOutput.Items.Add(anItem);
-
-                        /*
-                        remove_output.Items.Add(myreader["car_id"].ToString().Replace("  ", "")
-                            + "\t" + myreader["description"].ToString().Replace("  ", "")
-                            + "\t" + myreader["city"].ToString().Replace("  ", "")
-                            + "\t" + myreader["year"].ToString().Replace("  ", "")
-                            + "\t" + myreader["model"].ToString().Replace("  ", "")
-                            + "\t" + myreader["plate_num"].ToString().Replace("  ", ""));*/
                     }
+
                 } catch (SqlException e4) { MessageBox.Show(e4.Message); }
                 myreader.Close();
 
@@ -673,22 +618,15 @@ namespace CMPT291PROJECT
                         carInfo[5] = myreader["plate_num"].ToString();
                         anItem = new ListViewItem(carInfo);
                         removeOutput.Items.Add(anItem);
-
-                        /*
-                        remove_output.Items.Add(myreader["car_id"].ToString().Replace("  ", "")
-                            + "\t" + myreader["description"].ToString().Replace("  ", "")
-                            + "\t" + myreader["city"].ToString().Replace("  ", "")
-                            + "\t" + myreader["year"].ToString().Replace("  ", "")
-                            + "\t" + myreader["model"].ToString().Replace("  ", "")
-                            + "\t" + myreader["plate_num"].ToString().Replace("  ", ""));*/
                     }
+
                 } catch (SqlException e5) { MessageBox.Show(e5.Message); }
                 myreader.Close();
 
             }
 
-            //if (remove_output.Items.Count == 0)
-              //  remove_output.Items.Add("No Results");
+            if (removeOutput.Items.Count == 0)
+                MessageBox.Show("No Vehicles were found");
         }
 
         private void Remove_Output_DoubleClick(object sender, MouseEventArgs e)
@@ -698,7 +636,26 @@ namespace CMPT291PROJECT
                 string[] aCar = new string[6];
 
                 ListViewItem aSelection = removeOutput.SelectedItems[0];
-                
+
+
+                aCar[0] = (aSelection.SubItems[0].Text);
+                aCar[1] = (aSelection.SubItems[1].Text);
+                aCar[2] = (aSelection.SubItems[2].Text);
+                aCar[3] = (aSelection.SubItems[3].Text);
+                aCar[4] = (aSelection.SubItems[4].Text);
+                aCar[5] = (aSelection.SubItems[5].Text);
+
+
+                string message = "Are you sure you would like to remove this vehicle?\n";
+                for (int i1 = 0; i1 < aCar.Length; i1++)
+                {
+                    message += aCar[i1].ToString() + " ";
+                }
+
+                DialogResult removeCar = MessageBox.Show(message, "Remove", MessageBoxButtons.YesNo);
+
+                string[] cols = { "car_id", "car_type", "car_branch", "model", "year", "plate_num" };
+                mycommand.CommandText = "DELETE FROM car WHERE ";
 
                 aCar[0] = (aSelection.SubItems[0].Text);
                 aCar[1] = descToType((aSelection.SubItems[1].Text));
@@ -707,16 +664,6 @@ namespace CMPT291PROJECT
                 aCar[4] = (aSelection.SubItems[4].Text);
                 aCar[5] = (aSelection.SubItems[5].Text);
 
-
-                string message = "Are you sure you would like to remove: ";
-                for (int i1 = 0; i1 < aCar.Length; i1++)
-                {
-                    message += aCar[i1].ToString() + " ";
-                }
-                DialogResult removeCar = MessageBox.Show(message, "Remove", MessageBoxButtons.YesNo);
-
-                string[] cols = { "car_id", "car_type", "car_branch", "model", "year", "plate_num" };
-                mycommand.CommandText = "DELETE FROM car WHERE ";
                 int i;
                 for (i = 0; i < aCar.Length; i++)
                 {
@@ -728,7 +675,6 @@ namespace CMPT291PROJECT
                     mycommand.CommandText += " AND ";
 
                 }
-                MessageBox.Show(mycommand.CommandText.ToString());
                 if (removeCar == DialogResult.Yes)
                 {
                     try
@@ -742,47 +688,6 @@ namespace CMPT291PROJECT
 
 
                 }
-
-                //string car;
-                //int selectedCar;
-                //selectedCar = remove_output.SelectedIndex;
-
-                //message += remove_output.SelectedItem.ToString();
-
-
-
-                //car = remove_output.SelectedItem.ToString();
-                //string[] args = car.Split('\t');
-
-                //args[1] = descToType(args[1]);
-                //args[2] = cityToBID(args[2]);
-
-                /*
-                string[] cols = { "car_id", "car_type", "car_branch", "year", "model", "plate_num" };
-                mycommand.CommandText = "DELETE FROM car WHERE ";
-                int i;
-                for (i = 0; i < args.Length; i++)
-                {
-
-                    mycommand.CommandText += cols[i] + " = ";
-                    mycommand.CommandText += "'" + args[i] + "'";
-                    if (i + 1 == args.Length)
-                        break;
-                    mycommand.CommandText += " AND ";
-
-                }
-                if (removeCar == DialogResult.Yes)
-                {
-                    try
-                    {
-                        mycommand.ExecuteNonQuery();
-                    } catch (SqlException) { MessageBox.Show("Something went wrong..\nThe car could not be removed.\nPlease try again", "ERROR"); }
-                    MessageBox.Show("Car removed from the system.");
-                    remove_output.Items.RemoveAt(selectedCar);
-
-                }*/
-
-
             }
         }
         //------------------------------------------------END REMOVE CARS-------------------------------------------------------//
@@ -794,7 +699,7 @@ namespace CMPT291PROJECT
         //-----------------------------------------------------EDIT CAR---------------------------------------------------------//
         private void editCar_id(object sender, EventArgs e)
         {
-            edit_output.Items.Clear();
+            editOutput.Items.Clear();
             searchForCarsWithID(this, editcar_id.Text.ToString());
 
         }
@@ -819,26 +724,7 @@ namespace CMPT291PROJECT
                 Edit edit = new Edit(parent, aCar);
                 edit.Show();
                 editOutput.Items.Clear();
-                //MessageBox.Show("Editing: " + edit_output.SelectedItem.ToString());
             }
-            
-            //MessageBox.Show(aSelection.SubItems[0].Text);
-            //MessageBox.Show(aSelection.SubItems[1].Text);
-            //string[] aCar = new string[15];
-            //editOutput.SelectedItems.CopyTo(aCar, 0);
-            //int j = 0;
-            //foreach (int i in aSelection)
-            //{
-            //  MessageBox.Show(editOutput.Items[i].ToString());
-            //for (j = 0; j < 6; j++)
-            // MessageBox.Show(editOutput.Items[i].SubItems[j].ToString());
-
-            //}
-            //MessageBox.Show(aSelection.ToString());
-            //for (int i = 0; i < aCar.Length; i++)
-                //MessageBox.Show(aCar[i]);
-
-
         }
 
 
@@ -848,36 +734,9 @@ namespace CMPT291PROJECT
             string[] carInfo = new string[6];
             ListViewItem anItem;
             editOutput.Items.Clear();
-            //edit_output.Items.Clear();
             if (editcar_id.Text.Length != 0)
             {
                 searchForCarsWithID(this, editcar_id.Text);
-                /*mycommand.CommandText = "SELECT * FROM car C, branch B, type T WHERE (C.car_branch = B.branch_id AND C.car_type = T.type_id) AND car_id = " + "'" + editcar_id.Text + "'";
-                try
-                {
-                    myreader = mycommand.ExecuteReader();
-                    while (myreader.Read())
-                    {
-
-                        carInfo[0] = myreader["car_id"].ToString();
-                        carInfo[1] = myreader["description"].ToString();
-                        carInfo[2] = myreader["city"].ToString();
-                        carInfo[3] = myreader["model"].ToString();
-                        carInfo[4] = myreader["year"].ToString();
-                        carInfo[5] = myreader["plate_num"].ToString();
-                        anItem = new ListViewItem(carInfo);
-                        editOutput.Items.Add(anItem);
-
-                        /*edit_output.Items.Add(myreader["car_id"].ToString().Replace("  ", "")
-                            + "\t" + myreader["description"].ToString()
-                            + "\t" + myreader["city"].ToString().Replace("  ", "")
-                            + "\t" + myreader["year"].ToString().Replace("  ", "")
-                            + "\t" + myreader["model"].ToString().Replace("  ", "")
-                            + "\t" + myreader["plate_num"].ToString().Replace("  ", ""));
-                    }
-                } catch (SqlException e5) { MessageBox.Show(e5.Message); }
-                myreader.Close();*/
-
             }
 
             else if (edit_branch.SelectedItem.ToString().Equals("Any") && edit_type.SelectedItem.ToString().Equals("Any"))
@@ -896,14 +755,8 @@ namespace CMPT291PROJECT
                         carInfo[5] = myreader["plate_num"].ToString();
                         anItem = new ListViewItem(carInfo);
                         editOutput.Items.Add(anItem);
-                        /*
-                        edit_output.Items.Add(myreader["car_id"].ToString().Replace("  ", "")
-                            + "\t" + myreader["description"].ToString()
-                            + "\t" + myreader["city"].ToString().Replace("  ", "")
-                            + "\t" + myreader["year"].ToString().Replace("  ", "")
-                            + "\t" + myreader["model"].ToString().Replace("  ", "")
-                            + "\t" + myreader["plate_num"].ToString().Replace("  ", ""));*/
                     }
+
                 } catch (SqlException e4) { MessageBox.Show(e4.Message); }
                 myreader.Close();
 
@@ -924,14 +777,8 @@ namespace CMPT291PROJECT
                         carInfo[5] = myreader["plate_num"].ToString();
                         anItem = new ListViewItem(carInfo);
                         editOutput.Items.Add(anItem);
-                        /*
-                        edit_output.Items.Add(myreader["car_id"].ToString().Replace("  ", "")
-                            + "\t" + myreader["description"].ToString()
-                            + "\t" + myreader["city"].ToString().Replace("  ", "")
-                            + "\t" + myreader["year"].ToString().Replace("  ", "")
-                            + "\t" + myreader["model"].ToString().Replace("  ", "")
-                            + "\t" + myreader["plate_num"].ToString().Replace("  ", ""));*/
                     }
+
                 } catch (SqlException e3) { MessageBox.Show(e3.Message); }
                 myreader.Close();
             }
@@ -952,14 +799,8 @@ namespace CMPT291PROJECT
                         carInfo[5] = myreader["plate_num"].ToString();
                         anItem = new ListViewItem(carInfo);
                         editOutput.Items.Add(anItem);
-                        /*
-                        edit_output.Items.Add(myreader["car_id"].ToString().Replace("  ", "")
-                            + "\t" + myreader["description"].ToString()
-                            + "\t" + myreader["city"].ToString().Replace("  ", "")
-                            + "\t" + myreader["year"].ToString().Replace("  ", "")
-                            + "\t" + myreader["model"].ToString().Replace("  ", "")
-                            + "\t" + myreader["plate_num"].ToString().Replace("  ", ""));*/
                     }
+
                 } catch (SqlException e2) {MessageBox.Show(e2.Message); }
                 myreader.Close();
 
@@ -981,24 +822,13 @@ namespace CMPT291PROJECT
                         carInfo[5] = myreader["plate_num"].ToString();
                         anItem = new ListViewItem(carInfo);
                         editOutput.Items.Add(anItem);
-                        /*
-                        edit_output.Items.Add(myreader["car_id"].ToString().Replace("  ", "")
-                            + "\t" + myreader["description"].ToString()
-                            + "\t" + myreader["city"].ToString().Replace("  ", "")
-                            + "\t" + myreader["year"].ToString().Replace("  ", "")
-                            + "\t" + myreader["model"].ToString().Replace("  ", "")
-                            + "\t" + myreader["plate_num"].ToString().Replace("  ", ""));*/
                     }
                 }
+
                 catch (SqlException e1) { MessageBox.Show(e1.Message);}
                 myreader.Close();
 
             }
-
-            //if (edit_output.Items.Count == 0)
-                //edit_output.Items.Add("No Results");
-
-
         }
         //----------------------------------------------END EDIT CAR--------------------------------------------------//
 
@@ -1062,63 +892,12 @@ namespace CMPT291PROJECT
 
 
 
-
-                    /*while (myreader.Read())
-                    {
-                    remove_output.Items.Add(myreader["car_id"].ToString().Replace("  ", "")
-                        + "\t" + myreader["description"].ToString().Replace("  ", "")
-                        + "\t" + myreader["city"].ToString().Replace("  ", "")
-                        + "\t" + myreader["year"].ToString().Replace("  ", "")
-                        + "\t" + myreader["model"].ToString().Replace("  ", "")
-                        + "\t" + myreader["plate_num"].ToString().Replace("  ", ""));
-                         }
-                    } catch (SqlException e1) { MessageBox.Show(e1.Message);}
-                    myreader.Close();
-                    }*/
-
-
-        private void searchForCarsWithIDEdit(object sender, string anID)
-        {
-            editOutput.Items.Clear();
-            string[] carInfo = new string[6];
-            ListViewItem anItem;
-            mycommand.CommandText = "SELECT * FROM car C, branch B, type T ";
-            mycommand.CommandText += "WHERE (C.car_branch = B.branch_id AND C.car_type = T.type_id) ";
-            mycommand.CommandText += "AND car_id like " + "'" + anID + "%'";
-
-            try {
-                myreader = mycommand.ExecuteReader();
-                while (myreader.Read())
-                {
-                    carInfo[0] = myreader["car_id"].ToString();
-                    carInfo[1] = myreader["description"].ToString();
-                    carInfo[2] = myreader["city"].ToString();
-                    carInfo[3] = myreader["model"].ToString();
-                    carInfo[4] = myreader["year"].ToString();
-                    carInfo[5] = myreader["plate_num"].ToString();
-                    anItem = new ListViewItem(carInfo);
-                    editOutput.Items.Add(anItem);
-                    /*
-                    edit_output.Items.Add(myreader["car_id"].ToString().Replace("  ", "")
-                        + "\t" + myreader["description"].ToString().Replace("  ", "")
-                        + "\t" + myreader["city"].ToString().Replace("  ", "")
-                        + "\t" + myreader["year"].ToString().Replace("  ", "")
-                        + "\t" + myreader["model"].ToString().Replace("  ", "")
-                        + "\t" + myreader["plate_num"].ToString().Replace("  ", ""));*/
-                }
-                } catch(Exception e) { MessageBox.Show(e.Message); }
-            myreader.Close();
-        }
-
-
-
         //Allows enter key to be used as a click for the submit button for each tab page
         private void tabPage_Switch(object sender, EventArgs e)
         {
             if (tabControl1.SelectedTab == tabControl1.TabPages["tabPage1"])
             {
                 this.AcceptButton = button1;
-                //booking_output.DataSource = null;
                 user_id.ResetText();
                 drop_off_check.Checked = default;
             }
@@ -1133,8 +912,9 @@ namespace CMPT291PROJECT
             else if (tabControl1.SelectedTab == tabControl1.TabPages["tabPage3"])
             {
                 this.AcceptButton = InventoryButton;
-                //InventoryBranch.SelectedIndex = 0;
-                //this.dateTimePicker6.Text = default;
+                InventoryBranch.SelectedIndex = 0;
+                invDateFrom.ResetText();
+                invDateTo.ResetText();
             }
                 
             else if (tabControl1.SelectedTab == tabControl1.TabPages["tabPage4"])
@@ -1146,19 +926,21 @@ namespace CMPT291PROJECT
             else if (tabControl1.SelectedTab == tabControl1.TabPages["tabPage5"])
             {
                 this.AcceptButton = addcar_submit;
+                addcar_year.ResetText();
+                addcar_model.ResetText();
+                addcar_plate.ResetText();
             }
                 
             else if (tabControl1.SelectedTab == tabControl1.TabPages["tabPage6"])
             {
                 remcar_id.Text = default;
                 this.AcceptButton = remove_submit;
-                //remove_output.DataSource = null;
                 removeOutput.Items.Clear();
                 remcar_type.SelectedIndex = 0;
                 remcar_branch.SelectedIndex = 0;
-                remcar_year.Text = default;
-                remcar_plate.Text = default;
-                remcar_model.Text = default;
+                remcar_year.ResetText();
+                remcar_plate.ResetText();
+                remcar_model.ResetText();
 
             }
                 
@@ -1167,14 +949,12 @@ namespace CMPT291PROJECT
                 editcar_id.Text = default;
                 this.AcceptButton = editSubmit;
                 editOutput.Items.Clear();
-                //edit_output.DataSource = null;
-                //edit_output.Items.Clear();
                 edit_branch.SelectedIndex = 0;
                 edit_type.SelectedIndex = 0;
-                edit_model.Text = default;
-                edit_plate.Text = default;
-                edit_year.Text = default;
-                
+                edit_model.ResetText();
+                edit_plate.ResetText();
+                edit_year.ResetText();
+
             }
                 
             
@@ -1247,31 +1027,6 @@ namespace CMPT291PROJECT
 
 
         }
-    }
 
-
-
-
-    /* UNUSED FOR NOW
-    private void searchForCarsWithoutID(object sender, IList<string> args)
-    {
-        mycommand.CommandText = "SELECT * FROM car WHERE car_branch = " + "'" + args[0] + "'" + " AND car_type = " + "'" + args[1] + "'";
-
-        if (remcar_plate.Text.ToString().Length != 0)
-            mycommand.CommandText += " AND plate_num like " + "'" + remcar_plate.Text.ToString() + "%'";
-
-        if (remcar_model.Text.ToString().Length != 0)
-            mycommand.CommandText += " AND model like " + "'" + remcar_model.Text.ToString() + "%'";
-
-        if (remcar_year.Text.ToString().Length != 0)
-            mycommand.CommandText += " AND year like " + "'" + remcar_year.Text.ToString() + "%'";
-
-        myreader = mycommand.ExecuteReader();
-        while (myreader.Read())
-        {
-            remove_output.Items.Add(myreader["car_id"].ToString() + "\t" + myreader["car_type"].ToString() + "\t" + myreader["car_branch"].ToString() + "\t" + myreader["year"].ToString() + "\t" + myreader["model"].ToString() + "\t" + myreader["plate_num"].ToString());
-        }
-        myreader.Close();
-    }*/
-    
+    }    
 }

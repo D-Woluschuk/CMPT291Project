@@ -17,9 +17,9 @@ namespace CMPT291PROJECT
             error_text.Visible = false;
             user_id.Visible = false;
             enter_username.Visible = false;
-            
+
             // Establish SQL Connection
-            String connection_string = "Server = DESKTOP-423POA7; Database = Project; Trusted_Connection = yes;";
+            String connection_string = "Server = DESKTOP-OP195PG; Database = Project; Trusted_Connection = yes;";
 
             SqlConnection myconnection = new SqlConnection(connection_string);
             try
@@ -118,11 +118,6 @@ namespace CMPT291PROJECT
                 user_id.Visible = false;
                 enter_username.Visible = false;
             }
-        }
-
-        private void Login_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }
