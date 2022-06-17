@@ -176,5 +176,11 @@ namespace CMPT291PROJECT
                 signup_branch_label.Visible = false;
             }
         }
+
+        private void signup_back_Click(object sender, EventArgs e)
+        {
+            login.Visible = true;
+            this.Close();
+        }
     }
 }

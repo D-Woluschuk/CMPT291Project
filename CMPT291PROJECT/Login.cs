@@ -19,7 +19,7 @@ namespace CMPT291PROJECT
             enter_username.Visible = false;
             
             // Establish SQL Connection
-            String connection_string = "Server = DESKTOP-423POA7; Database = Project; Trusted_Connection = yes;";
+            String connection_string = "Server = DESKTOP-RVC34SE; Database = Project; Trusted_Connection = yes;";
 
             SqlConnection myconnection = new SqlConnection(connection_string);
             try

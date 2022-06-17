@@ -27,6 +27,7 @@ namespace CMPT291PROJECT
             InitializeComponent();
             default_date = date_from.Text;
             user_info.Visible = false;
+            return_id_error.Visible = false;
             // Inherit SQL Connection
             parent = f1;
             myconnection = f1.myconnection;
@@ -136,7 +137,6 @@ namespace CMPT291PROJECT
 
         private void Employee_Load(object sender, EventArgs e)
         {
-
         }
 
         private void Employee_FormClosing(object sender, FormClosingEventArgs e)
@@ -144,37 +144,40 @@ namespace CMPT291PROJECT
             parent.Visible = true;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void booking_submit_click(object sender, EventArgs e)
         {
             // Verify customer ID input and display information on customer
             if (user_id.Text.Length == 0)
             {
                 user_info.Text = "Please Enter Customer ID";
                 user_info.ForeColor = Color.Red;
-                return;
             }
-            mycommand.CommandText = "SELECT * FROM customer WHERE cust_id = '" + user_id.Text.ToString() + "'";
-            int i = 0;
-            try
+            else
             {
-                myreader = mycommand.ExecuteReader();
-                while (myreader.Read())
+                mycommand.CommandText = "SELECT * FROM customer WHERE cust_id = '" + user_id.Text.ToString() + "'";
+                int i = 0;
+                try
                 {
-                    i++;
-                    user_info.ForeColor = Color.Black;
-                    user_info.Text = myreader["fname"].ToString() + " " + myreader["Lname"].ToString() + "\n";
-                    user_info.Text += myreader["street"].ToString() + " " + myreader["city"].ToString() + " " + myreader["province"];
-                    if (myreader["Gold_status"].ToString() == "1") { user_info.Text += "\nGold Status"; }
+                    myreader = mycommand.ExecuteReader();
+                    while (myreader.Read())
+                    {
+                        i++;
+                        user_info.ForeColor = Color.Black;
+                        user_info.Text = myreader["fname"].ToString() + " " + myreader["Lname"].ToString() + "\n";
+                        user_info.Text += myreader["street"].ToString() + " " + myreader["city"].ToString() + " " + myreader["province"];
+                        if (myreader["Gold_status"].ToString() == "True") { user_info.Text += "\nGold Status"; }
+                    }
                 }
+                catch (Exception e3)
+                {
+                    MessageBox.Show(e3.Message.ToString());
+                    user_info.ForeColor = Color.Red;
+                    user_info.Text = "Customer Not Found";
+                }
+                myreader.Close();
             }
-            catch (Exception e3)
-            {
-                MessageBox.Show(e3.Message.ToString());
-                user_info.ForeColor = Color.Red;
-                user_info.Text = "Customer Not Found";
-                return;
-            }
-            myreader.Close();
+            user_info.Visible = true;
+
             // Get information on all cars fitting choices
             mycommand.CommandText = "SELECT * FROM car c, type t, branch b WHERE c.car_type = t.type_id and c.car_branch = b.branch_id ";
             if (pickup.SelectedItem.ToString() != "Any")
@@ -226,23 +229,6 @@ namespace CMPT291PROJECT
             float total_price = 0;
             int total_days = (date_to - date_from).Days + 1;
             float daily = float.Parse(d), weekly = float.Parse(w), monthly = float.Parse(m), late_fee = 0;
-            /*
-            mycommand.CommandText = "SELECT daily, weekly, monthly, late_fee FROM type WHERE description = '" + type_desc + "'";
-            try
-            {
-                myreader = mycommand.ExecuteReader();
-                while (myreader.Read())
-                {
-                    daily = float.Parse(myreader["daily"].ToString());
-                    weekly = float.Parse(myreader["weekly"].ToString());
-                    monthly = float.Parse(myreader["monthly"].ToString());
-                    late_fee = float.Parse(myreader["late_fee"].ToString());
-                }
-
-            }
-            catch (SqlException ex) { MessageBox.Show("Cannot find price of " + type_desc + ex.Message); }
-            myreader.Close();
-            */
             total_price += ((total_days / 30) * monthly);
             total_days = total_days % 30;
             total_price += ((total_days / 7) * weekly);
@@ -256,7 +242,103 @@ namespace CMPT291PROJECT
 
             return total_price;
         }
+        private void update_status(string userid)
+        {
+            bool gold = false;
+            mycommand.CommandText = "SELECT count(*) as total FROM booking WHERE cust_id = '" + userid + "'";
+            mycommand.CommandText += " And year(date_from) = " + DateTime.Now.Year.ToString();
+            Clipboard.SetText(mycommand.CommandText);
+            try
+            {
+                myreader = mycommand.ExecuteReader();
+                while (myreader.Read())
+                {
+                    if (Int32.Parse(myreader["total"].ToString()) >= 3)
+                    {
+                        gold = true;
+                    }
+                }
+            }
+            catch (SqlException ex) { MessageBox.Show(ex.Message); }
+            myreader.Close();
 
+            if (gold)
+            {
+                mycommand.CommandText = "UPDATE customer SET gold_status = 1 WHERE cust_id = '" + userid + "'";
+                
+            }
+            else
+            {
+                mycommand.CommandText = "UPDATE customer SET gold_status = 0 WHERE cust_id = '" + userid + "'";
+            }
+            try
+            {
+                mycommand.ExecuteNonQuery();
+            }
+            catch (SqlException ex) { MessageBox.Show(ex.Message); }
+            myreader.Close();
+        }
+        private float calc_price(DateTime date_from, DateTime date_to, string type_id, bool late = false, bool change = false)
+        {
+            float total_price = 0;
+            int total_days = (date_to - date_from).Days;
+            float daily = 0, weekly = 0, monthly = 0, late_fee = 0, change_fee = 0;
+
+            mycommand.CommandText = "SELECT daily, weekly, monthly, late_fee, change FROM type WHERE type_id = '" + type_id + "'";
+            try
+            {
+                myreader = mycommand.ExecuteReader();
+                while (myreader.Read())
+                {
+                    daily = float.Parse(myreader["daily"].ToString());
+                    weekly = float.Parse(myreader["weekly"].ToString());
+                    monthly = float.Parse(myreader["monthly"].ToString());
+                    late_fee = float.Parse(myreader["late_fee"].ToString());
+                    change_fee = float.Parse(myreader["change"].ToString());
+                }
+
+            }
+            catch (SqlException ex) { MessageBox.Show("Cannot find price of " + type_id + ex.Message); }
+            myreader.Close();
+
+
+            total_price += ((total_days / 30) * monthly);
+            total_days = total_days % 30;
+            total_price += ((total_days / 7) * weekly);
+            total_days = total_days % 7;
+            total_price += (total_days * daily);
+
+
+            if (late)
+            {
+                total_price += late_fee;
+            }
+            if (change)
+            {
+                total_price += change_fee;
+            }
+
+            return total_price;
+        }
+        private bool get_status(string userid)
+        {
+            bool status = false;
+            mycommand.CommandText = "SELECT gold_status FROM customer WHERE cust_id = '" + userid + "'";
+            try
+            {
+                myreader = mycommand.ExecuteReader();
+                while (myreader.Read())
+                {
+                    if (myreader["gold_status"].ToString() == "1")
+                    {
+                        status = true;
+                    }
+                }
+            }
+            catch (SqlException ex) { MessageBox.Show(ex.Message); }
+            myreader.Close();
+            return status;
+        }
         private void booking_MouseDoubleClick(object sender, MouseEventArgs e)
         {
 
@@ -278,7 +360,7 @@ namespace CMPT291PROJECT
                     user_info.ForeColor = Color.Black;
                     user_info.Text = myreader["fname"].ToString() + " " + myreader["Lname"].ToString() + "\n";
                     user_info.Text += myreader["street"].ToString() + " " + myreader["city"].ToString() + " " + myreader["province"];
-                    if (myreader["Gold_status"].ToString() == "1") { user_info.Text += "\nGold Status"; }
+                    if (myreader["Gold_status"].ToString() == "True") { user_info.Text += "\nGold Status"; }
                 }
             }
             catch (Exception e3)
@@ -346,6 +428,7 @@ namespace CMPT291PROJECT
                     }
                 }
             }
+            update_status(user_id.Text);
 
         }
         private string get_new_id(string table)
@@ -1118,14 +1201,16 @@ namespace CMPT291PROJECT
             if (tabControl1.SelectedTab == tabControl1.TabPages["tabPage1"])
             {
                 this.AcceptButton = button1;
-                //booking_output.DataSource = null;
+                booking_output.DataSource = null;
                 user_id.ResetText();
+                user_info.Visible = false;
                 drop_off_check.Checked = default;
             }
                 
             else if (tabControl1.SelectedTab == tabControl1.TabPages["tabPage2"])
             {
                 this.AcceptButton = submit_return;
+                return_id_error.Visible = false;
                 returnOutput.Items.Clear();
                 return_id.ResetText();
             }
@@ -1246,6 +1331,194 @@ namespace CMPT291PROJECT
             return aTypeID;
 
 
+        }
+
+        private float get_late_fee(string type_id)
+        {
+            float late_fee = 0;
+            mycommand.CommandText = "SELECT late_fee FROM type WHERE type_id = '" + type_id + "'";
+            try
+            {
+                myreader = mycommand.ExecuteReader();
+                while (myreader.Read())
+                {
+                    late_fee = float.Parse(myreader["late_fee"].ToString());
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Cannot Find Late Fee");
+            }
+            myreader.Close();
+            return late_fee;
+        }
+
+        private bool get_cust_status(string cust_id)
+        {
+            bool ret = false;
+            mycommand.CommandText = "SELECT gold_status FROM customer WHERE cust_id = '" + cust_id + "'";
+
+            try
+            {
+                myreader = mycommand.ExecuteReader();
+                while (myreader.Read())
+                {
+                    if (myreader["gold_status"].ToString() == "True")
+                    {
+                        ret = true;
+                    }
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Cannot Find Customer Status");
+
+            }
+            myreader.Close();
+            return ret;
+        }
+
+        private float get_change_fee(string type_id)
+        {
+            float fee = 0;
+            mycommand.CommandText = "SELECT change FROM type WHERE type_id = '" + type_id + "'";
+            try
+            {
+                myreader = mycommand.ExecuteReader();
+                while (myreader.Read())
+                {
+                    fee = float.Parse(myreader["change"].ToString());
+                }
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show("Cannot Find Change Fee: " + ex.Message);
+            }
+            myreader.Close();
+            return fee;
+        }
+        private void returnOutput_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            string[] args = returnOutput.Text.Split('\t');
+            string drop_off = cityToBID(return_dropoff.SelectedItem.ToString());
+            float final_price = float.Parse(args[8]);
+            bool late = false, change = false;
+            string message = "Return Car: " + args[1] + " To " + return_dropoff.Text;
+
+            //Check if dropped of at different branch - Only apply fee if cust not gold
+            if (drop_off != args[6])
+            {
+                if (get_cust_status(return_id.Text) == false)
+                {
+                    change = true;
+                    message += "\nChange Branch Fee Applied";
+                }
+            }
+
+            //Check if the drop off is late
+            if (DateTime.Parse(args[5]) < dropoff_date.Value)
+            {
+                late = true;
+                message += "\nLate Dropoff Fee Applied";
+            }
+            final_price += calc_price(DateTime.Parse(args[4]), dropoff_date.Value, args[7], late, change);
+
+            DialogResult confirm = MessageBox.Show( message + "\nFinal Price: " + final_price.ToString(), "Confirm", MessageBoxButtons.OKCancel);
+            if (confirm == DialogResult.OK)
+            {
+                mycommand.CommandText += "UPDATE booking SET ";
+                mycommand.CommandText += "branchTo = '" + drop_off + "', ";
+                mycommand.CommandText += "[returned] = '" + dropoff_date.Text + "' ";
+                mycommand.CommandText += "WHERE booking_id = '" + args[0] + "'";
+                try
+                {
+                    mycommand.ExecuteNonQuery();
+                    MessageBox.Show("Return Processed");
+                }
+                catch (SqlException ex)
+                {
+                    MessageBox.Show("Cannot Complete Return: " + ex.Message);
+                    Clipboard.SetText(mycommand.CommandText);
+                }
+                myreader.Close();
+            }
+        }
+
+        private void submit_return_Click(object sender, EventArgs e)
+        {
+            returnOutput.Items.Clear();
+            if (return_id.Text.Length == 0)
+            {
+                return_id_error.Text = "Please Enter Customer ID";
+                return_id_error.ForeColor = Color.Red;
+                return_id_error.Visible = true;
+                return;
+            }
+            else
+            {
+                string temp = "";
+                bool found = false;
+                mycommand.CommandText = "SELECT FName, Lname, gold_status FROM customer WHERE cust_id = '" + return_id.Text + "'";
+                try
+                {
+                    myreader = mycommand.ExecuteReader();
+                    while (myreader.Read())
+                    {
+                        found = true;
+                        temp += myreader["Fname"].ToString() + " " + myreader["Lname"].ToString();
+                        
+                    }
+                }catch (SqlException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                myreader.Close();
+                if (found)
+                {
+                    update_status(return_id.Text);
+                    if (get_cust_status(return_id.Text)) 
+                    {
+                        temp += " - Gold Status";
+                    } 
+                    else
+                    {
+                        temp += " - Standard Status";
+                    }
+                    return_id_error.Text = temp;
+                    return_id_error.ForeColor = Color.Black;
+                    return_id_error.Visible = true;
+                }
+                else
+                {
+                    return_id_error.Text = "Cannot Find User";
+                    return_id_error.Visible = true;
+                    return_id_error.ForeColor = Color.Red;
+                    return;
+                }
+            }
+            mycommand.CommandText = "SELECT * FROM booking b, type t, car c WHERE cust_id = '" + return_id.Text + "'";
+            mycommand.CommandText += " and returned IS NULL and b.type_requested = t.type_id and b.car_id = c.car_id";
+            //MessageBox.Show(mycommand.CommandText);
+            Clipboard.SetText(mycommand.CommandText);
+            //List <string> = new List<string>
+            try
+            {
+                myreader = mycommand.ExecuteReader();
+                while (myreader.Read())
+                {
+                    string temp = "";
+                    temp += myreader["booking_id"].ToString() + "\t" + myreader["car_id"].ToString() + "\t";
+                    temp += myreader["description"].ToString() + "\t" + myreader["plate_num"].ToString() + "\t";
+                    temp += DateTime.Parse(myreader["date_From"].ToString()).Date.ToString("d") + "\t" + DateTime.Parse(myreader["date_to"].ToString()).Date.ToString("d") + "\t";
+                    temp += myreader["branchFrom"].ToString() + "\t" + myreader["type_requested"] + "\t" + myreader["price"].ToString();
+                    returnOutput.Items.Add(temp);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            myreader.Close();
         }
     }
 
