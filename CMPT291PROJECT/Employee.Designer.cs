@@ -49,6 +49,7 @@
             this.date_from = new System.Windows.Forms.DateTimePicker();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.return_id_error = new System.Windows.Forms.Label();
+            //this.returnHeading = new System.Windows.Forms.Label();
             this.returnLookup = new System.Windows.Forms.Button();
             this.returnOutput = new System.Windows.Forms.ListBox();
             this.return_dropoff = new System.Windows.Forms.ComboBox();
@@ -259,7 +260,7 @@
             this.button1.TabStop = false;
             this.button1.Text = "Submit";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button1.Click += new System.EventHandler(this.booking_submit_click);
             // 
             // dropoff
             // 
@@ -930,6 +931,22 @@
             this.removeOutput.Name = "removeOutput";
             this.removeOutput.ShowGroups = false;
             this.removeOutput.Size = new System.Drawing.Size(627, 544);
+            this.removeOutput.TabIndex = 36;
+            this.removeOutput.TabStop = false;
+            this.removeOutput.UseCompatibleStateImageBehavior = false;
+            this.removeOutput.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Remove_Output_DoubleClick);
+            // 
+            // removeOutput
+            // 
+            this.removeOutput.FullRowSelect = true;
+            this.removeOutput.GridLines = true;
+            this.removeOutput.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.removeOutput.HideSelection = false;
+            this.removeOutput.Location = new System.Drawing.Point(182, 186);
+            this.removeOutput.Margin = new System.Windows.Forms.Padding(2);
+            this.removeOutput.MultiSelect = false;
+            this.removeOutput.Name = "removeOutput";
+            this.removeOutput.Size = new System.Drawing.Size(493, 205);
             this.removeOutput.TabIndex = 36;
             this.removeOutput.TabStop = false;
             this.removeOutput.UseCompatibleStateImageBehavior = false;

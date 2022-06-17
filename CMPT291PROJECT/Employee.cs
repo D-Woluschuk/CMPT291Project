@@ -284,7 +284,7 @@ namespace CMPT291PROJECT
             parent.Visible = true;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void booking_submit_click(object sender, EventArgs e)
         {
             bookingOutput.Items.Clear();
             if (date_from.Value > date_to.Value)
@@ -298,30 +298,33 @@ namespace CMPT291PROJECT
             {
                 user_info.Text = "Please Enter Customer ID";
                 user_info.ForeColor = Color.Red;
-                return;
             }
-            mycommand.CommandText = "SELECT * FROM customer WHERE cust_id = '" + user_id.Text.ToString() + "'";
-            int i = 0;
-            try
+            else
             {
-                myreader = mycommand.ExecuteReader();
-                while (myreader.Read())
+                mycommand.CommandText = "SELECT * FROM customer WHERE cust_id = '" + user_id.Text.ToString() + "'";
+                int i = 0;
+                try
                 {
-                    i++;
-                    user_info.ForeColor = Color.Black;
-                    user_info.Text = myreader["fname"].ToString() + " " + myreader["Lname"].ToString() + "\n";
-                    user_info.Text += myreader["street"].ToString() + " " + myreader["city"].ToString() + " " + myreader["province"];
-                    if (myreader["Gold_status"].ToString() == "1") { user_info.Text += "\nGold Status"; }
+                    myreader = mycommand.ExecuteReader();
+                    while (myreader.Read())
+                    {
+                        i++;
+                        user_info.ForeColor = Color.Black;
+                        user_info.Text = myreader["fname"].ToString() + " " + myreader["Lname"].ToString() + "\n";
+                        user_info.Text += myreader["street"].ToString() + " " + myreader["city"].ToString() + " " + myreader["province"];
+                        if (myreader["Gold_status"].ToString() == "True") { user_info.Text += "\nGold Status"; }
+                    }
                 }
+                catch (Exception e3)
+                {
+                    MessageBox.Show(e3.Message.ToString());
+                    user_info.ForeColor = Color.Red;
+                    user_info.Text = "Customer Not Found";
+                }
+                myreader.Close();
             }
-            catch (Exception e3)
-            {
-                MessageBox.Show(e3.Message.ToString());
-                user_info.ForeColor = Color.Red;
-                user_info.Text = "Customer Not Found";
-                return;
-            }
-            myreader.Close();
+            user_info.Visible = true;
+
             // Get information on all cars fitting choices
             mycommand.CommandText = "SELECT * FROM car c, type t, branch b WHERE c.car_type = t.type_id and c.car_branch = b.branch_id ";
             if (pickup.SelectedItem.ToString() != "Any")
@@ -385,23 +388,6 @@ namespace CMPT291PROJECT
             float total_price = 0;
             int total_days = (date_to - date_from).Days + 1;
             float daily = float.Parse(d), weekly = float.Parse(w), monthly = float.Parse(m), late_fee = 0;
-            /*
-            mycommand.CommandText = "SELECT daily, weekly, monthly, late_fee FROM type WHERE description = '" + type_desc + "'";
-            try
-            {
-                myreader = mycommand.ExecuteReader();
-                while (myreader.Read())
-                {
-                    daily = float.Parse(myreader["daily"].ToString());
-                    weekly = float.Parse(myreader["weekly"].ToString());
-                    monthly = float.Parse(myreader["monthly"].ToString());
-                    late_fee = float.Parse(myreader["late_fee"].ToString());
-                }
-
-            }
-            catch (SqlException ex) { MessageBox.Show("Cannot find price of " + type_desc + ex.Message); }
-            myreader.Close();
-            */
             total_price += ((total_days / 30) * monthly);
             total_days = total_days % 30;
             total_price += ((total_days / 7) * weekly);
@@ -411,6 +397,84 @@ namespace CMPT291PROJECT
             if (late)
             {
                 total_price += late_fee;
+            }
+
+            return total_price;
+        }
+        private void update_status(string userid)
+        {
+            bool gold = false;
+            mycommand.CommandText = "SELECT count(*) as total FROM booking WHERE cust_id = '" + userid + "'";
+            mycommand.CommandText += " And year(date_from) = " + DateTime.Now.Year.ToString();
+            Clipboard.SetText(mycommand.CommandText);
+            try
+            {
+                myreader = mycommand.ExecuteReader();
+                while (myreader.Read())
+                {
+                    if (Int32.Parse(myreader["total"].ToString()) >= 3)
+                    {
+                        gold = true;
+                    }
+                }
+            }
+            catch (SqlException ex) { MessageBox.Show(ex.Message); }
+            myreader.Close();
+
+            if (gold)
+            {
+                mycommand.CommandText = "UPDATE customer SET gold_status = 1 WHERE cust_id = '" + userid + "'";
+                
+            }
+            else
+            {
+                mycommand.CommandText = "UPDATE customer SET gold_status = 0 WHERE cust_id = '" + userid + "'";
+            }
+            try
+            {
+                mycommand.ExecuteNonQuery();
+            }
+            catch (SqlException ex) { MessageBox.Show(ex.Message); }
+            myreader.Close();
+        }
+        private float calc_price(DateTime date_from, DateTime date_to, string type_id, bool late = false, bool change = false)
+        {
+            float total_price = 0;
+            int total_days = (date_to - date_from).Days;
+            float daily = 0, weekly = 0, monthly = 0, late_fee = 0, change_fee = 0;
+
+            mycommand.CommandText = "SELECT daily, weekly, monthly, late_fee, change FROM type WHERE type_id = '" + type_id + "'";
+            try
+            {
+                myreader = mycommand.ExecuteReader();
+                while (myreader.Read())
+                {
+                    daily = float.Parse(myreader["daily"].ToString());
+                    weekly = float.Parse(myreader["weekly"].ToString());
+                    monthly = float.Parse(myreader["monthly"].ToString());
+                    late_fee = float.Parse(myreader["late_fee"].ToString());
+                    change_fee = float.Parse(myreader["change"].ToString());
+                }
+
+            }
+            catch (SqlException ex) { MessageBox.Show("Cannot find price of " + type_id + ex.Message); }
+            myreader.Close();
+
+
+            total_price += ((total_days / 30) * monthly);
+            total_days = total_days % 30;
+            total_price += ((total_days / 7) * weekly);
+            total_days = total_days % 7;
+            total_price += (total_days * daily);
+
+
+            if (late)
+            {
+                total_price += late_fee;
+            }
+            if (change)
+            {
+                total_price += change_fee;
             }
 
             return total_price;
@@ -515,7 +579,7 @@ namespace CMPT291PROJECT
             myreader.Close();
             return status;
         }
-
+        
         private void booking_MouseDoubleClick(object sender, MouseEventArgs e)
         {
 
@@ -627,6 +691,7 @@ namespace CMPT291PROJECT
                 }
             }
             update_status(user_id.Text);
+
         }
         private string get_new_id(string table)
         {
@@ -1473,12 +1538,14 @@ namespace CMPT291PROJECT
             {
                 this.AcceptButton = button1;
                 user_id.ResetText();
+                user_info.Visible = false;
                 drop_off_check.Checked = default;
             }
                 
             else if (tabControl1.SelectedTab == tabControl1.TabPages["tabPage2"])
             {
                 this.AcceptButton = submit_return;
+                return_id_error.Visible = false;
                 returnOutput.Items.Clear();
                 return_id.ResetText();
             }
@@ -1603,7 +1670,5 @@ namespace CMPT291PROJECT
 
 
         }
-
-
     }    
 }
