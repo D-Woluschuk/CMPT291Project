@@ -45,7 +45,7 @@
             // date_from
             // 
             this.date_from.Location = new System.Drawing.Point(156, 62);
-            this.date_from.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.date_from.Margin = new System.Windows.Forms.Padding(6);
             this.date_from.Name = "date_from";
             this.date_from.Size = new System.Drawing.Size(396, 31);
             this.date_from.TabIndex = 0;
@@ -53,7 +53,7 @@
             // date_to
             // 
             this.date_to.Location = new System.Drawing.Point(156, 160);
-            this.date_to.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.date_to.Margin = new System.Windows.Forms.Padding(6);
             this.date_to.Name = "date_to";
             this.date_to.Size = new System.Drawing.Size(396, 31);
             this.date_to.TabIndex = 1;
@@ -85,7 +85,7 @@
             this.pickup_branch.Items.AddRange(new object[] {
             "Any"});
             this.pickup_branch.Location = new System.Drawing.Point(209, 274);
-            this.pickup_branch.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.pickup_branch.Margin = new System.Windows.Forms.Padding(6);
             this.pickup_branch.Name = "pickup_branch";
             this.pickup_branch.Size = new System.Drawing.Size(238, 33);
             this.pickup_branch.TabIndex = 4;
@@ -107,7 +107,7 @@
             this.vehicle_type.Items.AddRange(new object[] {
             "Any"});
             this.vehicle_type.Location = new System.Drawing.Point(207, 330);
-            this.vehicle_type.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.vehicle_type.Margin = new System.Windows.Forms.Padding(6);
             this.vehicle_type.Name = "vehicle_type";
             this.vehicle_type.Size = new System.Drawing.Size(238, 33);
             this.vehicle_type.TabIndex = 6;
@@ -125,7 +125,7 @@
             // submit
             // 
             this.submit.Location = new System.Drawing.Point(288, 431);
-            this.submit.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.submit.Margin = new System.Windows.Forms.Padding(6);
             this.submit.Name = "submit";
             this.submit.Size = new System.Drawing.Size(150, 44);
             this.submit.TabIndex = 10;
@@ -146,7 +146,7 @@
             // log_out
             // 
             this.log_out.Location = new System.Drawing.Point(24, 431);
-            this.log_out.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.log_out.Margin = new System.Windows.Forms.Padding(6);
             this.log_out.Name = "log_out";
             this.log_out.Size = new System.Drawing.Size(150, 44);
             this.log_out.TabIndex = 13;
@@ -160,7 +160,7 @@
             this.custOutput.FullRowSelect = true;
             this.custOutput.GridLines = true;
             this.custOutput.HideSelection = false;
-            this.custOutput.Location = new System.Drawing.Point(670, 71);
+            this.custOutput.Location = new System.Drawing.Point(660, 62);
             this.custOutput.Name = "custOutput";
             this.custOutput.Size = new System.Drawing.Size(532, 423);
             this.custOutput.TabIndex = 15;
@@ -185,7 +185,7 @@
             this.Controls.Add(this.date_to);
             this.Controls.Add(this.date_from);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "Customer";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "View Available Cars";

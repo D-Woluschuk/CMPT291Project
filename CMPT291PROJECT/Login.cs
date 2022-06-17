@@ -51,6 +51,7 @@ namespace CMPT291PROJECT
 
         private void existing_user_Click(object sender, EventArgs e)
         {
+            user_id.Visible = true;
             // Check for no user input
             if (user_id.Text == "" && debug.Checked == false) { 
                 error_text.Text = "Please Enter ID";

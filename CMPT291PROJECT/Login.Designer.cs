@@ -41,8 +41,8 @@
             // existing_user
             // 
             this.existing_user.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.existing_user.Location = new System.Drawing.Point(452, 429);
-            this.existing_user.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.existing_user.Location = new System.Drawing.Point(366, 438);
+            this.existing_user.Margin = new System.Windows.Forms.Padding(6);
             this.existing_user.Name = "existing_user";
             this.existing_user.Size = new System.Drawing.Size(180, 42);
             this.existing_user.TabIndex = 0;
@@ -53,8 +53,8 @@
             // new_user
             // 
             this.new_user.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.new_user.Location = new System.Drawing.Point(686, 429);
-            this.new_user.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.new_user.Location = new System.Drawing.Point(600, 438);
+            this.new_user.Margin = new System.Windows.Forms.Padding(6);
             this.new_user.Name = "new_user";
             this.new_user.Size = new System.Drawing.Size(180, 42);
             this.new_user.TabIndex = 1;
@@ -66,7 +66,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(477, 30);
+            this.label1.Location = new System.Drawing.Point(391, 39);
             this.label1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(342, 33);
@@ -76,8 +76,8 @@
             // user_id
             // 
             this.user_id.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.user_id.Location = new System.Drawing.Point(455, 275);
-            this.user_id.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.user_id.Location = new System.Drawing.Point(369, 284);
+            this.user_id.Margin = new System.Windows.Forms.Padding(6);
             this.user_id.Name = "user_id";
             this.user_id.Size = new System.Drawing.Size(389, 35);
             this.user_id.TabIndex = 3;
@@ -86,8 +86,8 @@
             // 
             this.employee_check.AutoSize = true;
             this.employee_check.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.employee_check.Location = new System.Drawing.Point(1162, 646);
-            this.employee_check.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.employee_check.Location = new System.Drawing.Point(966, 557);
+            this.employee_check.Margin = new System.Windows.Forms.Padding(6);
             this.employee_check.Name = "employee_check";
             this.employee_check.Size = new System.Drawing.Size(126, 29);
             this.employee_check.TabIndex = 5;
@@ -99,7 +99,7 @@
             // 
             this.enter_username.AutoSize = true;
             this.enter_username.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.enter_username.Location = new System.Drawing.Point(210, 275);
+            this.enter_username.Location = new System.Drawing.Point(124, 284);
             this.enter_username.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.enter_username.Name = "enter_username";
             this.enter_username.Size = new System.Drawing.Size(206, 31);
@@ -111,7 +111,7 @@
             // 
             this.error_text.AutoSize = true;
             this.error_text.ForeColor = System.Drawing.Color.Red;
-            this.error_text.Location = new System.Drawing.Point(451, 399);
+            this.error_text.Location = new System.Drawing.Point(365, 408);
             this.error_text.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.error_text.Name = "error_text";
             this.error_text.Size = new System.Drawing.Size(91, 24);
@@ -124,8 +124,8 @@
             this.debug.Checked = true;
             this.debug.CheckState = System.Windows.Forms.CheckState.Checked;
             this.debug.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.debug.Location = new System.Drawing.Point(1162, 604);
-            this.debug.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.debug.Location = new System.Drawing.Point(966, 515);
+            this.debug.Margin = new System.Windows.Forms.Padding(6);
             this.debug.Name = "debug";
             this.debug.Size = new System.Drawing.Size(91, 29);
             this.debug.TabIndex = 8;
@@ -137,7 +137,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1316, 700);
+            this.BackColor = System.Drawing.Color.DimGray;
+            this.ClientSize = new System.Drawing.Size(1107, 601);
             this.Controls.Add(this.debug);
             this.Controls.Add(this.error_text);
             this.Controls.Add(this.enter_username);
@@ -146,9 +147,14 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.new_user);
             this.Controls.Add(this.existing_user);
+            this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.ForeColor = System.Drawing.Color.Black;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.ImeMode = System.Windows.Forms.ImeMode.Close;
+            this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "Login";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Welcome!";
             this.ResumeLayout(false);
             this.PerformLayout();
