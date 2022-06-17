@@ -51,6 +51,7 @@
             this.id_error = new System.Windows.Forms.Label();
             this.branch_error = new System.Windows.Forms.Label();
             this.signup_branch = new System.Windows.Forms.ComboBox();
+            this.signup_back = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // signup_id
@@ -107,7 +108,7 @@
             // 
             // submit
             // 
-            this.submit.Location = new System.Drawing.Point(78, 206);
+            this.submit.Location = new System.Drawing.Point(178, 223);
             this.submit.Name = "submit";
             this.submit.Size = new System.Drawing.Size(75, 23);
             this.submit.TabIndex = 6;
@@ -252,11 +253,23 @@
             this.signup_branch.Size = new System.Drawing.Size(121, 21);
             this.signup_branch.TabIndex = 8;
             // 
+            // signup_back
+            // 
+            this.signup_back.Location = new System.Drawing.Point(12, 224);
+            this.signup_back.Name = "signup_back";
+            this.signup_back.Size = new System.Drawing.Size(75, 23);
+            this.signup_back.TabIndex = 23;
+            this.signup_back.TabStop = false;
+            this.signup_back.Text = "Back";
+            this.signup_back.UseVisualStyleBackColor = true;
+            this.signup_back.Click += new System.EventHandler(this.signup_back_Click);
+            // 
             // UserSignUp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(444, 256);
+            this.Controls.Add(this.signup_back);
             this.Controls.Add(this.signup_branch);
             this.Controls.Add(this.branch_error);
             this.Controls.Add(this.id_error);
@@ -314,5 +327,6 @@
         private System.Windows.Forms.Label id_error;
         private System.Windows.Forms.Label branch_error;
         private System.Windows.Forms.ComboBox signup_branch;
+        private System.Windows.Forms.Button signup_back;
     }
 }
