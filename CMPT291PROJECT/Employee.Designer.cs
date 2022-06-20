@@ -49,9 +49,7 @@
             this.date_from = new System.Windows.Forms.DateTimePicker();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.return_id_error = new System.Windows.Forms.Label();
-            //this.returnHeading = new System.Windows.Forms.Label();
             this.returnLookup = new System.Windows.Forms.Button();
-            this.returnOutput = new System.Windows.Forms.ListBox();
             this.return_dropoff = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
@@ -69,8 +67,8 @@
             this.label13 = new System.Windows.Forms.Label();
             this.InventoryBranch = new System.Windows.Forms.ComboBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.noFilters = new System.Windows.Forms.Label();
             this.reportOutputBox = new System.Windows.Forms.ListView();
-            this.reportbox = new System.Windows.Forms.ListBox();
             this.label41 = new System.Windows.Forms.Label();
             this.radioButton3 = new System.Windows.Forms.RadioButton();
             this.radioButton5 = new System.Windows.Forms.RadioButton();
@@ -135,7 +133,8 @@
             this.editcar_id = new System.Windows.Forms.TextBox();
             this.edit_model = new System.Windows.Forms.TextBox();
             this.editSubmit = new System.Windows.Forms.Button();
-            this.noFilters = new System.Windows.Forms.Label();
+            this.label40 = new System.Windows.Forms.Label();
+            this.returnOutputBox = new System.Windows.Forms.ListView();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -170,7 +169,7 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.BackColor = System.Drawing.Color.LightGray;
+            this.tabPage1.BackColor = System.Drawing.Color.Gray;
             this.tabPage1.Controls.Add(this.bookingOutput);
             this.tabPage1.Controls.Add(this.user_info);
             this.tabPage1.Controls.Add(this.CustomerLookup);
@@ -197,6 +196,7 @@
             // 
             // bookingOutput
             // 
+            this.bookingOutput.BackColor = System.Drawing.Color.Gray;
             this.bookingOutput.HideSelection = false;
             this.bookingOutput.Location = new System.Drawing.Point(456, 6);
             this.bookingOutput.Margin = new System.Windows.Forms.Padding(4);
@@ -355,10 +355,11 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.BackColor = System.Drawing.Color.LightGray;
+            this.tabPage2.BackColor = System.Drawing.Color.Gray;
+            this.tabPage2.Controls.Add(this.returnOutputBox);
+            this.tabPage2.Controls.Add(this.label40);
             this.tabPage2.Controls.Add(this.return_id_error);
             this.tabPage2.Controls.Add(this.returnLookup);
-            this.tabPage2.Controls.Add(this.returnOutput);
             this.tabPage2.Controls.Add(this.return_dropoff);
             this.tabPage2.Controls.Add(this.label8);
             this.tabPage2.Controls.Add(this.label7);
@@ -376,9 +377,9 @@
             // return_id_error
             // 
             this.return_id_error.AutoSize = true;
-            this.return_id_error.Location = new System.Drawing.Point(92, 52);
+            this.return_id_error.Location = new System.Drawing.Point(212, 27);
             this.return_id_error.Name = "return_id_error";
-            this.return_id_error.Size = new System.Drawing.Size(65, 13);
+            this.return_id_error.Size = new System.Drawing.Size(113, 24);
             this.return_id_error.TabIndex = 11;
             this.return_id_error.Text = "Customer ID";
             // 
@@ -392,17 +393,6 @@
             this.returnLookup.Text = "Lookup";
             this.returnLookup.UseVisualStyleBackColor = true;
             this.returnLookup.Click += new System.EventHandler(this.customerLookup);
-            // 
-            // returnOutput
-            // 
-            this.returnOutput.FormattingEnabled = true;
-            this.returnOutput.ItemHeight = 24;
-            this.returnOutput.Location = new System.Drawing.Point(545, 61);
-            this.returnOutput.Name = "returnOutput";
-            this.returnOutput.Size = new System.Drawing.Size(558, 532);
-            this.returnOutput.TabIndex = 8;
-            this.returnOutput.TabStop = false;
-            this.returnOutput.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.returnOutput_MouseDoubleClick);
             // 
             // return_dropoff
             // 
@@ -468,7 +458,7 @@
             // 
             // tabPage3
             // 
-            this.tabPage3.BackColor = System.Drawing.Color.LightGray;
+            this.tabPage3.BackColor = System.Drawing.Color.Gray;
             this.tabPage3.Controls.Add(this.label16);
             this.tabPage3.Controls.Add(this.InventoryButton);
             this.tabPage3.Controls.Add(this.label15);
@@ -557,10 +547,9 @@
             // 
             // tabPage4
             // 
-            this.tabPage4.BackColor = System.Drawing.Color.LightGray;
+            this.tabPage4.BackColor = System.Drawing.Color.Gray;
             this.tabPage4.Controls.Add(this.noFilters);
             this.tabPage4.Controls.Add(this.reportOutputBox);
-            this.tabPage4.Controls.Add(this.reportbox);
             this.tabPage4.Controls.Add(this.label41);
             this.tabPage4.Controls.Add(this.radioButton3);
             this.tabPage4.Controls.Add(this.radioButton5);
@@ -582,26 +571,27 @@
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Reports";
             // 
+            // noFilters
+            // 
+            this.noFilters.AutoSize = true;
+            this.noFilters.ForeColor = System.Drawing.Color.Red;
+            this.noFilters.Location = new System.Drawing.Point(113, 102);
+            this.noFilters.Name = "noFilters";
+            this.noFilters.Size = new System.Drawing.Size(171, 24);
+            this.noFilters.TabIndex = 27;
+            this.noFilters.Text = "No Available Filters";
+            this.noFilters.Visible = false;
+            // 
             // reportOutputBox
             // 
+            this.reportOutputBox.BackColor = System.Drawing.Color.Gray;
             this.reportOutputBox.GridLines = true;
             this.reportOutputBox.HideSelection = false;
-            this.reportOutputBox.Location = new System.Drawing.Point(514, 136);
+            this.reportOutputBox.Location = new System.Drawing.Point(507, 136);
             this.reportOutputBox.Name = "reportOutputBox";
-            this.reportOutputBox.Size = new System.Drawing.Size(599, 240);
+            this.reportOutputBox.Size = new System.Drawing.Size(599, 394);
             this.reportOutputBox.TabIndex = 26;
             this.reportOutputBox.UseCompatibleStateImageBehavior = false;
-            // 
-            // reportbox
-            // 
-            this.reportbox.FormattingEnabled = true;
-            this.reportbox.ItemHeight = 24;
-            this.reportbox.Location = new System.Drawing.Point(727, 396);
-            this.reportbox.Name = "reportbox";
-            this.reportbox.Size = new System.Drawing.Size(194, 172);
-            this.reportbox.TabIndex = 22;
-            this.reportbox.TabStop = false;
-            this.reportbox.Visible = false;
             // 
             // label41
             // 
@@ -926,27 +916,11 @@
             this.removeOutput.HideSelection = false;
             this.removeOutput.HoverSelection = true;
             this.removeOutput.Location = new System.Drawing.Point(478, 43);
-            this.removeOutput.Margin = new System.Windows.Forms.Padding(4);
+            this.removeOutput.Margin = new System.Windows.Forms.Padding(2);
             this.removeOutput.MultiSelect = false;
             this.removeOutput.Name = "removeOutput";
             this.removeOutput.ShowGroups = false;
             this.removeOutput.Size = new System.Drawing.Size(627, 544);
-            this.removeOutput.TabIndex = 36;
-            this.removeOutput.TabStop = false;
-            this.removeOutput.UseCompatibleStateImageBehavior = false;
-            this.removeOutput.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Remove_Output_DoubleClick);
-            // 
-            // removeOutput
-            // 
-            this.removeOutput.FullRowSelect = true;
-            this.removeOutput.GridLines = true;
-            this.removeOutput.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.removeOutput.HideSelection = false;
-            this.removeOutput.Location = new System.Drawing.Point(182, 186);
-            this.removeOutput.Margin = new System.Windows.Forms.Padding(2);
-            this.removeOutput.MultiSelect = false;
-            this.removeOutput.Name = "removeOutput";
-            this.removeOutput.Size = new System.Drawing.Size(493, 205);
             this.removeOutput.TabIndex = 36;
             this.removeOutput.TabStop = false;
             this.removeOutput.UseCompatibleStateImageBehavior = false;
@@ -1323,16 +1297,26 @@
             this.editSubmit.UseVisualStyleBackColor = false;
             this.editSubmit.Click += new System.EventHandler(this.editCar_Submit);
             // 
-            // noFilters
+            // label40
             // 
-            this.noFilters.AutoSize = true;
-            this.noFilters.ForeColor = System.Drawing.Color.Red;
-            this.noFilters.Location = new System.Drawing.Point(113, 102);
-            this.noFilters.Name = "noFilters";
-            this.noFilters.Size = new System.Drawing.Size(171, 24);
-            this.noFilters.TabIndex = 27;
-            this.noFilters.Text = "No Available Filters";
-            this.noFilters.Visible = false;
+            this.label40.AutoSize = true;
+            this.label40.Location = new System.Drawing.Point(16, 27);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(180, 24);
+            this.label40.TabIndex = 12;
+            this.label40.Text = "Selected Customer: ";
+            // 
+            // returnOutputBox
+            // 
+            this.returnOutputBox.FullRowSelect = true;
+            this.returnOutputBox.GridLines = true;
+            this.returnOutputBox.HideSelection = false;
+            this.returnOutputBox.Location = new System.Drawing.Point(510, 14);
+            this.returnOutputBox.Name = "returnOutputBox";
+            this.returnOutputBox.Size = new System.Drawing.Size(593, 364);
+            this.returnOutputBox.TabIndex = 13;
+            this.returnOutputBox.UseCompatibleStateImageBehavior = false;
+            this.returnOutputBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.returnOutput_MouseDoubleClick);
             // 
             // Employee
             // 
@@ -1432,7 +1416,6 @@
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.TextBox addcar_year;
         private System.Windows.Forms.Button addcar_submit;
-        private System.Windows.Forms.ListBox returnOutput;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.ComboBox remcar_branch;
         private System.Windows.Forms.ComboBox remcar_type;
@@ -1471,7 +1454,6 @@
         private System.Windows.Forms.Label remModel;
         private System.Windows.Forms.TextBox remcar_model;
         private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.ListBox reportbox;
         private System.Windows.Forms.Button CustomerLookup;
         private System.Windows.Forms.Label user_info;
         private System.Windows.Forms.Button returnLookup;
@@ -1485,5 +1467,7 @@
         private System.Windows.Forms.ListView reportOutputBox;
         private System.Windows.Forms.Label noFilters;
         private System.Windows.Forms.Label return_id_error;
+        private System.Windows.Forms.Label label40;
+        private System.Windows.Forms.ListView returnOutputBox;
     }
 }

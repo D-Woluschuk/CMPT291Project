@@ -33,6 +33,7 @@ namespace CMPT291PROJECT
             DateTime date_from = (DateTime)TypeDescriptor.GetConverter(typeof(DateTime)).ConvertFromString(dateFrom);
             DateTime date_to = (DateTime)TypeDescriptor.GetConverter(typeof(DateTime)).ConvertFromString(dateTo);
             convertDateFrom = date_from.ToString("yyyy-MM-dd");
+            date_to = date_to.AddDays(1);
             convertDateTo = date_to.ToString("yyyy-MM-dd");
 
 
@@ -42,8 +43,8 @@ namespace CMPT291PROJECT
             myreader = e1.myreader;
             mycommand = e1.mycommand;
             label1.Text = "Branch: " + branchID;
-            label2.Text = "Date From: " + dateFrom.ToString();
-            label3.Text = "Date To: " + dateTo.ToString();
+            label2.Text = "Date From: " + convertDateFrom.ToString();
+            label3.Text = "Date To: " + convertDateTo.ToString();
             CurrentInventory.View = View.Details;
             CurrentInventory.GridLines = true;
             CurrentInventory.FullRowSelect = true;
