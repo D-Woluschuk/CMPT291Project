@@ -17,9 +17,9 @@ namespace CMPT291PROJECT
             error_text.Visible = false;
             user_id.Visible = false;
             enter_username.Visible = false;
-            
+
             // Establish SQL Connection
-            String connection_string = "Server = DESKTOP-RVC34SE; Database = Project; Trusted_Connection = yes;";
+            String connection_string = "Server = DESKTOP-OP195PG; Database = Project; Trusted_Connection = yes;";
 
             SqlConnection myconnection = new SqlConnection(connection_string);
             try
@@ -51,6 +51,7 @@ namespace CMPT291PROJECT
 
         private void existing_user_Click(object sender, EventArgs e)
         {
+            user_id.Visible = true;
             // Check for no user input
             if (user_id.Text == "" && debug.Checked == false) { 
                 error_text.Text = "Please Enter ID";
@@ -118,11 +119,6 @@ namespace CMPT291PROJECT
                 user_id.Visible = false;
                 enter_username.Visible = false;
             }
-        }
-
-        private void Login_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }
