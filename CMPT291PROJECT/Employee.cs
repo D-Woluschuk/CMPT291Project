@@ -22,26 +22,41 @@ namespace CMPT291PROJECT
         public IAsyncResult asyncResult;
         IList<string> arguments = new List<string>();
         public string default_date;
+        public DateTime default_date_to;
         public string[] tabNames = { "Booking", "Return", "Inventory", "Reports", "Add Car", "Remove Car", "Edit Car" };
         public Employee(Login f1)
         {
+            //booking id, car id, description, platenum, date from, date to, branch from, type requested, price
             InitializeComponent();
             //myTabRect = tabControl1.GetTabRect(0);
             //tabControl1.TabPages[0].Text = "Booking";
             DoubleBuffered = true;
             default_date = date_from.Text;
             date_to.Value = (date_from.Value.AddDays(1));
+            default_date_to = date_to.Value;
             user_info.Visible = false;
 
+            invDateTo.Value = default_date_to;
             // Inherit SQL Connection
             parent = f1;
             myconnection = f1.myconnection;
             myreader = f1.myreader;
             mycommand = f1.mycommand;
-            editOutput.View = View.Details;
             //editOutput.GridLines = true;
             //editOutput.FullRowSelect = true;
+            returnOutputBox.View = View.Details;
 
+            returnOutputBox.Columns.Add("Booking ID");
+            returnOutputBox.Columns.Add("Car ID");
+            returnOutputBox.Columns.Add("Description");
+            returnOutputBox.Columns.Add("Licence Plate");
+            returnOutputBox.Columns.Add("Date From");
+            returnOutputBox.Columns.Add("Date To");
+            returnOutputBox.Columns.Add("Branch From");
+            returnOutputBox.Columns.Add("Type Requested");
+            returnOutputBox.Columns.Add("Price");
+
+            editOutput.View = View.Details;
             editOutput.Columns.Add("Car ID", 70);
             editOutput.Columns.Add("Type", 105);
             editOutput.Columns.Add("Branch", 120);
@@ -231,6 +246,7 @@ namespace CMPT291PROJECT
             if (radioButton5.Checked == true)
             {
                 reportOutputBox.Columns.Clear();
+                reportOutputBox.Visible = false;
                 report_submit.Visible = true;
                 noFilters.Visible = true;
                 //MessageBox.Show("No filters available");
@@ -238,6 +254,7 @@ namespace CMPT291PROJECT
             else if (radioButton1.Checked == true)
             {
                 reportOutputBox.Columns.Clear();
+                reportOutputBox.Visible = false;
                 report_branch.Visible = true;
                 report_type.Visible = true;
                 report_datefrom.Visible = true;
@@ -252,6 +269,7 @@ namespace CMPT291PROJECT
             else if (radioButton2.Checked == true)
             {
                 reportOutputBox.Columns.Clear();
+                reportOutputBox.Visible = false;
                 report_branch.Visible = true;
                 label9.Visible = true;
                 report_submit.Visible = true;
@@ -260,6 +278,7 @@ namespace CMPT291PROJECT
             else if (radioButton3.Checked == true)
             {
                 reportOutputBox.Columns.Clear();
+                reportOutputBox.Visible = false;
                 report_branch.Visible = true;
                 label9.Visible = true;
                 report_submit.Visible = true;
@@ -268,6 +287,7 @@ namespace CMPT291PROJECT
             else if (radioButton4.Checked == true)
             {
                 reportOutputBox.Columns.Clear();
+                reportOutputBox.Visible = false;
                 report_branch.Visible = true;
                 report_type.Visible = true;
                 label9.Visible = true;
@@ -480,85 +500,7 @@ namespace CMPT291PROJECT
             return total_price;
         }
 
-        private void update_status(string userid)
-        {
-            bool gold = false;
-            mycommand.CommandText = "SELECT count(*) as total FROM booking WHERE cust_id = '" + userid + "'";
-            mycommand.CommandText += " And year(date_from) = " + DateTime.Now.Year.ToString();
-            Clipboard.SetText(mycommand.CommandText);
-            try
-            {
-                myreader = mycommand.ExecuteReader();
-                while (myreader.Read())
-                {
-                    if (Int32.Parse(myreader["total"].ToString()) >= 3)
-                    {
-                        gold = true;
-                    }
-                }
-            }
-            catch (SqlException ex) { MessageBox.Show(ex.Message); }
-            myreader.Close();
 
-            if (gold)
-            {
-                mycommand.CommandText = "UPDATE customer SET gold_status = 1 WHERE cust_id = '" + userid + "'";
-
-            }
-            else
-            {
-                mycommand.CommandText = "UPDATE customer SET gold_status = 0 WHERE cust_id = '" + userid + "'";
-            }
-            try
-            {
-                mycommand.ExecuteNonQuery();
-            }
-            catch (SqlException ex) { MessageBox.Show(ex.Message); }
-            myreader.Close();
-        }
-
-        private float calc_price(DateTime date_from, DateTime date_to, string type_id, bool late = false, bool change = false)
-        {
-            float total_price = 0;
-            int total_days = (date_to - date_from).Days;
-            float daily = 0, weekly = 0, monthly = 0, late_fee = 0, change_fee = 0;
-
-            mycommand.CommandText = "SELECT daily, weekly, monthly, late_fee, change FROM type WHERE type_id = '" + type_id + "'";
-            try
-            {
-                myreader = mycommand.ExecuteReader();
-                while (myreader.Read())
-                {
-                    daily = float.Parse(myreader["daily"].ToString());
-                    weekly = float.Parse(myreader["weekly"].ToString());
-                    monthly = float.Parse(myreader["monthly"].ToString());
-                    late_fee = float.Parse(myreader["late_fee"].ToString());
-                    change_fee = float.Parse(myreader["change"].ToString());
-                }
-
-            }
-            catch (SqlException ex) { MessageBox.Show("Cannot find price of " + type_id + ex.Message); }
-            myreader.Close();
-
-
-            total_price += ((total_days / 30) * monthly);
-            total_days = total_days % 30;
-            total_price += ((total_days / 7) * weekly);
-            total_days = total_days % 7;
-            total_price += (total_days * daily);
-
-
-            if (late)
-            {
-                total_price += late_fee;
-            }
-            if (change)
-            {
-                total_price += change_fee;
-            }
-
-            return total_price;
-        }
 
         private bool get_status(string userid)
         {
@@ -816,54 +758,78 @@ namespace CMPT291PROJECT
 
         private void returnOutput_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            string[] args = returnOutput.Text.Split('\t');
-            string drop_off = cityToBID(return_dropoff.SelectedItem.ToString());
-            float final_price = float.Parse(args[8]);
-            bool late = false, change = false;
-            string message = "Return Car: " + args[1] + " To " + return_dropoff.Text;
+            string[] aCar = new string[10];
 
-            //Check if dropped of at different branch - Only apply fee if cust not gold
-            if (drop_off != args[6])
+            if (removeOutput.SelectedItems != null)
             {
-                if (get_cust_status(return_id.Text) == false)
+                ListViewItem aSelection = returnOutputBox.SelectedItems[0];
+                aCar[0] = (aSelection.SubItems[0].Text); //bookingID
+                aCar[1] = (aSelection.SubItems[1].Text); //carID
+                aCar[2] = (aSelection.SubItems[2].Text); //description
+                aCar[3] = (aSelection.SubItems[3].Text); //plateNum
+                aCar[4] = (aSelection.SubItems[4].Text); //dateFrom
+                aCar[5] = (aSelection.SubItems[5].Text); //dateTo
+                aCar[6] = cityToBID((aSelection.SubItems[6].Text)); //branchFrom
+                aCar[7] = (aSelection.SubItems[7].Text); //typeRequested
+                aCar[8] = (aSelection.SubItems[8].Text); //Price
+
+
+                string drop_off = cityToBID(return_dropoff.SelectedItem.ToString());
+                float final_price = float.Parse(aCar[8]);
+                bool late = false, change = false;
+                string message = "Return Car: " + aCar[1] + " To " + return_dropoff.Text;
+
+
+                //Check if dropped of at different branch - Only apply fee if cust not gold
+                if (drop_off != aCar[6])
                 {
-                    change = true;
-                    message += "\nChange Branch Fee Applied";
+                    if (get_cust_status(return_id.Text) == false)
+                    {
+                        change = true;
+                        message += "\nChange Branch Fee Applied";
+                    }
+                }
+
+                //Check if the drop off is late
+                if (DateTime.Parse(aCar[5]) < dropoff_date.Value)
+                {
+                    late = true;
+                    message += "\nLate Dropoff Fee Applied";
+                }
+
+                final_price += calc_price(DateTime.Parse(aCar[4]), dropoff_date.Value, aCar[7], late, change);
+
+                DialogResult confirm = MessageBox.Show(message + "\nFinal Price: " + final_price.ToString(), "Confirm", MessageBoxButtons.OKCancel);
+                if (confirm == DialogResult.OK)
+                {
+                    mycommand.CommandText += "UPDATE booking SET ";
+                    mycommand.CommandText += "branchTo = '" + drop_off + "', ";
+                    mycommand.CommandText += "[returned] = '" + dropoff_date.Text + "' ";
+                    mycommand.CommandText += "WHERE booking_id = '" + aCar[0] + "'";
+                    try
+                    {
+                        mycommand.ExecuteNonQuery();
+                        MessageBox.Show("Return Processed");
+                        returnOutputBox.Items.Remove(aSelection);
+                    }
+                    catch (SqlException ex)
+                    {
+                        MessageBox.Show("Cannot Complete Return: " + ex.Message);
+                        Clipboard.SetText(mycommand.CommandText);
+                    }
+                    myreader.Close();
                 }
             }
-
-            //Check if the drop off is late
-            if (DateTime.Parse(args[5]) < dropoff_date.Value)
+            else
             {
-                late = true;
-                message += "\nLate Dropoff Fee Applied";
-            }
-            final_price += calc_price(DateTime.Parse(args[4]), dropoff_date.Value, args[7], late, change);
-
-            DialogResult confirm = MessageBox.Show(message + "\nFinal Price: " + final_price.ToString(), "Confirm", MessageBoxButtons.OKCancel);
-            if (confirm == DialogResult.OK)
-            {
-                mycommand.CommandText += "UPDATE booking SET ";
-                mycommand.CommandText += "branchTo = '" + drop_off + "', ";
-                mycommand.CommandText += "[returned] = '" + dropoff_date.Text + "' ";
-                mycommand.CommandText += "WHERE booking_id = '" + args[0] + "'";
-                try
-                {
-                    mycommand.ExecuteNonQuery();
-                    MessageBox.Show("Return Processed");
-                }
-                catch (SqlException ex)
-                {
-                    MessageBox.Show("Cannot Complete Return: " + ex.Message);
-                    Clipboard.SetText(mycommand.CommandText);
-                }
-                myreader.Close();
+                returnOutputBox.Items.Add("No Results Found");
             }
         }
 
         private void submit_return_Click(object sender, EventArgs e)
         {
-            returnOutput.Items.Clear();
+            returnOutputBox.Items.Clear();
+
             if (return_id.Text.Length == 0)
             {
                 return_id_error.Text = "Please Enter Customer ID";
@@ -916,20 +882,37 @@ namespace CMPT291PROJECT
             }
             mycommand.CommandText = "SELECT * FROM booking b, type t, car c WHERE cust_id = '" + return_id.Text + "'";
             mycommand.CommandText += " and returned IS NULL and b.type_requested = t.type_id and b.car_id = c.car_id";
-            //MessageBox.Show(mycommand.CommandText);
             Clipboard.SetText(mycommand.CommandText);
+
+
             //List <string> = new List<string>
             try
             {
+                string[] carInfo = new string[10];
+                ListViewItem anItem;
+                string tempDate;
+                string tempDate1;
                 myreader = mycommand.ExecuteReader();
                 while (myreader.Read())
                 {
-                    string temp = "";
-                    temp += myreader["booking_id"].ToString() + "\t" + myreader["car_id"].ToString() + "\t";
-                    temp += myreader["description"].ToString() + "\t" + myreader["plate_num"].ToString() + "\t";
-                    temp += DateTime.Parse(myreader["date_From"].ToString()).Date.ToString("d") + "\t" + DateTime.Parse(myreader["date_to"].ToString()).Date.ToString("d") + "\t";
-                    temp += myreader["branchFrom"].ToString() + "\t" + myreader["type_requested"] + "\t" + myreader["price"].ToString();
-                    returnOutput.Items.Add(temp);
+                    carInfo[0] = myreader["booking_id"].ToString(); //BookingID
+                    carInfo[1] = myreader["car_id"].ToString(); //CarID
+                    carInfo[2] = myreader["description"].ToString(); //Description
+                    carInfo[3] = myreader["plate_num"].ToString(); //PlateNum
+
+                    tempDate = DateTime.Parse(myreader["date_From"].ToString()).Date.ToString("d"); //DateFrom
+                    carInfo[4] = tempDate; //DateFrom
+
+                    tempDate1 = DateTime.Parse(myreader["date_to"].ToString()).Date.ToString("d"); //DateTo
+                    carInfo[5] = tempDate1; //DateTo
+
+                    carInfo[6] = myreader["branchFrom"].ToString(); //BranchFrom
+                    carInfo[7] = myreader["type_requested"].ToString(); //TypeRequested
+                    carInfo[8] = myreader["price"].ToString(); //Price
+
+                    anItem = new ListViewItem(carInfo);
+                    returnOutputBox.Items.Add(anItem);
+
                 }
             }
             catch (Exception ex)
@@ -987,11 +970,12 @@ namespace CMPT291PROJECT
 
         private void report_submit_Click(object sender, EventArgs e)
         {
+            reportOutputBox.Visible = true;
             reportOutputBox.Items.Clear();
             reportOutputBox.Columns.Clear();
+            string[] temp = new string[2];
             IList<string> report = new List<string>();
             ListViewItem anItem;
-            //reportbox.Text = "";
             if (radioButton5.Checked == true)
             {
                 reportOutputBox.Columns.Add("Customer", 150);
@@ -1003,10 +987,23 @@ namespace CMPT291PROJECT
                     "(select cust_id " +
                     "from booking, car " +
                     "where booking.car_id = car.car_id and type_requested != car_type);";
-                myreader = mycommand.ExecuteReader();
+                try
+                {
+                    myreader = mycommand.ExecuteReader();
+                    while (myreader.Read())
+                    {
+                        temp[0] = myreader[0].ToString();
+                        temp[1] = myreader[1].ToString();
+                        anItem = new ListViewItem(temp);
+                        reportOutputBox.Items.Add(anItem);
+                    }
+                } catch (Exception e1){MessageBox.Show(Text, e1.Message);}
+
+                myreader.Close();
             }
             else if (radioButton1.Checked == true)
             {
+                reportOutputBox.Columns.Add("Branch ID", 250);
                 reportOutputBox.Columns.Add("Customer Spending ($)", 250);
                 mycommand.CommandText = "select distinct branchFrom, sum(price) as [output] from booking where branchFrom = '"
                     + cityToBID(report_branch.SelectedItem.ToString())
@@ -1014,6 +1011,17 @@ namespace CMPT291PROJECT
                     "and date_from >= '" + report_datefrom.Text + "' and date_to <= '"
                     + report_dateto.Text + "' group by branchFrom;";
                 myreader = mycommand.ExecuteReader();
+                while (myreader.Read())
+                {
+                    temp[0] = myreader[0].ToString();
+                    temp[1] = myreader[1].ToString();
+                    //anItem = new ListViewItem(myreader[1].ToString());
+                    anItem = new ListViewItem(temp);
+                    reportOutputBox.Items.Add(anItem);
+
+                    //reportbox.Text += myreader["output"].ToString();
+                }
+                myreader.Close();
             }
             else if (radioButton2.Checked == true)
             {
@@ -1022,10 +1030,19 @@ namespace CMPT291PROJECT
                     "from booking " +
                     "where date_to != returned and branchFrom = '" + cityToBID(report_branch.SelectedItem.ToString()) + "';";
                 myreader = mycommand.ExecuteReader();
+                while (myreader.Read())
+                {
+                    temp[0] = myreader[0].ToString();
+                    //anItem = new ListViewItem(myreader[1].ToString());
+                    anItem = new ListViewItem(temp);
+                    reportOutputBox.Items.Add(anItem);
+
+                    //reportbox.Text += myreader["output"].ToString();
+                }
+                myreader.Close();
             }
             else if (radioButton3.Checked == true)
             {
-                string[] temp = new string[2];
                 reportOutputBox.Columns.Add("Car ID", 150);
                 reportOutputBox.Columns.Add("Total Rentals", 150);
                 mycommand.CommandText = "select car_id, max(num1) as total " +
@@ -1065,6 +1082,16 @@ namespace CMPT291PROJECT
                     "') as Temp;";
                 MessageBox.Show(mycommand.CommandText.ToString());
                 myreader = mycommand.ExecuteReader();
+                while (myreader.Read())
+                {
+                    temp[0] = myreader[0].ToString();
+                    //anItem = new ListViewItem(myreader[1].ToString());
+                    anItem = new ListViewItem(temp);
+                    reportOutputBox.Items.Add(anItem);
+
+                    //reportbox.Text += myreader["output"].ToString();
+                }
+                myreader.Close();
 
 
             }
@@ -1270,6 +1297,7 @@ namespace CMPT291PROJECT
 
         private void Remove_Output_DoubleClick(object sender, MouseEventArgs e)
         {
+            mycommand.CommandText = "";
             if (removeOutput.SelectedItems != null)
             {
                 string[] aCar = new string[6];
@@ -1294,7 +1322,7 @@ namespace CMPT291PROJECT
                 DialogResult removeCar = MessageBox.Show(message, "Remove", MessageBoxButtons.YesNo);
 
                 string[] cols = { "car_id", "car_type", "car_branch", "model", "year", "plate_num" };
-                mycommand.CommandText = "DELETE FROM car WHERE ";
+                mycommand.CommandText += "DELETE FROM car WHERE ";
 
                 aCar[0] = (aSelection.SubItems[0].Text);
                 aCar[1] = descToType((aSelection.SubItems[1].Text));
@@ -1305,15 +1333,25 @@ namespace CMPT291PROJECT
 
                 int i;
                 for (i = 0; i < aCar.Length; i++)
-                {
+                {                    
+                    if (i + 1 == aCar.Length)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        mycommand.CommandText += " AND ";
+                    }
 
                     mycommand.CommandText += cols[i] + " = ";
                     mycommand.CommandText += "'" + aCar[i] + "'";
-                    if (i + 1 == aCar.Length)
-                        break;
-                    mycommand.CommandText += " AND ";
+
 
                 }
+                mycommand.CommandText += " AND plate_num = ";
+                mycommand.CommandText += "'" + aCar[aCar.Length - 1] + "'";
+
+                MessageBox.Show(mycommand.CommandText.ToString());
                 if (removeCar == DialogResult.Yes)
                 {
                     try
@@ -1540,14 +1578,19 @@ namespace CMPT291PROJECT
                 user_id.ResetText();
                 user_info.Visible = false;
                 drop_off_check.Checked = default;
+                date_from.ResetText();
+                date_to.Value = default_date_to;
             }
                 
             else if (tabControl1.SelectedTab == tabControl1.TabPages["tabPage2"])
             {
                 this.AcceptButton = submit_return;
                 return_id_error.Visible = false;
-                returnOutput.Items.Clear();
+                returnOutputBox.Items.Clear();
+                //returnOutput.Items.Clear();
+                dropoff_date.ResetText();
                 return_id.ResetText();
+               
             }
                 
             else if (tabControl1.SelectedTab == tabControl1.TabPages["tabPage3"])
@@ -1555,13 +1598,28 @@ namespace CMPT291PROJECT
                 this.AcceptButton = InventoryButton;
                 InventoryBranch.SelectedIndex = 0;
                 invDateFrom.ResetText();
-                invDateTo.ResetText();
+                invDateTo.Value = default_date_to;
             }
                 
             else if (tabControl1.SelectedTab == tabControl1.TabPages["tabPage4"])
             {
                 this.AcceptButton = report_submit;
-                reportbox.Items.Clear();
+                reportOutputBox.Items.Clear();
+                reportOutputBox.Columns.Clear();
+                radioButton5.Checked = default;
+                radioButton4.Checked = default;
+                radioButton3.Checked = default;
+                radioButton2.Checked = default;
+                radioButton1.Checked = default;
+                if (noFilters.Visible == true)
+                    noFilters.Visible = false;
+                report_branch.SelectedIndex = default;
+                report_type.SelectedIndex = default;
+                report_datefrom.Text = default_date;
+                report_dateto.Value = default_date_to;
+                reportOutputBox.Visible = false;
+
+
             }
                 
             else if (tabControl1.SelectedTab == tabControl1.TabPages["tabPage5"])
