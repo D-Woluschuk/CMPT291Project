@@ -888,8 +888,8 @@ namespace CMPT291PROJECT
                     return;
                 }
             }
-            mycommand.CommandText = "SELECT * FROM booking b, type t, car c WHERE cust_id = '" + return_id.Text + "'";
-            mycommand.CommandText += " and returned IS NULL and b.type_requested = t.type_id and b.car_id = c.car_id";
+            mycommand.CommandText = "SELECT * FROM booking b, type t, car c, branch br WHERE cust_id = '" + return_id.Text + "'";
+            mycommand.CommandText += " and returned IS NULL and b.type_requested = t.type_id and b.car_id = c.car_id and br.branch_id = b.branchFrom";
 
             try
             {
@@ -911,8 +911,8 @@ namespace CMPT291PROJECT
                     tempDate1 = DateTime.Parse(myreader["date_to"].ToString()).Date.ToString("d"); //DateTo
                     carInfo[5] = tempDate1; //DateTo
 
-                    carInfo[6] = myreader["branchFrom"].ToString(); //BranchFrom
-                    carInfo[7] = myreader["type_requested"].ToString(); //TypeRequested
+                    carInfo[6] = myreader["city"].ToString(); //BranchFrom
+                    carInfo[7] = myreader["description"].ToString(); //TypeRequested
                     carInfo[8] = myreader["price"].ToString(); //Price
 
                     anItem = new ListViewItem(carInfo);
@@ -1114,26 +1114,19 @@ namespace CMPT291PROJECT
 
 
                 mycommand.CommandText = "select avg([days]) as [output], branchFrom from " +
-                    "(select booking_id, DATEDIFF(day, date_from, date_to) as [days], branchFrom from booking ";
-                if (report_branch.SelectedIndex != 0) {
-                    mycommand.CommandText += "where branchFrom = '" +
-                        cityToBID(report_branch.SelectedItem.ToString());
-                   
-                    if (report_type.SelectedIndex != 0) {
-                        mycommand.CommandText += "' and type_requested = '" +
-                             descToType(report_type.SelectedItem.ToString()) + "') as temp";
-                    }
-                    else
-                    {
-                        mycommand.CommandText += "') as Temp";
-                    }
-                }
-                else if (report_type.SelectedIndex != 0)
-                {
-                    mycommand.CommandText += "where type_requested = '" + descToType(report_type.SelectedItem.ToString()) + "') as temp";
-                }
-                else { mycommand.CommandText += ") as Temp group by branchFrom"; }
+                    "(select booking_id, DATEDIFF(day, date_from, date_to) as [days], branchFrom from booking where 1 = 1 ";
 
+                if (report_branch.SelectedIndex != 0)
+                {
+                    mycommand.CommandText += "and branchFrom = '" +
+                        cityToBID(report_branch.SelectedItem.ToString()) + "'";
+                }
+                 if (report_type.SelectedIndex != 0)
+                {
+                    mycommand.CommandText += "and type_requested = '" + descToType(report_type.SelectedItem.ToString()) + "'";
+                }
+                mycommand.CommandText += ") as Temp group by branchFrom"; 
+                Clipboard.SetText(mycommand.CommandText);
                 try
                 {
                     myreader = mycommand.ExecuteReader();
