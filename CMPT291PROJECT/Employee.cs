@@ -998,7 +998,7 @@ namespace CMPT291PROJECT
             reportOutputBox.Visible = true;
             reportOutputBox.Items.Clear();
             reportOutputBox.Columns.Clear();
-            string[] temp = new string[2];
+            string[] temp = new string[3];
             IList<string> report = new List<string>();
             ListViewItem anItem;
             if (radioButton5.Checked == true)
@@ -1050,20 +1050,26 @@ namespace CMPT291PROJECT
             }
             else if (radioButton2.Checked == true)
             {
-                reportOutputBox.Columns.Add("Total Late Dropoffs", 250);
-                mycommand.CommandText = "select count(*) as [output] " +
-                    "from booking " +
-                    "where date_to != returned ";
+                reportOutputBox.Columns.Add("Branch", 200);
+                reportOutputBox.Columns.Add("Total Late Dropoffs", 200);
+                reportOutputBox.Columns.Add("Total Late Fees", 150);
+
+                mycommand.CommandText = "Select * from branch br," +
+                    "(select sum(late_fee) as total, branchFrom from type t, booking b where t.type_id = b.type_requested and b.date_to < b.returned group by b.branchFrom) as t1, " +
+                    " (select count(*) as [count], branchFrom from booking b, type t WHERE t.type_id = b.type_requested and date_to < returned group by branchFrom) as t2 " +
+                    "where t1.branchfrom = t2.branchfrom and br.branch_id = t1.branchFrom";
                 if (report_branch.SelectedIndex != 0)
                 {
-                    mycommand.CommandText += "and branchFrom = '" + cityToBID(report_branch.SelectedItem.ToString()) + "'";
+                    mycommand.CommandText += " and t1.branchFrom = '" + cityToBID(report_branch.SelectedItem.ToString()) + "'";
                 }
                 try
                 {
                     myreader = mycommand.ExecuteReader();
                     while (myreader.Read())
                     {
-                        temp[0] = myreader[0].ToString();
+                        temp[0] = myreader["city"].ToString();
+                        temp[1] = myreader["count"].ToString();
+                        temp[2] = myreader["total"].ToString();
                         //anItem = new ListViewItem(myreader[1].ToString());
                         anItem = new ListViewItem(temp);
                         reportOutputBox.Items.Add(anItem);
@@ -1082,9 +1088,12 @@ namespace CMPT291PROJECT
                     "from( " +
                     "select description, count(*) as num1 " +
                     "from booking b, type t, car c " +
-                    "where b.car_id = c.car_id and c.car_type = t.type_id and branchFrom = '" +
-                    cityToBID(report_branch.SelectedItem.ToString()) +
-                    "' group by description) as tem " +
+                    "where b.car_id = c.car_id and c.car_type = t.type_id ";
+                if (report_branch.SelectedIndex != 0) {
+                    mycommand.CommandText += "and branchFrom = '" +
+                    cityToBID(report_branch.SelectedItem.ToString()) + "'";
+                }
+                mycommand.CommandText += " group by description) as tem " +
                     "group by description ";
 
                 try { 
