@@ -131,8 +131,7 @@ namespace CMPT291PROJECT
                 InventoryBranch.DataSource = branches;
                 addcar_type.DataSource = types;
                 return_dropoff.DataSource = branches;
-                report_type.DataSource = types;
-                report_branch.DataSource = branches;
+                
 
 
                 branches.Insert(0, "Any");
@@ -141,6 +140,9 @@ namespace CMPT291PROJECT
                 remcar_type.DataSource = types;
                 edit_type.DataSource = types;
                 edit_branch.DataSource = branches;
+                report_type.DataSource = types;
+                report_branch.DataSource = branches;
+
                 for (int i = 0; i < branches.Count; i++)
                     branches1.Add(branches.ElementAt(i));
 
@@ -1006,19 +1008,35 @@ namespace CMPT291PROJECT
             {
                 reportOutputBox.Columns.Add("Branch ID", 250);
                 reportOutputBox.Columns.Add("Customer Spending ($)", 250);
-                mycommand.CommandText = "select distinct branchFrom, sum(price) as [output] from booking where branchFrom = '"
-                    + cityToBID(report_branch.SelectedItem.ToString())
-                    + "' and type_requested = '" + descToType(report_type.SelectedItem.ToString()) + "'" +
-                    "and date_from >= '" + report_datefrom.Text + "' and date_to <= '"
-                    + report_dateto.Text + "' group by branchFrom;";
-                myreader = mycommand.ExecuteReader();
-                while (myreader.Read())
+                mycommand.CommandText = "select distinct branchFrom, sum(price) as [output] from booking where 1=1 ";
+                if (report_branch.SelectedIndex != 0)
                 {
-                    temp[0] = myreader[0].ToString();
-                    temp[1] = myreader[1].ToString();
-                    anItem = new ListViewItem(temp);
-                    reportOutputBox.Items.Add(anItem);
+                    mycommand.CommandText += "and branchFrom = '" + cityToBID(report_branch.SelectedItem.ToString()) + "'";
                 }
+                if (report_type.SelectedIndex != 0)
+                {
+                    mycommand.CommandText += " and type_requested = '" + descToType(report_type.SelectedItem.ToString()) + "'";
+                }
+                if (report_datefrom.Text != default_date && report_dateto.Value != default_date_to)
+                {
+                    mycommand.CommandText += "and date_from >= '" + report_datefrom.Text + "' and date_to <= '"
+                    + report_dateto.Text + "'";
+                }
+                mycommand.CommandText += " group by branchFrom;";
+
+                Clipboard.SetText(mycommand.CommandText);
+                try
+                {
+                    myreader = mycommand.ExecuteReader();
+                    while (myreader.Read())
+                    {
+                        temp[0] = myreader[0].ToString();
+                        temp[1] = myreader[1].ToString();
+                        anItem = new ListViewItem(temp);
+                        reportOutputBox.Items.Add(anItem);
+                    }
+                }
+                catch (Exception e1) { MessageBox.Show(e1.Message); }
                 myreader.Close();
             }
             else if (radioButton2.Checked == true)
@@ -1031,9 +1049,10 @@ namespace CMPT291PROJECT
                     "(select sum(late_fee) as total, branchFrom from type t, booking b where t.type_id = b.type_requested and b.date_to < b.returned group by b.branchFrom) as t1, " +
                     " (select count(*) as [count], branchFrom from booking b, type t WHERE t.type_id = b.type_requested and date_to < returned group by branchFrom) as t2 " +
                     "where t1.branchfrom = t2.branchfrom and br.branch_id = t1.branchFrom";
-                if (report_branch.SelectedIndex != 0)
+
+                if (report_branch.SelectedItem.ToString() != "Any")
                 {
-                    mycommand.CommandText += " and t1.branchFrom = '" + cityToBID(report_branch.SelectedItem.ToString()) + "'";
+                    mycommand.CommandText += " and br.branch_id = '" + cityToBID(report_branch.SelectedItem.ToString()) + "'";
                 }
                 try
                 {
@@ -1091,9 +1110,11 @@ namespace CMPT291PROJECT
             else if (radioButton4.Checked == true)
             {
                 reportOutputBox.Columns.Add("Average Rental Time (Days)", 250);
+                reportOutputBox.Columns.Add("Branch", 250);
 
-                mycommand.CommandText = "select avg([days]) as [output] from " +
-                    "(select booking_id, DATEDIFF(day, date_from, date_to) as [days] from booking ";
+
+                mycommand.CommandText = "select avg([days]) as [output], branchFrom from " +
+                    "(select booking_id, DATEDIFF(day, date_from, date_to) as [days], branchFrom from booking ";
                 if (report_branch.SelectedIndex != 0) {
                     mycommand.CommandText += "where branchFrom = '" +
                         cityToBID(report_branch.SelectedItem.ToString());
@@ -1111,15 +1132,16 @@ namespace CMPT291PROJECT
                 {
                     mycommand.CommandText += "where type_requested = '" + descToType(report_type.SelectedItem.ToString()) + "') as temp";
                 }
-                else { mycommand.CommandText += ") as Temp"; }
-                Clipboard.SetText(mycommand.CommandText);
-                MessageBox.Show(mycommand.CommandText.ToString());
+                else { mycommand.CommandText += ") as Temp group by branchFrom"; }
+
                 try
                 {
                     myreader = mycommand.ExecuteReader();
                     while (myreader.Read())
                     {
                         temp[0] = myreader[0].ToString();
+                        temp[1] = myreader[1].ToString();
+
                         //anItem = new ListViewItem(myreader[1].ToString());
                         anItem = new ListViewItem(temp);
                         reportOutputBox.Items.Add(anItem);
