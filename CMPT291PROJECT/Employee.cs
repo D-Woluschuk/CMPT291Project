@@ -474,7 +474,7 @@ namespace CMPT291PROJECT
         private float calc_price(DateTime date_from, DateTime date_to, string type_id, bool late = false, bool change = false)
         {
             float total_price = 0;
-            int total_days = (date_to - date_from).Days;
+            int total_days = (date_to - date_from).Days + 1;
             float daily = 0, weekly = 0, monthly = 0, late_fee = 0, change_fee = 0;
 
             mycommand.CommandText = "SELECT daily, weekly, monthly, late_fee, change FROM type WHERE type_id = '" + type_id + "'";
@@ -799,7 +799,7 @@ namespace CMPT291PROJECT
                 }
 
                 //Check if the drop off is late
-                if (DateTime.Parse(aCar[5]) < dropoff_date.Value)
+                if (DateTime.Parse(aCar[5]) < dropoff_date.Value.Date)
                 {
                     late = true;
                     message += "\nLate Dropoff Fee Applied";
@@ -1008,7 +1008,7 @@ namespace CMPT291PROJECT
             {
                 reportOutputBox.Columns.Add("Branch ID", 250);
                 reportOutputBox.Columns.Add("Customer Spending ($)", 250);
-                mycommand.CommandText = "select distinct branchFrom, sum(price) as [output] from booking where 1=1 ";
+                mycommand.CommandText = "select distinct branchFrom, avg(price) as [output] from booking where 1=1 ";
                 if (report_branch.SelectedIndex != 0)
                 {
                     mycommand.CommandText += "and branchFrom = '" + cityToBID(report_branch.SelectedItem.ToString()) + "'";
@@ -1088,8 +1088,9 @@ namespace CMPT291PROJECT
                     cityToBID(report_branch.SelectedItem.ToString()) + "'";
                 }
                 mycommand.CommandText += " group by description) as tem " +
-                    "group by description ";
+                    "group by description";
 
+                Clipboard.SetText(mycommand.CommandText);
                 try
                 {
                     myreader = mycommand.ExecuteReader();
