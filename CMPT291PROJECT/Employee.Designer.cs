@@ -199,7 +199,7 @@
             // Book_Warn
             // 
             this.Book_Warn.AutoSize = true;
-            this.Book_Warn.Location = new System.Drawing.Point(223, 26);
+            this.Book_Warn.Location = new System.Drawing.Point(151, 50);
             this.Book_Warn.Name = "Book_Warn";
             this.Book_Warn.Size = new System.Drawing.Size(0, 24);
             this.Book_Warn.TabIndex = 33;
@@ -229,7 +229,7 @@
             // user_info
             // 
             this.user_info.AutoSize = true;
-            this.user_info.Location = new System.Drawing.Point(244, 26);
+            this.user_info.Location = new System.Drawing.Point(205, 26);
             this.user_info.Name = "user_info";
             this.user_info.Size = new System.Drawing.Size(113, 24);
             this.user_info.TabIndex = 30;
