@@ -218,10 +218,10 @@
             // 
             this.bookingOutput.BackColor = System.Drawing.Color.Gray;
             this.bookingOutput.HideSelection = false;
-            this.bookingOutput.Location = new System.Drawing.Point(456, 6);
+            this.bookingOutput.Location = new System.Drawing.Point(406, 6);
             this.bookingOutput.Margin = new System.Windows.Forms.Padding(4);
             this.bookingOutput.Name = "bookingOutput";
-            this.bookingOutput.Size = new System.Drawing.Size(647, 582);
+            this.bookingOutput.Size = new System.Drawing.Size(697, 582);
             this.bookingOutput.TabIndex = 31;
             this.bookingOutput.UseCompatibleStateImageBehavior = false;
             this.bookingOutput.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.booking_MouseDoubleClick);
@@ -229,7 +229,7 @@
             // user_info
             // 
             this.user_info.AutoSize = true;
-            this.user_info.Location = new System.Drawing.Point(274, 26);
+            this.user_info.Location = new System.Drawing.Point(244, 26);
             this.user_info.Name = "user_info";
             this.user_info.Size = new System.Drawing.Size(113, 24);
             this.user_info.TabIndex = 30;
@@ -256,9 +256,9 @@
             this.label17.AutoSize = true;
             this.label17.Location = new System.Drawing.Point(19, 108);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(113, 24);
+            this.label17.Size = new System.Drawing.Size(118, 24);
             this.label17.TabIndex = 26;
-            this.label17.Text = "Customer ID";
+            this.label17.Text = "Customer ID:";
             // 
             // user_id
             // 
@@ -292,11 +292,12 @@
             this.dropoff.Name = "dropoff";
             this.dropoff.Size = new System.Drawing.Size(202, 32);
             this.dropoff.TabIndex = 1;
+            this.dropoff.SelectedIndexChanged += new System.EventHandler(this.branch_changed);
             // 
             // drop_off_check
             // 
             this.drop_off_check.AutoSize = true;
-            this.drop_off_check.Location = new System.Drawing.Point(8, 345);
+            this.drop_off_check.Location = new System.Drawing.Point(110, 345);
             this.drop_off_check.Name = "drop_off_check";
             this.drop_off_check.Size = new System.Drawing.Size(247, 28);
             this.drop_off_check.TabIndex = 20;
@@ -310,9 +311,9 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(19, 437);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(122, 24);
+            this.label4.Size = new System.Drawing.Size(127, 24);
             this.label4.TabIndex = 19;
-            this.label4.Text = "Vehicle Type";
+            this.label4.Text = "Vehicle Type:";
             // 
             // vehicle_type
             // 
@@ -328,9 +329,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(4, 305);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(137, 24);
+            this.label3.Size = new System.Drawing.Size(142, 24);
             this.label3.TabIndex = 17;
-            this.label3.Text = "Pick up Branch";
+            this.label3.Text = "Pick up Branch:";
             // 
             // pickup
             // 
@@ -340,6 +341,7 @@
             this.pickup.Name = "pickup";
             this.pickup.Size = new System.Drawing.Size(202, 32);
             this.pickup.TabIndex = 0;
+            this.pickup.SelectedIndexChanged += new System.EventHandler(this.branch_changed);
             // 
             // label2
             // 

@@ -117,7 +117,7 @@ namespace CMPT291PROJECT
             {
                 IList<string> branches = new List<string>();
                 IList<string> types = new List<string>();
-               
+                IList<string> branches1 = new List<string>();
 
                 myreader = mycommand.ExecuteReader();
                 while (myreader.Read())
@@ -127,7 +127,6 @@ namespace CMPT291PROJECT
                 }
                 branches = branches.Distinct().ToList();
                 types = types.Distinct().ToList();
-
                 addcar_branch.DataSource = branches;
                 InventoryBranch.DataSource = branches;
                 addcar_type.DataSource = types;
@@ -142,10 +141,11 @@ namespace CMPT291PROJECT
                 remcar_type.DataSource = types;
                 edit_type.DataSource = types;
                 edit_branch.DataSource = branches;
-
+                for (int i = 0; i < branches.Count; i++)
+                    branches1.Add(branches.ElementAt(i));
 
                 pickup.DataSource = branches;
-                dropoff.DataSource = branches;
+                dropoff.DataSource = branches1;
                 
                 vehicle_type.DataSource = types;
                 
@@ -296,6 +296,7 @@ namespace CMPT291PROJECT
 
         private void booking_submit_click(object sender, EventArgs e)
         {
+            bool gold = false;
             bookingOutput.Items.Clear();
             if (date_from.Value > date_to.Value)
             {
@@ -325,7 +326,7 @@ namespace CMPT291PROJECT
                         user_info.ForeColor = Color.Black;
                         user_info.Text = myreader["fname"].ToString() + " " + myreader["Lname"].ToString() + "\n";
                         user_info.Text += myreader["street"].ToString() + " " + myreader["city"].ToString() + " " + myreader["province"];
-                        if (myreader["Gold_status"].ToString() == "True") { user_info.Text += "\nGold Status"; }
+                        if (myreader["Gold_status"].ToString() == "True") { user_info.Text += "\nGold Status"; gold = true; }
                     }
                 }
                 catch (Exception e3)
@@ -346,8 +347,17 @@ namespace CMPT291PROJECT
                 mycommand.CommandText += "and b.city = '" + pickup.SelectedItem.ToString() + "' ";
             }
             if (vehicle_type.SelectedItem.ToString() != "Any")
-            {
+            {                
                 mycommand.CommandText += "and t.description = '" + vehicle_type.SelectedItem.ToString() + "' ";
+
+                if (gold)
+                {
+                    mycommand.CommandText += "or t.type_id >= '" + descToType(vehicle_type.SelectedItem.ToString()) + "') ";
+                }
+                else
+                {
+                    mycommand.CommandText += " ";
+                }
             }
             if (date_from.Value.ToString() != default_date || date_to.Value.ToString() != default_date)
             {
@@ -357,15 +367,31 @@ namespace CMPT291PROJECT
                 mycommand.CommandText += "(b.Date_From <= '" + date_to.Value.ToString() + "') and ('";
                 mycommand.CommandText += date_from.Value.ToString() + "' <= b.Date_To)) ";              //TODO Check if date formats are compatible
             }
+            mycommand.CommandText += "ORDER BY type_id";
 
             // Display all available vehicles to output
             string[] aCar = new string[7];
             ListViewItem anItem;
+            int o = 0;
             try
             {
                 myreader = mycommand.ExecuteReader();
                 while (myreader.Read())
                 {
+
+                    if (myreader["description"].ToString() != vehicle_type.SelectedItem.ToString() && vehicle_type.SelectedItem.ToString() != "Any")
+                    {
+                        if (o == 0)
+                        {
+                            MessageBox.Show("Free Upgrade Available");
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                    }
+
+
                     aCar[0] = myreader["city"].ToString();
                     aCar[1] = myreader["description"].ToString();
                     aCar[2] = myreader["model"].ToString();
@@ -375,6 +401,7 @@ namespace CMPT291PROJECT
                     
                     anItem = new ListViewItem(aCar);
                     bookingOutput.Items.Add(anItem);
+                    o++;
                 }
             }
             catch (Exception e3) { MessageBox.Show(e3.ToString()); }
@@ -511,8 +538,6 @@ namespace CMPT291PROJECT
                 Book_Warn.Visible = true;
                 Book_Warn.Text = "Please Enter Customer ID";
                 Book_Warn.ForeColor = Color.Red;
-                //user_info.Text = "Please Enter Customer ID";
-                //user_info.ForeColor = Color.Red;
                 return;
             }
             mycommand.CommandText = "SELECT * FROM customer WHERE cust_id = '" + user_id.Text.ToString() + "'";
@@ -1063,7 +1088,8 @@ namespace CMPT291PROJECT
 
         private void drop_off_check_CheckedChanged(object sender, EventArgs e)
         {
-
+            if (drop_off_check.Checked == false)
+                dropoff.SelectedIndex = pickup.SelectedIndex;
         }
 
 
@@ -1477,9 +1503,13 @@ namespace CMPT291PROJECT
                 this.AcceptButton = button1;
                 user_id.ResetText();
                 user_info.Visible = false;
+                Book_Warn.Visible = false;
                 drop_off_check.Checked = default;
                 date_from.ResetText();
                 date_to.Value = default_date_to;
+                pickup.SelectedIndex = 0;
+                dropoff.SelectedIndex = 0;
+
             }
                 
             else if (tabControl1.SelectedTab == tabControl1.TabPages["tabPage2"])
@@ -1636,6 +1666,12 @@ namespace CMPT291PROJECT
                 MessageBox.Show("Please enter only numbers.");
                 textBox.Text = textBox.Text.Remove(textBox.Text.Length - 1);
             }
+        }
+
+        private void branch_changed(object sender, EventArgs e)
+        {
+            if (drop_off_check.Checked == false && dropoff.CanSelect)
+                dropoff.SelectedIndex = pickup.SelectedIndex;
         }
     }    
 }
