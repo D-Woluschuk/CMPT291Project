@@ -1053,18 +1053,26 @@ namespace CMPT291PROJECT
                 reportOutputBox.Columns.Add("Total Late Dropoffs", 250);
                 mycommand.CommandText = "select count(*) as [output] " +
                     "from booking " +
-                    "where date_to != returned and branchFrom = '" + cityToBID(report_branch.SelectedItem.ToString()) + "';";
-                myreader = mycommand.ExecuteReader();
-                while (myreader.Read())
+                    "where date_to != returned ";
+                if (report_branch.SelectedIndex != 0)
                 {
-                    temp[0] = myreader[0].ToString();
-                    //anItem = new ListViewItem(myreader[1].ToString());
-                    anItem = new ListViewItem(temp);
-                    reportOutputBox.Items.Add(anItem);
-
-                    //reportbox.Text += myreader["output"].ToString();
+                    mycommand.CommandText += "and branchFrom = '" + cityToBID(report_branch.SelectedItem.ToString()) + "'";
                 }
+                try
+                {
+                    myreader = mycommand.ExecuteReader();
+                    while (myreader.Read())
+                    {
+                        temp[0] = myreader[0].ToString();
+                        //anItem = new ListViewItem(myreader[1].ToString());
+                        anItem = new ListViewItem(temp);
+                        reportOutputBox.Items.Add(anItem);
+
+                        //reportbox.Text += myreader["output"].ToString();
+                    }
+                }catch(SqlException ex) { MessageBox.Show(ex.Message); }
                 myreader.Close();
+                Clipboard.SetText(mycommand.CommandText);
             }
             else if (radioButton3.Checked == true)
             {
