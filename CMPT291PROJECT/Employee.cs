@@ -1012,7 +1012,7 @@ namespace CMPT291PROJECT
                     "b.cust_id = c.cust_id and c.gold_status = 1 and c.cust_id not in " +
                     "(select b.cust_id from booking b, car c where b.type_requested != c.car_type " +
                     "and c.car_id = b.car_id) ";
-                    
+
                 try
                 {
                     myreader = mycommand.ExecuteReader();
@@ -1024,7 +1024,8 @@ namespace CMPT291PROJECT
                         anItem = new ListViewItem(temp);
                         reportOutputBox.Items.Add(anItem);
                     }
-                } catch (Exception e1){MessageBox.Show(Text, e1.Message);}
+                }
+                catch (Exception e1) { MessageBox.Show(Text, e1.Message); }
 
                 myreader.Close();
             }
@@ -1078,7 +1079,8 @@ namespace CMPT291PROJECT
 
                         //reportbox.Text += myreader["output"].ToString();
                     }
-                }catch(SqlException ex) { MessageBox.Show(ex.Message); }
+                }
+                catch (SqlException ex) { MessageBox.Show(ex.Message); }
                 myreader.Close();
                 Clipboard.SetText(mycommand.CommandText);
             }
@@ -1091,14 +1093,16 @@ namespace CMPT291PROJECT
                     "select description, count(*) as num1 " +
                     "from booking b, type t, car c " +
                     "where b.car_id = c.car_id and c.car_type = t.type_id ";
-                if (report_branch.SelectedIndex != 0) {
+                if (report_branch.SelectedIndex != 0)
+                {
                     mycommand.CommandText += "and branchFrom = '" +
                     cityToBID(report_branch.SelectedItem.ToString()) + "'";
                 }
                 mycommand.CommandText += " group by description) as tem " +
                     "group by description ";
 
-                try { 
+                try
+                {
                     myreader = mycommand.ExecuteReader();
                     while (myreader.Read())
                     {
@@ -1111,32 +1115,49 @@ namespace CMPT291PROJECT
                         //reportbox.Text += myreader["output"].ToString();
                     }
                 }
-                catch (SqlException ex){ MessageBox.Show(ex.Message); }
+                catch (SqlException ex) { MessageBox.Show(ex.Message); }
                 myreader.Close();
             }
             else if (radioButton4.Checked == true)
             {
                 reportOutputBox.Columns.Add("Average Rental Time (Days)", 250);
-                
-                mycommand.CommandText = "select sum([days]) as [output] " +
-                    "from( " +
-                    "select booking_id, DATEDIFF(day, date_from, date_to) as [days] " +
-                    "from booking where branchFrom = '" +
-                    cityToBID(report_branch.SelectedItem.ToString()) +
-                    "' and type_requested = '" +
-                    descToType(report_type.SelectedItem.ToString()) +
-                    "') as Temp;";
-                MessageBox.Show(mycommand.CommandText.ToString());
-                myreader = mycommand.ExecuteReader();
-                while (myreader.Read())
-                {
-                    temp[0] = myreader[0].ToString();
-                    //anItem = new ListViewItem(myreader[1].ToString());
-                    anItem = new ListViewItem(temp);
-                    reportOutputBox.Items.Add(anItem);
 
-                    //reportbox.Text += myreader["output"].ToString();
+                mycommand.CommandText = "select avg([days]) as [output] from " +
+                    "(select booking_id, DATEDIFF(day, date_from, date_to) as [days] from booking ";
+                if (report_branch.SelectedIndex != 0) {
+                    mycommand.CommandText += "where branchFrom = '" +
+                        cityToBID(report_branch.SelectedItem.ToString());
+                   
+                    if (report_type.SelectedIndex != 0) {
+                        mycommand.CommandText += "' and type_requested = '" +
+                             descToType(report_type.SelectedItem.ToString()) + "') as temp";
+                    }
+                    else
+                    {
+                        mycommand.CommandText += "') as Temp";
+                    }
                 }
+                else if (report_type.SelectedIndex != 0)
+                {
+                    mycommand.CommandText += "where type_requested = '" + descToType(report_type.SelectedItem.ToString()) + "') as temp";
+                }
+                else { mycommand.CommandText += ") as Temp"; }
+                Clipboard.SetText(mycommand.CommandText);
+                MessageBox.Show(mycommand.CommandText.ToString());
+                try
+                {
+                    myreader = mycommand.ExecuteReader();
+                    while (myreader.Read())
+                    {
+                        temp[0] = myreader[0].ToString();
+                        //anItem = new ListViewItem(myreader[1].ToString());
+                        anItem = new ListViewItem(temp);
+                        reportOutputBox.Items.Add(anItem);
+
+                        //reportbox.Text += myreader["output"].ToString();
+                    }
+                }
+                catch (SqlException ex) { MessageBox.Show(ex.Message); }
                 myreader.Close();
 
 
