@@ -30,12 +30,13 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.Book_Warn = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.bookingOutput = new System.Windows.Forms.ListView();
             this.user_info = new System.Windows.Forms.Label();
             this.CustomerLookup = new System.Windows.Forms.Button();
             this.label17 = new System.Windows.Forms.Label();
             this.user_id = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.dropoff = new System.Windows.Forms.ComboBox();
             this.drop_off_check = new System.Windows.Forms.CheckBox();
@@ -48,6 +49,8 @@
             this.date_to = new System.Windows.Forms.DateTimePicker();
             this.date_from = new System.Windows.Forms.DateTimePicker();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.returnOutputBox = new System.Windows.Forms.ListView();
+            this.label40 = new System.Windows.Forms.Label();
             this.return_id_error = new System.Windows.Forms.Label();
             this.returnLookup = new System.Windows.Forms.Button();
             this.return_dropoff = new System.Windows.Forms.ComboBox();
@@ -133,8 +136,6 @@
             this.editcar_id = new System.Windows.Forms.TextBox();
             this.edit_model = new System.Windows.Forms.TextBox();
             this.editSubmit = new System.Windows.Forms.Button();
-            this.label40 = new System.Windows.Forms.Label();
-            this.returnOutputBox = new System.Windows.Forms.ListView();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -170,12 +171,13 @@
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.Gray;
+            this.tabPage1.Controls.Add(this.Book_Warn);
+            this.tabPage1.Controls.Add(this.label5);
             this.tabPage1.Controls.Add(this.bookingOutput);
             this.tabPage1.Controls.Add(this.user_info);
             this.tabPage1.Controls.Add(this.CustomerLookup);
             this.tabPage1.Controls.Add(this.label17);
             this.tabPage1.Controls.Add(this.user_id);
-            this.tabPage1.Controls.Add(this.label5);
             this.tabPage1.Controls.Add(this.button1);
             this.tabPage1.Controls.Add(this.dropoff);
             this.tabPage1.Controls.Add(this.drop_off_check);
@@ -194,6 +196,24 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Booking";
             // 
+            // Book_Warn
+            // 
+            this.Book_Warn.AutoSize = true;
+            this.Book_Warn.Location = new System.Drawing.Point(223, 26);
+            this.Book_Warn.Name = "Book_Warn";
+            this.Book_Warn.Size = new System.Drawing.Size(0, 24);
+            this.Book_Warn.TabIndex = 33;
+            this.Book_Warn.Visible = false;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 26);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(193, 24);
+            this.label5.TabIndex = 32;
+            this.label5.Text = "Customer Information:";
+            // 
             // bookingOutput
             // 
             this.bookingOutput.BackColor = System.Drawing.Color.Gray;
@@ -209,7 +229,7 @@
             // user_info
             // 
             this.user_info.AutoSize = true;
-            this.user_info.Location = new System.Drawing.Point(15, 298);
+            this.user_info.Location = new System.Drawing.Point(274, 26);
             this.user_info.Name = "user_info";
             this.user_info.Size = new System.Drawing.Size(113, 24);
             this.user_info.TabIndex = 30;
@@ -217,19 +237,24 @@
             // 
             // CustomerLookup
             // 
-            this.CustomerLookup.Location = new System.Drawing.Point(255, 356);
+            this.CustomerLookup.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.CustomerLookup.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.CustomerLookup.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.CustomerLookup.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.CustomerLookup.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.CustomerLookup.Location = new System.Drawing.Point(155, 138);
             this.CustomerLookup.Name = "CustomerLookup";
-            this.CustomerLookup.Size = new System.Drawing.Size(102, 32);
+            this.CustomerLookup.Size = new System.Drawing.Size(121, 40);
             this.CustomerLookup.TabIndex = 29;
             this.CustomerLookup.TabStop = false;
             this.CustomerLookup.Text = "Lookup";
-            this.CustomerLookup.UseVisualStyleBackColor = true;
+            this.CustomerLookup.UseVisualStyleBackColor = false;
             this.CustomerLookup.Click += new System.EventHandler(this.customerLookup);
             // 
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(10, 364);
+            this.label17.Location = new System.Drawing.Point(19, 108);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(113, 24);
             this.label17.TabIndex = 26;
@@ -237,44 +262,41 @@
             // 
             // user_id
             // 
-            this.user_id.Location = new System.Drawing.Point(128, 359);
+            this.user_id.Location = new System.Drawing.Point(155, 103);
             this.user_id.Name = "user_id";
             this.user_id.Size = new System.Drawing.Size(121, 29);
             this.user_id.TabIndex = 4;
             // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(181, 13);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(176, 24);
-            this.label5.TabIndex = 23;
-            this.label5.Text = "View Available Cars";
-            // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(114, 406);
+            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.button1.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.button1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Location = new System.Drawing.Point(110, 497);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(103, 37);
+            this.button1.Size = new System.Drawing.Size(166, 57);
             this.button1.TabIndex = 22;
             this.button1.TabStop = false;
             this.button1.Text = "Submit";
-            this.button1.UseVisualStyleBackColor = true;
+            this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.booking_submit_click);
             // 
             // dropoff
             // 
             this.dropoff.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.dropoff.FormattingEnabled = true;
-            this.dropoff.Location = new System.Drawing.Point(252, 172);
+            this.dropoff.Location = new System.Drawing.Point(155, 379);
             this.dropoff.Name = "dropoff";
-            this.dropoff.Size = new System.Drawing.Size(121, 32);
+            this.dropoff.Size = new System.Drawing.Size(202, 32);
             this.dropoff.TabIndex = 1;
             // 
             // drop_off_check
             // 
             this.drop_off_check.AutoSize = true;
-            this.drop_off_check.Location = new System.Drawing.Point(6, 176);
+            this.drop_off_check.Location = new System.Drawing.Point(8, 345);
             this.drop_off_check.Name = "drop_off_check";
             this.drop_off_check.Size = new System.Drawing.Size(247, 28);
             this.drop_off_check.TabIndex = 20;
@@ -286,7 +308,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 232);
+            this.label4.Location = new System.Drawing.Point(19, 437);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(122, 24);
             this.label4.TabIndex = 19;
@@ -296,15 +318,15 @@
             // 
             this.vehicle_type.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.vehicle_type.FormattingEnabled = true;
-            this.vehicle_type.Location = new System.Drawing.Point(157, 224);
+            this.vehicle_type.Location = new System.Drawing.Point(155, 429);
             this.vehicle_type.Name = "vehicle_type";
-            this.vehicle_type.Size = new System.Drawing.Size(121, 32);
+            this.vehicle_type.Size = new System.Drawing.Size(202, 32);
             this.vehicle_type.TabIndex = 3;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 138);
+            this.label3.Location = new System.Drawing.Point(4, 305);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(137, 24);
             this.label3.TabIndex = 17;
@@ -314,15 +336,15 @@
             // 
             this.pickup.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.pickup.FormattingEnabled = true;
-            this.pickup.Location = new System.Drawing.Point(157, 135);
+            this.pickup.Location = new System.Drawing.Point(155, 297);
             this.pickup.Name = "pickup";
-            this.pickup.Size = new System.Drawing.Size(121, 32);
+            this.pickup.Size = new System.Drawing.Size(202, 32);
             this.pickup.TabIndex = 0;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(27, 91);
+            this.label2.Location = new System.Drawing.Point(19, 252);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(86, 24);
             this.label2.TabIndex = 15;
@@ -331,7 +353,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(10, 39);
+            this.label1.Location = new System.Drawing.Point(19, 197);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(103, 24);
             this.label1.TabIndex = 14;
@@ -339,17 +361,17 @@
             // 
             // date_to
             // 
-            this.date_to.Location = new System.Drawing.Point(157, 87);
+            this.date_to.Location = new System.Drawing.Point(155, 248);
             this.date_to.Name = "date_to";
-            this.date_to.Size = new System.Drawing.Size(200, 29);
+            this.date_to.Size = new System.Drawing.Size(202, 29);
             this.date_to.TabIndex = 13;
             this.date_to.TabStop = false;
             // 
             // date_from
             // 
-            this.date_from.Location = new System.Drawing.Point(157, 39);
+            this.date_from.Location = new System.Drawing.Point(155, 192);
             this.date_from.Name = "date_from";
-            this.date_from.Size = new System.Drawing.Size(200, 29);
+            this.date_from.Size = new System.Drawing.Size(202, 29);
             this.date_from.TabIndex = 12;
             this.date_from.TabStop = false;
             // 
@@ -374,10 +396,32 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Return";
             // 
+            // returnOutputBox
+            // 
+            this.returnOutputBox.BackColor = System.Drawing.Color.Gray;
+            this.returnOutputBox.FullRowSelect = true;
+            this.returnOutputBox.GridLines = true;
+            this.returnOutputBox.HideSelection = false;
+            this.returnOutputBox.Location = new System.Drawing.Point(6, 297);
+            this.returnOutputBox.Name = "returnOutputBox";
+            this.returnOutputBox.Size = new System.Drawing.Size(1100, 288);
+            this.returnOutputBox.TabIndex = 13;
+            this.returnOutputBox.UseCompatibleStateImageBehavior = false;
+            this.returnOutputBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.returnOutput_MouseDoubleClick);
+            // 
+            // label40
+            // 
+            this.label40.AutoSize = true;
+            this.label40.Location = new System.Drawing.Point(16, 41);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(180, 24);
+            this.label40.TabIndex = 12;
+            this.label40.Text = "Selected Customer: ";
+            // 
             // return_id_error
             // 
             this.return_id_error.AutoSize = true;
-            this.return_id_error.Location = new System.Drawing.Point(212, 27);
+            this.return_id_error.Location = new System.Drawing.Point(224, 41);
             this.return_id_error.Name = "return_id_error";
             this.return_id_error.Size = new System.Drawing.Size(113, 24);
             this.return_id_error.TabIndex = 11;
@@ -385,20 +429,25 @@
             // 
             // returnLookup
             // 
-            this.returnLookup.Location = new System.Drawing.Point(395, 61);
+            this.returnLookup.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.returnLookup.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.returnLookup.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.returnLookup.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.returnLookup.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.returnLookup.Location = new System.Drawing.Point(933, 135);
             this.returnLookup.Name = "returnLookup";
-            this.returnLookup.Size = new System.Drawing.Size(109, 39);
+            this.returnLookup.Size = new System.Drawing.Size(121, 40);
             this.returnLookup.TabIndex = 9;
             this.returnLookup.TabStop = false;
             this.returnLookup.Text = "Lookup";
-            this.returnLookup.UseVisualStyleBackColor = true;
+            this.returnLookup.UseVisualStyleBackColor = false;
             this.returnLookup.Click += new System.EventHandler(this.customerLookup);
             // 
             // return_dropoff
             // 
             this.return_dropoff.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.return_dropoff.FormattingEnabled = true;
-            this.return_dropoff.Location = new System.Drawing.Point(216, 117);
+            this.return_dropoff.Location = new System.Drawing.Point(933, 31);
             this.return_dropoff.Name = "return_dropoff";
             this.return_dropoff.Size = new System.Drawing.Size(121, 32);
             this.return_dropoff.TabIndex = 1;
@@ -406,7 +455,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(29, 183);
+            this.label8.Location = new System.Drawing.Point(41, 130);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(122, 24);
             this.label8.TabIndex = 6;
@@ -415,7 +464,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(16, 125);
+            this.label7.Location = new System.Drawing.Point(733, 39);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(144, 24);
             this.label7.TabIndex = 5;
@@ -423,7 +472,7 @@
             // 
             // dropoff_date
             // 
-            this.dropoff_date.Location = new System.Drawing.Point(216, 178);
+            this.dropoff_date.Location = new System.Drawing.Point(228, 125);
             this.dropoff_date.Name = "dropoff_date";
             this.dropoff_date.Size = new System.Drawing.Size(200, 29);
             this.dropoff_date.TabIndex = 3;
@@ -431,19 +480,25 @@
             // 
             // submit_return
             // 
-            this.submit_return.Location = new System.Drawing.Point(216, 294);
+            this.submit_return.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.submit_return.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.submit_return.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.submit_return.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.submit_return.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.submit_return.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.submit_return.Location = new System.Drawing.Point(438, 212);
             this.submit_return.Name = "submit_return";
-            this.submit_return.Size = new System.Drawing.Size(139, 53);
+            this.submit_return.Size = new System.Drawing.Size(166, 57);
             this.submit_return.TabIndex = 2;
             this.submit_return.TabStop = false;
             this.submit_return.Text = "Submit";
-            this.submit_return.UseVisualStyleBackColor = true;
+            this.submit_return.UseVisualStyleBackColor = false;
             this.submit_return.Click += new System.EventHandler(this.submit_return_Click);
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(38, 74);
+            this.label6.Location = new System.Drawing.Point(755, 103);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(113, 24);
             this.label6.TabIndex = 1;
@@ -451,7 +506,7 @@
             // 
             // return_id
             // 
-            this.return_id.Location = new System.Drawing.Point(216, 71);
+            this.return_id.Location = new System.Drawing.Point(933, 100);
             this.return_id.Name = "return_id";
             this.return_id.Size = new System.Drawing.Size(121, 29);
             this.return_id.TabIndex = 0;
@@ -484,13 +539,19 @@
             // 
             // InventoryButton
             // 
+            this.InventoryButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.InventoryButton.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.InventoryButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.InventoryButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.InventoryButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.InventoryButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.InventoryButton.Location = new System.Drawing.Point(470, 387);
             this.InventoryButton.Name = "InventoryButton";
-            this.InventoryButton.Size = new System.Drawing.Size(158, 51);
+            this.InventoryButton.Size = new System.Drawing.Size(166, 57);
             this.InventoryButton.TabIndex = 23;
             this.InventoryButton.TabStop = false;
             this.InventoryButton.Text = "Get Inventory";
-            this.InventoryButton.UseVisualStyleBackColor = true;
+            this.InventoryButton.UseVisualStyleBackColor = false;
             this.InventoryButton.Click += new System.EventHandler(this.getInventory);
             // 
             // label15
@@ -637,13 +698,18 @@
             // 
             // report_submit
             // 
+            this.report_submit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.report_submit.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.report_submit.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.report_submit.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.report_submit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.report_submit.Location = new System.Drawing.Point(54, 496);
             this.report_submit.Name = "report_submit";
-            this.report_submit.Size = new System.Drawing.Size(140, 34);
+            this.report_submit.Size = new System.Drawing.Size(166, 57);
             this.report_submit.TabIndex = 9;
             this.report_submit.TabStop = false;
             this.report_submit.Text = "Generate Report";
-            this.report_submit.UseVisualStyleBackColor = true;
+            this.report_submit.UseVisualStyleBackColor = false;
             this.report_submit.Click += new System.EventHandler(this.report_submit_Click);
             // 
             // report_branch
@@ -857,16 +923,23 @@
             this.addcar_year.Name = "addcar_year";
             this.addcar_year.Size = new System.Drawing.Size(121, 29);
             this.addcar_year.TabIndex = 1;
+            this.addcar_year.TextChanged += new System.EventHandler(this.YearTextChanged);
             // 
             // addcar_submit
             // 
+            this.addcar_submit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.addcar_submit.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.addcar_submit.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.addcar_submit.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.addcar_submit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.addcar_submit.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.addcar_submit.Location = new System.Drawing.Point(460, 487);
             this.addcar_submit.Name = "addcar_submit";
-            this.addcar_submit.Size = new System.Drawing.Size(116, 43);
+            this.addcar_submit.Size = new System.Drawing.Size(166, 57);
             this.addcar_submit.TabIndex = 0;
             this.addcar_submit.TabStop = false;
             this.addcar_submit.Text = "Submit";
-            this.addcar_submit.UseVisualStyleBackColor = true;
+            this.addcar_submit.UseVisualStyleBackColor = false;
             this.addcar_submit.Click += new System.EventHandler(this.addcar_submit_Click);
             // 
             // tabPage6
@@ -963,6 +1036,7 @@
             this.remcar_year.Name = "remcar_year";
             this.remcar_year.Size = new System.Drawing.Size(213, 35);
             this.remcar_year.TabIndex = 5;
+            this.remcar_year.TextChanged += new System.EventHandler(this.YearTextChanged);
             // 
             // label30
             // 
@@ -1037,10 +1111,10 @@
             // 
             // remcar_type
             // 
-            this.remcar_type.BackColor = System.Drawing.Color.DimGray;
+            this.remcar_type.BackColor = System.Drawing.Color.LightGray;
             this.remcar_type.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.remcar_type.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.remcar_type.ForeColor = System.Drawing.SystemColors.ScrollBar;
+            this.remcar_type.ForeColor = System.Drawing.Color.Black;
             this.remcar_type.FormattingEnabled = true;
             this.remcar_type.Location = new System.Drawing.Point(189, 183);
             this.remcar_type.Name = "remcar_type";
@@ -1075,8 +1149,8 @@
             // 
             this.remove_submit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.remove_submit.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.remove_submit.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Cyan;
-            this.remove_submit.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Yellow;
+            this.remove_submit.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.remove_submit.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
             this.remove_submit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.remove_submit.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.remove_submit.ForeColor = System.Drawing.Color.Black;
@@ -1161,6 +1235,7 @@
             this.edit_year.Name = "edit_year";
             this.edit_year.Size = new System.Drawing.Size(213, 35);
             this.edit_year.TabIndex = 29;
+            this.edit_year.TextChanged += new System.EventHandler(this.YearTextChanged);
             // 
             // label31
             // 
@@ -1286,6 +1361,8 @@
             // 
             this.editSubmit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.editSubmit.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.editSubmit.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.editSubmit.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
             this.editSubmit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.editSubmit.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.editSubmit.ForeColor = System.Drawing.Color.Black;
@@ -1296,27 +1373,6 @@
             this.editSubmit.Text = "Submit";
             this.editSubmit.UseVisualStyleBackColor = false;
             this.editSubmit.Click += new System.EventHandler(this.editCar_Submit);
-            // 
-            // label40
-            // 
-            this.label40.AutoSize = true;
-            this.label40.Location = new System.Drawing.Point(16, 27);
-            this.label40.Name = "label40";
-            this.label40.Size = new System.Drawing.Size(180, 24);
-            this.label40.TabIndex = 12;
-            this.label40.Text = "Selected Customer: ";
-            // 
-            // returnOutputBox
-            // 
-            this.returnOutputBox.FullRowSelect = true;
-            this.returnOutputBox.GridLines = true;
-            this.returnOutputBox.HideSelection = false;
-            this.returnOutputBox.Location = new System.Drawing.Point(510, 14);
-            this.returnOutputBox.Name = "returnOutputBox";
-            this.returnOutputBox.Size = new System.Drawing.Size(593, 364);
-            this.returnOutputBox.TabIndex = 13;
-            this.returnOutputBox.UseCompatibleStateImageBehavior = false;
-            this.returnOutputBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.returnOutput_MouseDoubleClick);
             // 
             // Employee
             // 
@@ -1362,7 +1418,6 @@
         #endregion
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ComboBox dropoff;
         private System.Windows.Forms.CheckBox drop_off_check;
@@ -1469,5 +1524,7 @@
         private System.Windows.Forms.Label return_id_error;
         private System.Windows.Forms.Label label40;
         private System.Windows.Forms.ListView returnOutputBox;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label Book_Warn;
     }
 }

@@ -40,26 +40,36 @@
             // 
             // existing_user
             // 
-            this.existing_user.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.existing_user.Location = new System.Drawing.Point(366, 438);
+            this.existing_user.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.existing_user.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.existing_user.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.existing_user.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.existing_user.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.existing_user.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.existing_user.Location = new System.Drawing.Point(297, 438);
             this.existing_user.Margin = new System.Windows.Forms.Padding(6);
             this.existing_user.Name = "existing_user";
-            this.existing_user.Size = new System.Drawing.Size(180, 42);
+            this.existing_user.Size = new System.Drawing.Size(190, 80);
             this.existing_user.TabIndex = 0;
             this.existing_user.Text = "Existing User";
-            this.existing_user.UseVisualStyleBackColor = true;
+            this.existing_user.UseVisualStyleBackColor = false;
             this.existing_user.Click += new System.EventHandler(this.existing_user_Click);
             // 
             // new_user
             // 
-            this.new_user.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.new_user.Location = new System.Drawing.Point(600, 438);
+            this.new_user.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.new_user.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.new_user.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.new_user.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.new_user.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.new_user.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.new_user.Location = new System.Drawing.Point(645, 438);
             this.new_user.Margin = new System.Windows.Forms.Padding(6);
             this.new_user.Name = "new_user";
-            this.new_user.Size = new System.Drawing.Size(180, 42);
+            this.new_user.Size = new System.Drawing.Size(190, 80);
             this.new_user.TabIndex = 1;
             this.new_user.Text = "New User";
-            this.new_user.UseVisualStyleBackColor = true;
+            this.new_user.UseVisualStyleBackColor = false;
             this.new_user.Click += new System.EventHandler(this.new_user_Click);
             // 
             // label1
@@ -85,11 +95,11 @@
             // employee_check
             // 
             this.employee_check.AutoSize = true;
-            this.employee_check.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.employee_check.Location = new System.Drawing.Point(966, 557);
+            this.employee_check.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.employee_check.Location = new System.Drawing.Point(934, 553);
             this.employee_check.Margin = new System.Windows.Forms.Padding(6);
             this.employee_check.Name = "employee_check";
-            this.employee_check.Size = new System.Drawing.Size(126, 29);
+            this.employee_check.Size = new System.Drawing.Size(141, 33);
             this.employee_check.TabIndex = 5;
             this.employee_check.Text = "Employee";
             this.employee_check.UseVisualStyleBackColor = true;
@@ -110,11 +120,12 @@
             // error_text
             // 
             this.error_text.AutoSize = true;
+            this.error_text.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.error_text.ForeColor = System.Drawing.Color.Red;
-            this.error_text.Location = new System.Drawing.Point(365, 408);
+            this.error_text.Location = new System.Drawing.Point(291, 374);
             this.error_text.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.error_text.Name = "error_text";
-            this.error_text.Size = new System.Drawing.Size(91, 24);
+            this.error_text.Size = new System.Drawing.Size(126, 31);
             this.error_text.TabIndex = 7;
             this.error_text.Text = "Welcome";
             // 
@@ -123,11 +134,11 @@
             this.debug.AutoSize = true;
             this.debug.Checked = true;
             this.debug.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.debug.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.debug.Location = new System.Drawing.Point(966, 515);
+            this.debug.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.debug.Location = new System.Drawing.Point(934, 512);
             this.debug.Margin = new System.Windows.Forms.Padding(6);
             this.debug.Name = "debug";
-            this.debug.Size = new System.Drawing.Size(91, 29);
+            this.debug.Size = new System.Drawing.Size(101, 33);
             this.debug.TabIndex = 8;
             this.debug.Text = "debug";
             this.debug.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;

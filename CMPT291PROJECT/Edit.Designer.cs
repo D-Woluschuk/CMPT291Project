@@ -47,122 +47,146 @@
             // label27
             // 
             this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(191, 217);
+            this.label27.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label27.Location = new System.Drawing.Point(559, 318);
             this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(71, 13);
+            this.label27.Size = new System.Drawing.Size(179, 31);
             this.label27.TabIndex = 26;
             this.label27.Text = "Plate Number";
             // 
             // label26
             // 
             this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(214, 166);
+            this.label26.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label26.Location = new System.Drawing.Point(638, 212);
             this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(36, 13);
+            this.label26.Size = new System.Drawing.Size(87, 31);
             this.label26.TabIndex = 25;
             this.label26.Text = "Model";
             // 
             // edit_plate
             // 
-            this.edit_plate.Location = new System.Drawing.Point(268, 214);
+            this.edit_plate.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.edit_plate.Location = new System.Drawing.Point(792, 315);
             this.edit_plate.Name = "edit_plate";
-            this.edit_plate.Size = new System.Drawing.Size(121, 20);
+            this.edit_plate.Size = new System.Drawing.Size(200, 38);
             this.edit_plate.TabIndex = 24;
             // 
             // edit_model
             // 
-            this.edit_model.Location = new System.Drawing.Point(268, 160);
+            this.edit_model.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.edit_model.Location = new System.Drawing.Point(792, 213);
             this.edit_model.Name = "edit_model";
-            this.edit_model.Size = new System.Drawing.Size(121, 20);
+            this.edit_model.Size = new System.Drawing.Size(200, 38);
             this.edit_model.TabIndex = 23;
             // 
             // yearLabel
             // 
             this.yearLabel.AutoSize = true;
-            this.yearLabel.Location = new System.Drawing.Point(16, 166);
+            this.yearLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.yearLabel.Location = new System.Drawing.Point(153, 318);
             this.yearLabel.Name = "yearLabel";
-            this.yearLabel.Size = new System.Drawing.Size(29, 13);
+            this.yearLabel.Size = new System.Drawing.Size(71, 31);
             this.yearLabel.TabIndex = 22;
             this.yearLabel.Text = "Year";
             // 
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(214, 112);
+            this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label20.Location = new System.Drawing.Point(638, 118);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(41, 13);
+            this.label20.Size = new System.Drawing.Size(100, 31);
             this.label20.TabIndex = 21;
             this.label20.Text = "Branch";
             // 
             // edit_branch
             // 
             this.edit_branch.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.edit_branch.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.edit_branch.FormattingEnabled = true;
-            this.edit_branch.Location = new System.Drawing.Point(268, 106);
+            this.edit_branch.Location = new System.Drawing.Point(792, 118);
             this.edit_branch.Name = "edit_branch";
-            this.edit_branch.Size = new System.Drawing.Size(121, 21);
+            this.edit_branch.Size = new System.Drawing.Size(200, 39);
             this.edit_branch.TabIndex = 20;
             // 
             // edit_type
             // 
             this.edit_type.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.edit_type.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.edit_type.FormattingEnabled = true;
-            this.edit_type.Location = new System.Drawing.Point(60, 109);
+            this.edit_type.Location = new System.Drawing.Point(268, 212);
             this.edit_type.Name = "edit_type";
-            this.edit_type.Size = new System.Drawing.Size(121, 21);
+            this.edit_type.Size = new System.Drawing.Size(200, 39);
             this.edit_type.TabIndex = 18;
             // 
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(13, 109);
+            this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label18.Location = new System.Drawing.Point(153, 212);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(31, 13);
+            this.label18.Size = new System.Drawing.Size(75, 31);
             this.label18.TabIndex = 17;
             this.label18.Text = "Type";
             // 
             // edit_year
             // 
-            this.edit_year.Location = new System.Drawing.Point(60, 163);
+            this.edit_year.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.edit_year.Location = new System.Drawing.Point(268, 318);
             this.edit_year.Name = "edit_year";
-            this.edit_year.Size = new System.Drawing.Size(121, 20);
+            this.edit_year.Size = new System.Drawing.Size(200, 38);
             this.edit_year.TabIndex = 16;
             // 
             // addcar_submit
             // 
-            this.addcar_submit.Location = new System.Drawing.Point(60, 263);
+            this.addcar_submit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.addcar_submit.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.addcar_submit.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.addcar_submit.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.addcar_submit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.addcar_submit.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.addcar_submit.Location = new System.Drawing.Point(268, 510);
             this.addcar_submit.Name = "addcar_submit";
-            this.addcar_submit.Size = new System.Drawing.Size(75, 23);
+            this.addcar_submit.Size = new System.Drawing.Size(166, 57);
             this.addcar_submit.TabIndex = 14;
             this.addcar_submit.Text = "Submit";
-            this.addcar_submit.UseVisualStyleBackColor = true;
+            this.addcar_submit.UseVisualStyleBackColor = false;
             this.addcar_submit.Click += new System.EventHandler(this.editSubmit);
             // 
             // edit_cancel
             // 
-            this.edit_cancel.Location = new System.Drawing.Point(314, 263);
+            this.edit_cancel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.edit_cancel.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.edit_cancel.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.edit_cancel.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.edit_cancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.edit_cancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.edit_cancel.Location = new System.Drawing.Point(729, 510);
             this.edit_cancel.Name = "edit_cancel";
-            this.edit_cancel.Size = new System.Drawing.Size(75, 23);
+            this.edit_cancel.Size = new System.Drawing.Size(166, 57);
             this.edit_cancel.TabIndex = 28;
             this.edit_cancel.Text = "Cancel";
-            this.edit_cancel.UseVisualStyleBackColor = true;
+            this.edit_cancel.UseVisualStyleBackColor = false;
             this.edit_cancel.Click += new System.EventHandler(this.editCar_Cancel);
             // 
             // editc_id_label
             // 
             this.editc_id_label.AutoSize = true;
-            this.editc_id_label.Location = new System.Drawing.Point(13, 65);
+            this.editc_id_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.editc_id_label.Location = new System.Drawing.Point(131, 118);
             this.editc_id_label.Name = "editc_id_label";
-            this.editc_id_label.Size = new System.Drawing.Size(37, 13);
+            this.editc_id_label.Size = new System.Drawing.Size(93, 31);
             this.editc_id_label.TabIndex = 29;
             this.editc_id_label.Text = "Car ID";
             // 
             // edit_carID
             // 
             this.edit_carID.AutoSize = true;
-            this.edit_carID.Location = new System.Drawing.Point(60, 65);
+            this.edit_carID.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.edit_carID.Location = new System.Drawing.Point(262, 118);
             this.edit_carID.Name = "edit_carID";
-            this.edit_carID.Size = new System.Drawing.Size(0, 13);
+            this.edit_carID.Size = new System.Drawing.Size(0, 31);
             this.edit_carID.TabIndex = 30;
             // 
             // Edit
@@ -171,7 +195,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(437, 299);
+            this.BackColor = System.Drawing.Color.Gray;
+            this.ClientSize = new System.Drawing.Size(1145, 653);
             this.Controls.Add(this.edit_carID);
             this.Controls.Add(this.editc_id_label);
             this.Controls.Add(this.edit_cancel);

@@ -15,8 +15,8 @@ namespace CMPT291PROJECT
         {
             InitializeComponent();
             error_text.Visible = false;
-            user_id.Visible = false;
-            enter_username.Visible = false;
+            //user_id.Visible = false;
+            //enter_username.Visible = false;
 
             // Establish SQL Connection
             String connection_string = "Server = DESKTOP-OP195PG; Database = Project; Trusted_Connection = yes;";
