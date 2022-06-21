@@ -341,15 +341,26 @@ namespace CMPT291PROJECT
             user_info.Visible = true;
             Book_Warn.Visible = false;
             // Get information on all cars fitting choices
-            mycommand.CommandText = "SELECT * FROM car c, type t, branch b WHERE c.car_type = t.type_id and c.car_branch = b.branch_id ";
-            if (pickup.SelectedItem.ToString() != "Any")
+            mycommand.CommandText = "SELECT * FROM car c, type t, branch b WHERE (c.car_type = t.type_id and c.car_branch = b.branch_id) ";
+            if (pickup.SelectedItem.ToString() != "Any" && vehicle_type.SelectedItem.ToString() != "Any")
             {
-                mycommand.CommandText += "and b.city = '" + pickup.SelectedItem.ToString() + "' ";
+                mycommand.CommandText += "and (b.city = '" + pickup.SelectedItem.ToString() + "' ";
+                mycommand.CommandText += "and t.description = '" + vehicle_type.SelectedItem.ToString() + "' ";
+                if (gold)
+                {
+                    mycommand.CommandText += "or t.type_id >= '" + descToType(vehicle_type.SelectedItem.ToString()) + "') ";
+                }
+                else
+                {
+
+                    mycommand.CommandText += ") ";
+                }
             }
-            if (vehicle_type.SelectedItem.ToString() != "Any")
+
+            else if (pickup.SelectedItem.ToString() == "Any" && vehicle_type.SelectedItem.ToString() != "Any")
 
             {                
-                mycommand.CommandText += "and t.description = '" + vehicle_type.SelectedItem.ToString() + "' ";
+                mycommand.CommandText += "and (t.description = '" + vehicle_type.SelectedItem.ToString() + "' ";
 
                 if (gold)
                 {
@@ -358,9 +369,17 @@ namespace CMPT291PROJECT
                 else
                 {
 
-                    mycommand.CommandText += " ";
+                    mycommand.CommandText += ") ";
                 }
             }
+
+            else if (pickup.SelectedItem.ToString() != "Any" && vehicle_type.SelectedItem.ToString() == "Any")
+            {
+                mycommand.CommandText += "and (b.city = '" + pickup.SelectedItem.ToString() + "') ";
+
+            }
+
+
             if (date_from.Value.ToString() != default_date || date_to.Value.ToString() != default_date)
             {
                 //Get all bookings interfering with dates selected, get car_id not in that list
@@ -370,9 +389,9 @@ namespace CMPT291PROJECT
                 mycommand.CommandText += date_from.Value.ToString() + "' <= b.Date_To)) ";              //TODO Check if date formats are compatible
 
             }
+
             mycommand.CommandText += "ORDER BY type_id";
 
-           
             // Display all available vehicles to output
             string[] aCar = new string[7];
             ListViewItem anItem;
@@ -1113,7 +1132,7 @@ namespace CMPT291PROJECT
                 }
                 else { mycommand.CommandText += ") as Temp"; }
                 Clipboard.SetText(mycommand.CommandText);
-                MessageBox.Show(mycommand.CommandText.ToString());
+                //MessageBox.Show(mycommand.CommandText.ToString());
                 try
                 {
                     myreader = mycommand.ExecuteReader();
@@ -1557,6 +1576,7 @@ namespace CMPT291PROJECT
             {
                 this.AcceptButton = button1;
                 user_id.ResetText();
+                bookingOutput.Items.Clear();
                 user_info.Visible = false;
                 Book_Warn.Visible = false;
                 drop_off_check.Checked = default;
