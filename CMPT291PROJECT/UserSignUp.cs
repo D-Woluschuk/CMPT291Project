@@ -141,7 +141,6 @@ namespace CMPT291PROJECT
                 command_string += "0)";
 
             }
-            MessageBox.Show(command_string);
             try
             {
                 mycommand.CommandText = command_string;
@@ -150,7 +149,7 @@ namespace CMPT291PROJECT
             }
             catch (SqlException e1)
             {
-                MessageBox.Show(e1.Message);
+                //MessageBox.Show(e1.Message);
                 if (e1.Number == 2627)
                 {
                     id_error.Text = "User ID Taken";
