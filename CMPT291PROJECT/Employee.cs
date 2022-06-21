@@ -1068,29 +1068,31 @@ namespace CMPT291PROJECT
             }
             else if (radioButton3.Checked == true)
             {
-                reportOutputBox.Columns.Add("Car ID", 150);
+                reportOutputBox.Columns.Add("Type", 150);
                 reportOutputBox.Columns.Add("Total Rentals", 150);
-                mycommand.CommandText = "select car_id, max(num1) as total " +
+                mycommand.CommandText = "select description, max(num1) as total " +
                     "from( " +
-                    "select car_id, count(*) as num1 " +
-                    "from booking " +
-                    "where branchFrom = '" +
+                    "select description, count(*) as num1 " +
+                    "from booking b, type t, car c " +
+                    "where b.car_id = c.car_id and c.car_type = t.type_id and branchFrom = '" +
                     cityToBID(report_branch.SelectedItem.ToString()) +
-                    "' group by car_id) as tem " +
-                    "group by car_id ";
+                    "' group by description) as tem " +
+                    "group by description ";
 
+                try { 
+                    myreader = mycommand.ExecuteReader();
+                    while (myreader.Read())
+                    {
+                        temp[0] = myreader[0].ToString();
+                        temp[1] = myreader[1].ToString();
+                        //anItem = new ListViewItem(myreader[1].ToString());
+                        anItem = new ListViewItem(temp);
+                        reportOutputBox.Items.Add(anItem);
 
-                myreader = mycommand.ExecuteReader();
-                while (myreader.Read())
-                {
-                    temp[0] = myreader[0].ToString();
-                    temp[1] = myreader[1].ToString();
-                    //anItem = new ListViewItem(myreader[1].ToString());
-                    anItem = new ListViewItem(temp);
-                    reportOutputBox.Items.Add(anItem);
-
-                    //reportbox.Text += myreader["output"].ToString();
+                        //reportbox.Text += myreader["output"].ToString();
+                    }
                 }
+                catch (SqlException ex){ MessageBox.Show(ex.Message); }
                 myreader.Close();
             }
             else if (radioButton4.Checked == true)

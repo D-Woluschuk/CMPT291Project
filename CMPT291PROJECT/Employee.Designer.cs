@@ -48,6 +48,8 @@
             this.date_to = new System.Windows.Forms.DateTimePicker();
             this.date_from = new System.Windows.Forms.DateTimePicker();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.returnOutputBox = new System.Windows.Forms.ListView();
+            this.label40 = new System.Windows.Forms.Label();
             this.return_id_error = new System.Windows.Forms.Label();
             this.returnLookup = new System.Windows.Forms.Button();
             this.return_dropoff = new System.Windows.Forms.ComboBox();
@@ -133,8 +135,6 @@
             this.editcar_id = new System.Windows.Forms.TextBox();
             this.edit_model = new System.Windows.Forms.TextBox();
             this.editSubmit = new System.Windows.Forms.Button();
-            this.label40 = new System.Windows.Forms.Label();
-            this.returnOutputBox = new System.Windows.Forms.ListView();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -374,6 +374,27 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Return";
             // 
+            // returnOutputBox
+            // 
+            this.returnOutputBox.FullRowSelect = true;
+            this.returnOutputBox.GridLines = true;
+            this.returnOutputBox.HideSelection = false;
+            this.returnOutputBox.Location = new System.Drawing.Point(510, 14);
+            this.returnOutputBox.Name = "returnOutputBox";
+            this.returnOutputBox.Size = new System.Drawing.Size(593, 364);
+            this.returnOutputBox.TabIndex = 13;
+            this.returnOutputBox.UseCompatibleStateImageBehavior = false;
+            this.returnOutputBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.returnOutput_MouseDoubleClick);
+            // 
+            // label40
+            // 
+            this.label40.AutoSize = true;
+            this.label40.Location = new System.Drawing.Point(16, 27);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(180, 24);
+            this.label40.TabIndex = 12;
+            this.label40.Text = "Selected Customer: ";
+            // 
             // return_id_error
             // 
             this.return_id_error.AutoSize = true;
@@ -607,10 +628,10 @@
             this.radioButton3.AutoSize = true;
             this.radioButton3.Location = new System.Drawing.Point(54, 396);
             this.radioButton3.Name = "radioButton3";
-            this.radioButton3.Size = new System.Drawing.Size(162, 28);
+            this.radioButton3.Size = new System.Drawing.Size(283, 28);
             this.radioButton3.TabIndex = 5;
             this.radioButton3.TabStop = true;
-            this.radioButton3.Text = "Top Rented Car";
+            this.radioButton3.Text = "Highest Rented Car By Branch";
             this.radioButton3.UseVisualStyleBackColor = true;
             this.radioButton3.CheckedChanged += new System.EventHandler(this.ReportFilters_Click);
             // 
@@ -1296,27 +1317,6 @@
             this.editSubmit.Text = "Submit";
             this.editSubmit.UseVisualStyleBackColor = false;
             this.editSubmit.Click += new System.EventHandler(this.editCar_Submit);
-            // 
-            // label40
-            // 
-            this.label40.AutoSize = true;
-            this.label40.Location = new System.Drawing.Point(16, 27);
-            this.label40.Name = "label40";
-            this.label40.Size = new System.Drawing.Size(180, 24);
-            this.label40.TabIndex = 12;
-            this.label40.Text = "Selected Customer: ";
-            // 
-            // returnOutputBox
-            // 
-            this.returnOutputBox.FullRowSelect = true;
-            this.returnOutputBox.GridLines = true;
-            this.returnOutputBox.HideSelection = false;
-            this.returnOutputBox.Location = new System.Drawing.Point(510, 14);
-            this.returnOutputBox.Name = "returnOutputBox";
-            this.returnOutputBox.Size = new System.Drawing.Size(593, 364);
-            this.returnOutputBox.TabIndex = 13;
-            this.returnOutputBox.UseCompatibleStateImageBehavior = false;
-            this.returnOutputBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.returnOutput_MouseDoubleClick);
             // 
             // Employee
             // 
