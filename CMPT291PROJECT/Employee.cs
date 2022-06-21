@@ -1003,15 +1003,16 @@ namespace CMPT291PROJECT
             ListViewItem anItem;
             if (radioButton5.Checked == true)
             {
-                reportOutputBox.Columns.Add("Customer", 150);
+                reportOutputBox.Columns.Add("First Name", 150);
+                reportOutputBox.Columns.Add("Last Name", 150);
+                reportOutputBox.Columns.Add("Customer ID", 150);
+
                 mycommand.CommandText =
-                    "(select customer.cust_id as output " +
-                    "from booking, customer " +
-                    "where booking.cust_id = customer.cust_ID and Gold_status = 1) " +
-                    "except " +
-                    "(select cust_id " +
-                    "from booking, car " +
-                    "where booking.car_id = car.car_id and type_requested != car_type);";
+                    "select distinct c.Fname, c.Lname, c.cust_id from booking b, customer c where " +
+                    "b.cust_id = c.cust_id and c.gold_status = 1 and c.cust_id not in " +
+                    "(select b.cust_id from booking b, car c where b.type_requested != c.car_type " +
+                    "and c.car_id = b.car_id) ";
+                    
                 try
                 {
                     myreader = mycommand.ExecuteReader();
@@ -1019,6 +1020,7 @@ namespace CMPT291PROJECT
                     {
                         temp[0] = myreader[0].ToString();
                         temp[1] = myreader[1].ToString();
+                        temp[2] = myreader[2].ToString();
                         anItem = new ListViewItem(temp);
                         reportOutputBox.Items.Add(anItem);
                     }
