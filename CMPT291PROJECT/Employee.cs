@@ -131,8 +131,7 @@ namespace CMPT291PROJECT
                 InventoryBranch.DataSource = branches;
                 addcar_type.DataSource = types;
                 return_dropoff.DataSource = branches;
-                report_type.DataSource = types;
-                report_branch.DataSource = branches;
+                
 
 
                 branches.Insert(0, "Any");
@@ -141,6 +140,9 @@ namespace CMPT291PROJECT
                 remcar_type.DataSource = types;
                 edit_type.DataSource = types;
                 edit_branch.DataSource = branches;
+                report_type.DataSource = types;
+                report_branch.DataSource = branches;
+
                 for (int i = 0; i < branches.Count; i++)
                     branches1.Add(branches.ElementAt(i));
 
@@ -491,7 +493,7 @@ namespace CMPT291PROJECT
         private float calc_price(DateTime date_from, DateTime date_to, string type_id, bool late = false, bool change = false)
         {
             float total_price = 0;
-            int total_days = (date_to - date_from).Days;
+            int total_days = (date_to - date_from).Days + 1;
             float daily = 0, weekly = 0, monthly = 0, late_fee = 0, change_fee = 0;
 
             mycommand.CommandText = "SELECT daily, weekly, monthly, late_fee, change FROM type WHERE type_id = '" + type_id + "'";
@@ -816,7 +818,7 @@ namespace CMPT291PROJECT
                 }
 
                 //Check if the drop off is late
-                if (DateTime.Parse(aCar[5]) < dropoff_date.Value)
+                if (DateTime.Parse(aCar[5]) < dropoff_date.Value.Date)
                 {
                     late = true;
                     message += "\nLate Dropoff Fee Applied";
@@ -905,8 +907,8 @@ namespace CMPT291PROJECT
                     return;
                 }
             }
-            mycommand.CommandText = "SELECT * FROM booking b, type t, car c WHERE cust_id = '" + return_id.Text + "'";
-            mycommand.CommandText += " and returned IS NULL and b.type_requested = t.type_id and b.car_id = c.car_id";
+            mycommand.CommandText = "SELECT * FROM booking b, type t, car c, branch br WHERE cust_id = '" + return_id.Text + "'";
+            mycommand.CommandText += " and returned IS NULL and b.type_requested = t.type_id and b.car_id = c.car_id and br.branch_id = b.branchFrom";
 
             try
             {
@@ -928,8 +930,8 @@ namespace CMPT291PROJECT
                     tempDate1 = DateTime.Parse(myreader["date_to"].ToString()).Date.ToString("d"); //DateTo
                     carInfo[5] = tempDate1; //DateTo
 
-                    carInfo[6] = myreader["branchFrom"].ToString(); //BranchFrom
-                    carInfo[7] = myreader["type_requested"].ToString(); //TypeRequested
+                    carInfo[6] = myreader["city"].ToString(); //BranchFrom
+                    carInfo[7] = myreader["description"].ToString(); //TypeRequested
                     carInfo[8] = myreader["price"].ToString(); //Price
 
                     anItem = new ListViewItem(carInfo);
@@ -1025,19 +1027,35 @@ namespace CMPT291PROJECT
             {
                 reportOutputBox.Columns.Add("Branch ID", 250);
                 reportOutputBox.Columns.Add("Customer Spending ($)", 250);
-                mycommand.CommandText = "select distinct branchFrom, sum(price) as [output] from booking where branchFrom = '"
-                    + cityToBID(report_branch.SelectedItem.ToString())
-                    + "' and type_requested = '" + descToType(report_type.SelectedItem.ToString()) + "'" +
-                    "and date_from >= '" + report_datefrom.Text + "' and date_to <= '"
-                    + report_dateto.Text + "' group by branchFrom;";
-                myreader = mycommand.ExecuteReader();
-                while (myreader.Read())
+                mycommand.CommandText = "select distinct branchFrom, avg(price) as [output] from booking where 1=1 ";
+                if (report_branch.SelectedIndex != 0)
                 {
-                    temp[0] = myreader[0].ToString();
-                    temp[1] = myreader[1].ToString();
-                    anItem = new ListViewItem(temp);
-                    reportOutputBox.Items.Add(anItem);
+                    mycommand.CommandText += "and branchFrom = '" + cityToBID(report_branch.SelectedItem.ToString()) + "'";
                 }
+                if (report_type.SelectedIndex != 0)
+                {
+                    mycommand.CommandText += " and type_requested = '" + descToType(report_type.SelectedItem.ToString()) + "'";
+                }
+                if (report_datefrom.Text != default_date && report_dateto.Value != default_date_to)
+                {
+                    mycommand.CommandText += "and date_from >= '" + report_datefrom.Text + "' and date_to <= '"
+                    + report_dateto.Text + "'";
+                }
+                mycommand.CommandText += " group by branchFrom;";
+
+                Clipboard.SetText(mycommand.CommandText);
+                try
+                {
+                    myreader = mycommand.ExecuteReader();
+                    while (myreader.Read())
+                    {
+                        temp[0] = myreader[0].ToString();
+                        temp[1] = myreader[1].ToString();
+                        anItem = new ListViewItem(temp);
+                        reportOutputBox.Items.Add(anItem);
+                    }
+                }
+                catch (Exception e1) { MessageBox.Show(e1.Message); }
                 myreader.Close();
             }
             else if (radioButton2.Checked == true)
@@ -1050,9 +1068,10 @@ namespace CMPT291PROJECT
                     "(select sum(late_fee) as total, branchFrom from type t, booking b where t.type_id = b.type_requested and b.date_to < b.returned group by b.branchFrom) as t1, " +
                     " (select count(*) as [count], branchFrom from booking b, type t WHERE t.type_id = b.type_requested and date_to < returned group by branchFrom) as t2 " +
                     "where t1.branchfrom = t2.branchfrom and br.branch_id = t1.branchFrom";
-                if (report_branch.SelectedIndex != 0)
+
+                if (report_branch.SelectedItem.ToString() != "Any")
                 {
-                    mycommand.CommandText += " and t1.branchFrom = '" + cityToBID(report_branch.SelectedItem.ToString()) + "'";
+                    mycommand.CommandText += " and br.branch_id = '" + cityToBID(report_branch.SelectedItem.ToString()) + "'";
                 }
                 try
                 {
@@ -1079,7 +1098,7 @@ namespace CMPT291PROJECT
                 reportOutputBox.Columns.Add("Total Rentals", 150);
                 mycommand.CommandText = "select description, max(num1) as total " +
                     "from( " +
-                    "select description, count(*) as num1 " +
+                    "select branchFrom, description, count(*) as num1 " +
                     "from booking b, type t, car c " +
                     "where b.car_id = c.car_id and c.car_type = t.type_id ";
                 if (report_branch.SelectedIndex != 0)
@@ -1087,9 +1106,10 @@ namespace CMPT291PROJECT
                     mycommand.CommandText += "and branchFrom = '" +
                     cityToBID(report_branch.SelectedItem.ToString()) + "'";
                 }
-                mycommand.CommandText += " group by description) as tem " +
-                    "group by description ";
+                mycommand.CommandText += " group by branchFrom, description) as tem " +
+                    "group by description";
 
+                Clipboard.SetText(mycommand.CommandText);
                 try
                 {
                     myreader = mycommand.ExecuteReader();
@@ -1110,35 +1130,32 @@ namespace CMPT291PROJECT
             else if (radioButton4.Checked == true)
             {
                 reportOutputBox.Columns.Add("Average Rental Time (Days)", 250);
+                reportOutputBox.Columns.Add("Branch", 250);
 
-                mycommand.CommandText = "select avg([days]) as [output] from " +
-                    "(select booking_id, DATEDIFF(day, date_from, date_to) as [days] from booking ";
-                if (report_branch.SelectedIndex != 0) {
-                    mycommand.CommandText += "where branchFrom = '" +
-                        cityToBID(report_branch.SelectedItem.ToString());
-                   
-                    if (report_type.SelectedIndex != 0) {
-                        mycommand.CommandText += "' and type_requested = '" +
-                             descToType(report_type.SelectedItem.ToString()) + "') as temp";
-                    }
-                    else
-                    {
-                        mycommand.CommandText += "') as Temp";
-                    }
-                }
-                else if (report_type.SelectedIndex != 0)
+
+                mycommand.CommandText = "select avg([days]) as [output], branchFrom from " +
+                    "(select booking_id, DATEDIFF(day, date_from, date_to) as [days], branchFrom from booking where 1 = 1 ";
+
+                if (report_branch.SelectedIndex != 0)
                 {
-                    mycommand.CommandText += "where type_requested = '" + descToType(report_type.SelectedItem.ToString()) + "') as temp";
+                    mycommand.CommandText += "and branchFrom = '" +
+                        cityToBID(report_branch.SelectedItem.ToString()) + "'";
                 }
-                else { mycommand.CommandText += ") as Temp"; }
+                 if (report_type.SelectedIndex != 0)
+                {
+                    mycommand.CommandText += "and type_requested = '" + descToType(report_type.SelectedItem.ToString()) + "'";
+                }
+                mycommand.CommandText += ") as Temp group by branchFrom"; 
                 Clipboard.SetText(mycommand.CommandText);
-                //MessageBox.Show(mycommand.CommandText.ToString());
+
                 try
                 {
                     myreader = mycommand.ExecuteReader();
                     while (myreader.Read())
                     {
                         temp[0] = myreader[0].ToString();
+                        temp[1] = myreader[1].ToString();
+
                         //anItem = new ListViewItem(myreader[1].ToString());
                         anItem = new ListViewItem(temp);
                         reportOutputBox.Items.Add(anItem);
