@@ -73,12 +73,12 @@ namespace CMPT291PROJECT
             bookingOutput.GridLines=true;
             bookingOutput.FullRowSelect = true;
 
-            bookingOutput.Columns.Add("Branch", 120);
-            bookingOutput.Columns.Add("Type", 105);
-            bookingOutput.Columns.Add("Model", 132);
-            bookingOutput.Columns.Add("Year", 65);
-            bookingOutput.Columns.Add("Licence Plate", 130);
-            bookingOutput.Columns.Add("Price", 90);
+            bookingOutput.Columns.Add("Branch", 130);
+            bookingOutput.Columns.Add("Type", 118);
+            bookingOutput.Columns.Add("Model", 145);
+            bookingOutput.Columns.Add("Year", 70);
+            bookingOutput.Columns.Add("Licence Plate", 135);
+            bookingOutput.Columns.Add("Price ($)", 95);
 
             reportOutputBox.View = View.Details;
             report_branch.Visible = false;
@@ -1673,5 +1673,6 @@ namespace CMPT291PROJECT
             if (drop_off_check.Checked == false && dropoff.CanSelect)
                 dropoff.SelectedIndex = pickup.SelectedIndex;
         }
+
     }    
 }
