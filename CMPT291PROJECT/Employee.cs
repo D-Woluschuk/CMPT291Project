@@ -347,6 +347,7 @@ namespace CMPT291PROJECT
                 mycommand.CommandText += "and b.city = '" + pickup.SelectedItem.ToString() + "' ";
             }
             if (vehicle_type.SelectedItem.ToString() != "Any")
+
             {                
                 mycommand.CommandText += "and t.description = '" + vehicle_type.SelectedItem.ToString() + "' ";
 
@@ -356,6 +357,7 @@ namespace CMPT291PROJECT
                 }
                 else
                 {
+
                     mycommand.CommandText += " ";
                 }
             }
@@ -366,9 +368,11 @@ namespace CMPT291PROJECT
                 mycommand.CommandText += "and car_id not in (select car_id from Booking b where ";
                 mycommand.CommandText += "(b.Date_From <= '" + date_to.Value.ToString() + "') and ('";
                 mycommand.CommandText += date_from.Value.ToString() + "' <= b.Date_To)) ";              //TODO Check if date formats are compatible
+
             }
             mycommand.CommandText += "ORDER BY type_id";
 
+           
             // Display all available vehicles to output
             string[] aCar = new string[7];
             ListViewItem anItem;
@@ -402,6 +406,7 @@ namespace CMPT291PROJECT
                     anItem = new ListViewItem(aCar);
                     bookingOutput.Items.Add(anItem);
                     o++;
+
                 }
             }
             catch (Exception e3) { MessageBox.Show(e3.ToString()); }
@@ -966,20 +971,21 @@ namespace CMPT291PROJECT
             reportOutputBox.Visible = true;
             reportOutputBox.Items.Clear();
             reportOutputBox.Columns.Clear();
-            string[] temp = new string[2];
+            string[] temp = new string[3];
             IList<string> report = new List<string>();
             ListViewItem anItem;
             if (radioButton5.Checked == true)
             {
-                reportOutputBox.Columns.Add("Customer", 150);
+                reportOutputBox.Columns.Add("First Name", 150);
+                reportOutputBox.Columns.Add("Last Name", 150);
+                reportOutputBox.Columns.Add("Customer ID", 150);
+
                 mycommand.CommandText =
-                    "(select customer.cust_id as output " +
-                    "from booking, customer " +
-                    "where booking.cust_id = customer.cust_ID and Gold_status = 1) " +
-                    "except " +
-                    "(select cust_id " +
-                    "from booking, car " +
-                    "where booking.car_id = car.car_id and type_requested != car_type);";
+                    "select distinct c.Fname, c.Lname, c.cust_id from booking b, customer c where " +
+                    "b.cust_id = c.cust_id and c.gold_status = 1 and c.cust_id not in " +
+                    "(select b.cust_id from booking b, car c where b.type_requested != c.car_type " +
+                    "and c.car_id = b.car_id) ";
+
                 try
                 {
                     myreader = mycommand.ExecuteReader();
@@ -987,10 +993,12 @@ namespace CMPT291PROJECT
                     {
                         temp[0] = myreader[0].ToString();
                         temp[1] = myreader[1].ToString();
+                        temp[2] = myreader[2].ToString();
                         anItem = new ListViewItem(temp);
                         reportOutputBox.Items.Add(anItem);
                     }
-                } catch (Exception e1){MessageBox.Show(Text, e1.Message);}
+                }
+                catch (Exception e1) { MessageBox.Show(Text, e1.Message); }
 
                 myreader.Close();
             }
@@ -1015,64 +1023,111 @@ namespace CMPT291PROJECT
             }
             else if (radioButton2.Checked == true)
             {
-                reportOutputBox.Columns.Add("Total Late Dropoffs", 250);
-                mycommand.CommandText = "select count(*) as [output] " +
-                    "from booking " +
-                    "where date_to != returned and branchFrom = '" + cityToBID(report_branch.SelectedItem.ToString()) + "';";
-                myreader = mycommand.ExecuteReader();
-                while (myreader.Read())
+                reportOutputBox.Columns.Add("Branch", 200);
+                reportOutputBox.Columns.Add("Total Late Dropoffs", 200);
+                reportOutputBox.Columns.Add("Total Late Fees", 150);
+
+                mycommand.CommandText = "Select * from branch br," +
+                    "(select sum(late_fee) as total, branchFrom from type t, booking b where t.type_id = b.type_requested and b.date_to < b.returned group by b.branchFrom) as t1, " +
+                    " (select count(*) as [count], branchFrom from booking b, type t WHERE t.type_id = b.type_requested and date_to < returned group by branchFrom) as t2 " +
+                    "where t1.branchfrom = t2.branchfrom and br.branch_id = t1.branchFrom";
+                if (report_branch.SelectedIndex != 0)
                 {
-                    temp[0] = myreader[0].ToString();
-                    anItem = new ListViewItem(temp);
-                    reportOutputBox.Items.Add(anItem);
+                    mycommand.CommandText += " and t1.branchFrom = '" + cityToBID(report_branch.SelectedItem.ToString()) + "'";
                 }
+                try
+                {
+                    myreader = mycommand.ExecuteReader();
+                    while (myreader.Read())
+                    {
+                        temp[0] = myreader["city"].ToString();
+                        temp[1] = myreader["count"].ToString();
+                        temp[2] = myreader["total"].ToString();
+                        //anItem = new ListViewItem(myreader[1].ToString());
+                        anItem = new ListViewItem(temp);
+                        reportOutputBox.Items.Add(anItem);
+
+                        //reportbox.Text += myreader["output"].ToString();
+                    }
+                }
+                catch (SqlException ex) { MessageBox.Show(ex.Message); }
                 myreader.Close();
+                Clipboard.SetText(mycommand.CommandText);
             }
             else if (radioButton3.Checked == true)
             {
-                reportOutputBox.Columns.Add("Car ID", 150);
+                reportOutputBox.Columns.Add("Type", 150);
                 reportOutputBox.Columns.Add("Total Rentals", 150);
-                mycommand.CommandText = "select car_id, max(num1) as total " +
+                mycommand.CommandText = "select description, max(num1) as total " +
                     "from( " +
-                    "select car_id, count(*) as num1 " +
-                    "from booking " +
-                    "where branchFrom = '" +
-                    cityToBID(report_branch.SelectedItem.ToString()) +
-                    "' group by car_id) as tem " +
-                    "group by car_id ";
-
-
-                myreader = mycommand.ExecuteReader();
-                while (myreader.Read())
+                    "select description, count(*) as num1 " +
+                    "from booking b, type t, car c " +
+                    "where b.car_id = c.car_id and c.car_type = t.type_id ";
+                if (report_branch.SelectedIndex != 0)
                 {
-                    temp[0] = myreader[0].ToString();
-                    temp[1] = myreader[1].ToString();
-                    anItem = new ListViewItem(temp);
-                    reportOutputBox.Items.Add(anItem);
-
+                    mycommand.CommandText += "and branchFrom = '" +
+                    cityToBID(report_branch.SelectedItem.ToString()) + "'";
                 }
+                mycommand.CommandText += " group by description) as tem " +
+                    "group by description ";
+
+                try
+                {
+                    myreader = mycommand.ExecuteReader();
+                    while (myreader.Read())
+                    {
+                        temp[0] = myreader[0].ToString();
+                        temp[1] = myreader[1].ToString();
+                        //anItem = new ListViewItem(myreader[1].ToString());
+                        anItem = new ListViewItem(temp);
+                        reportOutputBox.Items.Add(anItem);
+
+                        //reportbox.Text += myreader["output"].ToString();
+                    }
+                }
+                catch (SqlException ex) { MessageBox.Show(ex.Message); }
                 myreader.Close();
             }
             else if (radioButton4.Checked == true)
             {
                 reportOutputBox.Columns.Add("Average Rental Time (Days)", 250);
-                
-                mycommand.CommandText = "select sum([days]) as [output] " +
-                    "from( " +
-                    "select booking_id, DATEDIFF(day, date_from, date_to) as [days] " +
-                    "from booking where branchFrom = '" +
-                    cityToBID(report_branch.SelectedItem.ToString()) +
-                    "' and type_requested = '" +
-                    descToType(report_type.SelectedItem.ToString()) +
-                    "') as Temp;";
-                //MessageBox.Show(mycommand.CommandText.ToString());
-                myreader = mycommand.ExecuteReader();
-                while (myreader.Read())
-                {
-                    temp[0] = myreader[0].ToString();
-                    anItem = new ListViewItem(temp);
-                    reportOutputBox.Items.Add(anItem);
+
+                mycommand.CommandText = "select avg([days]) as [output] from " +
+                    "(select booking_id, DATEDIFF(day, date_from, date_to) as [days] from booking ";
+                if (report_branch.SelectedIndex != 0) {
+                    mycommand.CommandText += "where branchFrom = '" +
+                        cityToBID(report_branch.SelectedItem.ToString());
+                   
+                    if (report_type.SelectedIndex != 0) {
+                        mycommand.CommandText += "' and type_requested = '" +
+                             descToType(report_type.SelectedItem.ToString()) + "') as temp";
+                    }
+                    else
+                    {
+                        mycommand.CommandText += "') as Temp";
+                    }
                 }
+                else if (report_type.SelectedIndex != 0)
+                {
+                    mycommand.CommandText += "where type_requested = '" + descToType(report_type.SelectedItem.ToString()) + "') as temp";
+                }
+                else { mycommand.CommandText += ") as Temp"; }
+                Clipboard.SetText(mycommand.CommandText);
+                MessageBox.Show(mycommand.CommandText.ToString());
+                try
+                {
+                    myreader = mycommand.ExecuteReader();
+                    while (myreader.Read())
+                    {
+                        temp[0] = myreader[0].ToString();
+                        //anItem = new ListViewItem(myreader[1].ToString());
+                        anItem = new ListViewItem(temp);
+                        reportOutputBox.Items.Add(anItem);
+
+                        //reportbox.Text += myreader["output"].ToString();
+                    }
+                }
+                catch (SqlException ex) { MessageBox.Show(ex.Message); }
                 myreader.Close();
 
 
