@@ -306,6 +306,7 @@ namespace CMPT291PROJECT
 
         private void booking_submit_click(object sender, EventArgs e)
         {
+            bool gold = false;
             bookingOutput.Items.Clear();
             if (date_from.Value > date_to.Value)
             {
@@ -332,7 +333,7 @@ namespace CMPT291PROJECT
                         user_info.ForeColor = Color.Black;
                         user_info.Text = myreader["fname"].ToString() + " " + myreader["Lname"].ToString() + "\n";
                         user_info.Text += myreader["street"].ToString() + " " + myreader["city"].ToString() + " " + myreader["province"];
-                        if (myreader["Gold_status"].ToString() == "True") { user_info.Text += "\nGold Status"; }
+                        if (myreader["Gold_status"].ToString() == "True") { user_info.Text += "\nGold Status"; gold = true; }
                     }
                 }
                 catch (Exception e3)
@@ -353,7 +354,16 @@ namespace CMPT291PROJECT
             }
             if (vehicle_type.SelectedItem.ToString() != "Any")
             {
-                mycommand.CommandText += "and t.description = '" + vehicle_type.SelectedItem.ToString() + "' ";
+                mycommand.CommandText += "and (t.description = '" + vehicle_type.SelectedItem.ToString() + "' ";
+
+                if (gold)
+                {
+                    mycommand.CommandText += "or t.type_id >= '" + descToType(vehicle_type.SelectedItem.ToString()) + "') ";
+                }
+                else
+                {
+                    mycommand.CommandText += ") ";
+                }
             }
             if (date_from.Value.ToString() != default_date || date_to.Value.ToString() != default_date)
             {
@@ -362,20 +372,36 @@ namespace CMPT291PROJECT
                 mycommand.CommandText += "and car_id not in (select car_id from Booking b where ";
                 mycommand.CommandText += "(b.Date_From <= '" + date_to.Value.ToString() + "') and ('";
                 mycommand.CommandText += date_from.Value.ToString() + "' <= b.Date_To)) ";              //TODO Check if date formats are compatible
-            }
-            //Clipboard.SetText(mycommand.CommandText);
 
+            }
+            mycommand.CommandText += "ORDER BY type_id";
+            Clipboard.SetText(mycommand.CommandText);
+
+           
             // Display all available vehicles to output
             //IList<string> result = new List<string>();
             //string temp;
             //float cost = 0;
             string[] aCar = new string[7];
             ListViewItem anItem;
+            int o = 0;
             try
             {
                 myreader = mycommand.ExecuteReader();
                 while (myreader.Read())
                 {
+                    if (myreader["description"].ToString() != vehicle_type.SelectedItem.ToString() && vehicle_type.SelectedItem.ToString() != "Any")
+                    {
+                        if (o == 0)
+                        {
+                            MessageBox.Show("Free Upgrade Available");
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                    }
+                    
                     aCar[0] = myreader["city"].ToString();
                     aCar[1] = myreader["description"].ToString();
                     aCar[2] = myreader["model"].ToString();
@@ -385,6 +411,7 @@ namespace CMPT291PROJECT
                     
                     anItem = new ListViewItem(aCar);
                     bookingOutput.Items.Add(anItem);
+                    o++;
 
                     //temp = myreader["city"].ToString() + "\t" + myreader["description"].ToString() + "\t";
                     //temp += myreader["model"].ToString() + "\t" + myreader["year"].ToString() + "\t";
@@ -397,9 +424,7 @@ namespace CMPT291PROJECT
             catch (Exception e3) { MessageBox.Show(e3.ToString()); }
 
             myreader.Close();
-            //booking_output.DataSource = result;
-            //output.Text = String.Join("", result.Distinct().ToList());
-            //booking_output.Visible = true;
+           
 
         }
 
