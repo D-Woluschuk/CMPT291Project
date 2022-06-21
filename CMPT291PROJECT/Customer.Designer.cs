@@ -44,24 +44,26 @@
             // 
             // date_from
             // 
-            this.date_from.Location = new System.Drawing.Point(156, 62);
+            this.date_from.CalendarMonthBackground = System.Drawing.Color.LightGray;
+            this.date_from.Location = new System.Drawing.Point(203, 116);
             this.date_from.Margin = new System.Windows.Forms.Padding(6);
             this.date_from.Name = "date_from";
-            this.date_from.Size = new System.Drawing.Size(396, 31);
+            this.date_from.Size = new System.Drawing.Size(238, 31);
             this.date_from.TabIndex = 0;
             // 
             // date_to
             // 
-            this.date_to.Location = new System.Drawing.Point(156, 160);
+            this.date_to.CalendarMonthBackground = System.Drawing.Color.LightGray;
+            this.date_to.Location = new System.Drawing.Point(203, 224);
             this.date_to.Margin = new System.Windows.Forms.Padding(6);
             this.date_to.Name = "date_to";
-            this.date_to.Size = new System.Drawing.Size(396, 31);
+            this.date_to.Size = new System.Drawing.Size(238, 31);
             this.date_to.TabIndex = 1;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(26, 71);
+            this.label1.Location = new System.Drawing.Point(59, 122);
             this.label1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(118, 25);
@@ -71,7 +73,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(40, 169);
+            this.label2.Location = new System.Drawing.Point(77, 230);
             this.label2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(100, 25);
@@ -80,11 +82,12 @@
             // 
             // pickup_branch
             // 
+            this.pickup_branch.BackColor = System.Drawing.Color.LightGray;
             this.pickup_branch.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.pickup_branch.FormattingEnabled = true;
             this.pickup_branch.Items.AddRange(new object[] {
             "Any"});
-            this.pickup_branch.Location = new System.Drawing.Point(209, 274);
+            this.pickup_branch.Location = new System.Drawing.Point(203, 327);
             this.pickup_branch.Margin = new System.Windows.Forms.Padding(6);
             this.pickup_branch.Name = "pickup_branch";
             this.pickup_branch.Size = new System.Drawing.Size(238, 33);
@@ -93,7 +96,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(37, 280);
+            this.label3.Location = new System.Drawing.Point(20, 335);
             this.label3.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(157, 25);
@@ -102,11 +105,12 @@
             // 
             // vehicle_type
             // 
+            this.vehicle_type.BackColor = System.Drawing.Color.LightGray;
             this.vehicle_type.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.vehicle_type.FormattingEnabled = true;
             this.vehicle_type.Items.AddRange(new object[] {
             "Any"});
-            this.vehicle_type.Location = new System.Drawing.Point(207, 330);
+            this.vehicle_type.Location = new System.Drawing.Point(203, 429);
             this.vehicle_type.Margin = new System.Windows.Forms.Padding(6);
             this.vehicle_type.Name = "vehicle_type";
             this.vehicle_type.Size = new System.Drawing.Size(238, 33);
@@ -115,7 +119,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(37, 336);
+            this.label4.Location = new System.Drawing.Point(40, 437);
             this.label4.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(137, 25);
@@ -124,19 +128,24 @@
             // 
             // submit
             // 
-            this.submit.Location = new System.Drawing.Point(288, 431);
+            this.submit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.submit.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.submit.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.submit.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.submit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.submit.Location = new System.Drawing.Point(283, 563);
             this.submit.Margin = new System.Windows.Forms.Padding(6);
             this.submit.Name = "submit";
             this.submit.Size = new System.Drawing.Size(150, 44);
             this.submit.TabIndex = 10;
             this.submit.Text = "Submit";
-            this.submit.UseVisualStyleBackColor = true;
+            this.submit.UseVisualStyleBackColor = false;
             this.submit.Click += new System.EventHandler(this.submit_Click);
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(833, 31);
+            this.label5.Location = new System.Drawing.Point(764, 19);
             this.label5.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(151, 25);
@@ -145,24 +154,29 @@
             // 
             // log_out
             // 
-            this.log_out.Location = new System.Drawing.Point(24, 431);
+            this.log_out.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.log_out.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.log_out.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.log_out.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.log_out.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.log_out.Location = new System.Drawing.Point(33, 563);
             this.log_out.Margin = new System.Windows.Forms.Padding(6);
             this.log_out.Name = "log_out";
             this.log_out.Size = new System.Drawing.Size(150, 44);
             this.log_out.TabIndex = 13;
             this.log_out.Text = "Log Out";
-            this.log_out.UseVisualStyleBackColor = true;
+            this.log_out.UseVisualStyleBackColor = false;
             this.log_out.Click += new System.EventHandler(this.log_out_Click);
             // 
             // custOutput
             // 
-            this.custOutput.BackColor = System.Drawing.Color.DarkGray;
+            this.custOutput.BackColor = System.Drawing.Color.Gray;
             this.custOutput.FullRowSelect = true;
             this.custOutput.GridLines = true;
             this.custOutput.HideSelection = false;
-            this.custOutput.Location = new System.Drawing.Point(660, 62);
+            this.custOutput.Location = new System.Drawing.Point(531, 59);
             this.custOutput.Name = "custOutput";
-            this.custOutput.Size = new System.Drawing.Size(532, 423);
+            this.custOutput.Size = new System.Drawing.Size(602, 582);
             this.custOutput.TabIndex = 15;
             this.custOutput.UseCompatibleStateImageBehavior = false;
             this.custOutput.View = System.Windows.Forms.View.Details;
@@ -171,7 +185,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1204, 498);
+            this.BackColor = System.Drawing.Color.Gray;
+            this.ClientSize = new System.Drawing.Size(1145, 653);
             this.Controls.Add(this.custOutput);
             this.Controls.Add(this.log_out);
             this.Controls.Add(this.label5);
