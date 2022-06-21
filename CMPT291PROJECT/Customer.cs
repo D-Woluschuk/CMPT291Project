@@ -95,7 +95,7 @@ namespace CMPT291PROJECT
                 mycommand.CommandText += date_from.Value.ToString() + "' <= b.Date_To))";
 
             }
-
+            mycommand.CommandText += " order by branch_id, type_id";
             // Display all available vehicles to output
             string[] info = new string[4];
             ListViewItem anItem;

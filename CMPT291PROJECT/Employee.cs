@@ -1079,7 +1079,7 @@ namespace CMPT291PROJECT
                 reportOutputBox.Columns.Add("Total Rentals", 150);
                 mycommand.CommandText = "select description, max(num1) as total " +
                     "from( " +
-                    "select description, count(*) as num1 " +
+                    "select branchFrom, description, count(*) as num1 " +
                     "from booking b, type t, car c " +
                     "where b.car_id = c.car_id and c.car_type = t.type_id ";
                 if (report_branch.SelectedIndex != 0)
@@ -1087,7 +1087,7 @@ namespace CMPT291PROJECT
                     mycommand.CommandText += "and branchFrom = '" +
                     cityToBID(report_branch.SelectedItem.ToString()) + "'";
                 }
-                mycommand.CommandText += " group by description) as tem " +
+                mycommand.CommandText += " group by branchFrom, description) as tem " +
                     "group by description";
 
                 Clipboard.SetText(mycommand.CommandText);
