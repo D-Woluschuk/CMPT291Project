@@ -18,6 +18,7 @@ namespace CMPT291PROJECT
         public SqlConnection myconnection;
         public SqlCommand mycommand;
         public string[] ids;
+        public string[] provinces = { "AB", "BC", "SK", "MB", "ON", "QC", "NB", "NS", "PE", "NL", "YT", "NT", "NU" };
         public UserSignUp(Login temp)
         {
             InitializeComponent();
@@ -47,6 +48,7 @@ namespace CMPT291PROJECT
             }
             myreader.Close();
             ids = list.ToArray();
+            Signup_Prov.DataSource = provinces;
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -119,7 +121,7 @@ namespace CMPT291PROJECT
             }
             else
             {
-                string[] param = { signup_id.Text, signup_Fname.Text, signup_Lname.Text, signup_street.Text, signup_city.Text, signup_province.Text };
+                string[] param = { signup_id.Text, signup_Fname.Text, signup_Lname.Text, signup_street.Text, signup_city.Text, Signup_Prov.SelectedItem.ToString() };
                 command_string += "customer VALUES (";
                 for (int i = 0; i < param.Length; i++)
                 {

@@ -25,6 +25,7 @@ namespace CMPT291PROJECT
             InitializeComponent();
             default_date = date_from.Value.ToString();
             parent = ftemp;
+            date_to.Value = date_from.Value.AddDays(1);
 
 
             myconnection = parent.myconnection;
@@ -33,9 +34,9 @@ namespace CMPT291PROJECT
 
             custOutput.View = View.Details;
             custOutput.GridLines = true;
-            custOutput.Columns.Add("Branch", 130);
-            custOutput.Columns.Add("Type", 150);
-            custOutput.Columns.Add("Price", 100);
+            custOutput.Columns.Add("Branch", 219);
+            custOutput.Columns.Add("Type", 219);
+            custOutput.Columns.Add("Price ($)", 160);
 
             // Populate combo boxes
             mycommand.CommandText = "SELECT b.city, t.description FROM car c, type t, branch b ";
@@ -65,10 +66,10 @@ namespace CMPT291PROJECT
 
         private void submit_Click(object sender, EventArgs e)
         {
-            if (date_from.Value > date_to.Value && date_from.Value.ToString() != default_date && date_to.Value.ToString() != default_date)
+            if (date_from.Value > date_to.Value) //&& date_from.Value.ToString() != default_date && date_to.Value.ToString() != default_date)
             {
+
                 custOutput.Items.Clear();
-                //output.DataSource = null;
                 MessageBox.Show("Date from must be before date to!");
                 return;
             }
@@ -96,13 +97,9 @@ namespace CMPT291PROJECT
             }
 
             // Display all available vehicles to output
-
-            IList<string> result = new List<string>();
-            string temp;
             string[] info = new string[4];
             ListViewItem anItem;
             custOutput.Items.Clear();
-            //MessageBox.Show(SqlCommand.CommandText.ToString());
             try
             {
                 myreader = mycommand.ExecuteReader();
@@ -113,25 +110,13 @@ namespace CMPT291PROJECT
                     info[2] = myreader["daily"].ToString();
                     anItem = new ListViewItem(info);
                     custOutput.Items.Add(anItem);
-                    //temp = myreader["city"].ToString().PadRight(15) + myreader["description"].ToString().PadRight(15);
-                    //temp += myreader["daily"].ToString(); // TODO CALCULATE ACTUAL PRICE
-                    //result.Add(temp);
                 }
             }
             catch (Exception e3) { MessageBox.Show(e3.ToString()); }
 
             myreader.Close();
-            //output.DataSource = result;
-            //output.Text = String.Join("", result.Distinct().ToList());
-            //output.Visible = true;
-
-
         }
 
-        private void results_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
 
         private void log_out_Click(object sender, EventArgs e)
         {

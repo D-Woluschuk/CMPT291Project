@@ -33,7 +33,6 @@ namespace CMPT291PROJECT
             DateTime date_from = (DateTime)TypeDescriptor.GetConverter(typeof(DateTime)).ConvertFromString(dateFrom);
             DateTime date_to = (DateTime)TypeDescriptor.GetConverter(typeof(DateTime)).ConvertFromString(dateTo);
             convertDateFrom = date_from.ToString("yyyy-MM-dd");
-            date_to = date_to.AddDays(1);
             convertDateTo = date_to.ToString("yyyy-MM-dd");
 
 
@@ -50,11 +49,11 @@ namespace CMPT291PROJECT
             CurrentInventory.FullRowSelect = true;
             
             myreader.Close();
-            CurrentInventory.Columns.Add("Car ID", 75);
-            CurrentInventory.Columns.Add("Type", 100);
-            CurrentInventory.Columns.Add("Model", 100);
-            CurrentInventory.Columns.Add("Year",100);
-            CurrentInventory.Columns.Add("Licence Plate", 100);
+            CurrentInventory.Columns.Add("Car ID", 175);
+            CurrentInventory.Columns.Add("Type", 250);
+            CurrentInventory.Columns.Add("Model", 250);
+            CurrentInventory.Columns.Add("Year",190);
+            CurrentInventory.Columns.Add("Licence Plate", 256);
 
             mycommand.CommandText = "SELECT C.car_id, T.description, C.model, C.year, C.plate_num FROM car C, type T, branch B1 WHERE (C.car_type = T.type_id AND C.car_branch = B1.branch_id) AND B1.city = '" + branchID + "' AND C.car_id not in (SELECT B.car_id FROM booking B WHERE B.date_from <= '" + convertDateFrom + "' AND B.date_to >= '" + convertDateTo + "')";
 
@@ -67,7 +66,6 @@ namespace CMPT291PROJECT
                 {
                     carInfo[0] = myreader["car_id"].ToString();
                     carInfo[1] = myreader["description"].ToString();
-                    //carInfo[2] = myreader["city"].ToString();
                     carInfo[2] = myreader["model"].ToString();
                     carInfo[3] = myreader["year"].ToString();
                     carInfo[4] = myreader["plate_num"].ToString();
@@ -91,5 +89,6 @@ namespace CMPT291PROJECT
             this.Close();
             this.parent.Show();
         }
+
     }
 }
